@@ -1,4 +1,4 @@
-package com.example.chowdown.controllers.Filler;
+package com.example.chowdown.controllers;
 
 /**
  * Created by mattlauer on 2014-11-03.
