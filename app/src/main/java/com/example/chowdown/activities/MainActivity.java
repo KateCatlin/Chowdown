@@ -1,9 +1,11 @@
-package com.example.chowdown;
+package com.example.chowdown.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.example.chowdown.R;
 
 
 public class MainActivity extends Activity {
