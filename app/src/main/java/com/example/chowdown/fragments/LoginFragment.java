@@ -18,7 +18,8 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        mUsernameEditText = (EditText) findViewById();
+        mUsernameEditText = (EditText) findViewById(R.id.editText_username_entry);
+
         String username = mUsernameEditText.getText().toString();
 
 
