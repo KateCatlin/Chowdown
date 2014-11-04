@@ -12,8 +12,8 @@ import com.parse.ParseObject;
 
 public class MainActivity extends Activity {
 
-    String APPLICATION_ID;
-    String CLIENT_KEY;
+    String APPLICATION_ID = "hQ5iOAVCIZ4BCepP1zco5r1HcoTp0uuvQUhLgUyX";
+    String CLIENT_KEY = "Hi4IYWhFI3L7EJLaX5KIRTTJvlt6DvBQHSDSTKgS";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
