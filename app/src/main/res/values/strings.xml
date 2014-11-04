@@ -2,7 +2,18 @@
 <resources>
 
     <string name="app_name">Chowdown</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="lunches_title">Join A Lunch</string>
+    <string name="dummy_date">Nov 15</string>
+    <string name="dummy_time_frame">12 PM - 1 PM</string>
+    <string name="dummy_lunch_identifer">A lunch to celebrate Kansas!</string>
+    <string name="dummy_started_by">Started by Coolio</string>
+    <string name="dummy_attending">You're attending!</string>
+    <string name="dummy_voting_ends">Voting ends in 11 minutes</string>
     <string name="action_settings">Settings</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="username">username</string>
+    <string name="welcome_to_chowdown">Welcome to ChowDown!</string>
+    <string name="username_prompt">Please enter a username to begin:</string>
+    <string name="username_can_be_changed">(Change at any time, in the ChowDown Settings)</string>
 
 </resources>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="150dp">
+
+    <TextView
+        android:id="@+id/text_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:text="@string/dummy_date"
+        android:textSize="25sp"/>
+
+    <TextView
+        android:id="@+id/text_time_frame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_toRightOf="@id/text_date"
+        android:text="@string/dummy_time_frame"
+        android:textSize="25sp"/>
+
+    <TextView
+        android:id="@+id/text_lunch_identifier"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/text_date"
+        android:layout_below="@id/text_time_frame"
+        android:layout_marginRight="25dp"
+        android:text="@string/dummy_lunch_identifer"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/text_started_by"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/text_lunch_identifier"
+        android:layout_below="@id/text_lunch_identifier"
+        android:text="@string/dummy_started_by"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/text_attending"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@id/text_started_by"
+        android:layout_below="@id/text_lunch_identifier"
+        android:text="@string/dummy_attending"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/text_voting_ends"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_started_by"
+        android:layout_alignLeft="@id/text_date"
+        android:layout_marginRight="25dp"
+        android:text="@string/dummy_voting_ends"
+        android:textSize="20dp"/>
+
+</RelativeLayout>
