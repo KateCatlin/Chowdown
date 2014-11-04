@@ -6,14 +6,25 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.chowdown.R;
+import com.parse.Parse;
+import com.parse.ParseObject;
 
 
 public class MainActivity extends Activity {
+
+    String APPLICATION_ID;
+    String CLIENT_KEY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Parse.initialize(this, APPLICATION_ID, CLIENT_KEY);
+
+        ParseObject testObject = new ParseObject("TestObject");
+        testObject.put("foo", "bar");
+        testObject.saveInBackground();
     }
 
 
