@@ -1,29 +1,22 @@
 package com.example.chowdown.activities;
 
-import android.app.Activity;
-import android.app.ListActivity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.Window;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+        import android.app.Activity;
+        import android.content.Intent;
+        import android.os.Bundle;
+        import android.view.Menu;
+        import android.view.MenuItem;
 
-import com.example.chowdown.R;
-import com.parse.FindCallback;
-import com.parse.Parse;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
+        import com.example.chowdown.R;
+        import com.example.chowdown.models.LunchEvent;
+        import com.parse.Parse;
+        import com.parse.ParseObject;
 
-import java.util.ArrayList;
-import java.util.List;
+        import java.util.ArrayList;
+        import java.util.Arrays;
+        import java.util.Date;
 
 
-public class MainActivity extends ListActivity {
-    private List<Note> posts;
+public class MainActivity extends Activity {
 
     String APPLICATION_ID = "hQ5iOAVCIZ4BCepP1zco5r1HcoTp0uuvQUhLgUyX";
     String CLIENT_KEY = "Hi4IYWhFI3L7EJLaX5KIRTTJvlt6DvBQHSDSTKgS";
@@ -31,17 +24,28 @@ public class MainActivity extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_main);
-        Parse.initialize(this, "h6Jfwyj8j8WH7jQUQUeVPQYh5ihIiyUMA3QlyCmW", "7c0iZ1z2gHtl4MjLNKLxpI8JduDFetA0EsgfxoPj");
 
-        posts = new ArrayList<Note>();
-        ArrayAdapter<Note> adapter = new ArrayAdapter<Note>(this, R.layout.list_item_layout, posts);
-        setListAdapter(adapter);
+        Parse.initialize(this, APPLICATION_ID, CLIENT_KEY);
 
-        refreshPostList();
+        ParseObject testObject = new ParseObject("TestObject");
+        testObject.put("foo", "bar");
+        testObject.saveInBackground();
+
+        String dummyID1 = "1";
+        String dummyID2 = "2";
+        String dummyID3 = "3";
+        Date dummyDate = new Date();
+        String[] eventAttendeesStringArray = {"Cory", "Kate", "Ken", "Matt"};
+        ArrayList<String> eventAttendees = new ArrayList<String>(Arrays.asList(eventAttendeesStringArray));
+        String topRestaurant1 = "Steve's Deli";
+        String topRestaurant2 = "Al's";
+        String topRestaurant3 = "7Greens";
+
+        LunchEvent lunch1 = new LunchEvent(dummyID1, dummyDate, dummyDate, dummyDate, eventAttendees, topRestaurant1);
+        LunchEvent lunch2 = new LunchEvent(dummyID2, dummyDate, dummyDate, dummyDate, eventAttendees, topRestaurant2);
+        LunchEvent lunch3 = new LunchEvent(dummyID3, dummyDate, dummyDate, dummyDate, eventAttendees, topRestaurant3);
     }
-
 
 
     @Override
@@ -57,52 +61,10 @@ public class MainActivity extends ListActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        switch (id) {
-
-            case R.id.action_refresh: {
-                refreshPostList();
-                break;
-            }
-
-            case R.id.action_new: {
-                Intent intent = new Intent(this, EditNoteActivity.class);
-                startActivity(intent);
-                break;
-            }
-            case R.id.action_settings: {
-                // Do something when user selects Settings from Action Bar overlay
-                break;
-            }
+        if (id == R.id.action_settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
+            return true;
         }
-
         return super.onOptionsItemSelected(item);
-    }
-
-    private void refreshPostList() {
-
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
-        setProgressBarIndeterminateVisibility(true);
-
-        query.findInBackground(new FindCallback<ParseObject>() {
-
-            @Override
-            public void done(List<ParseObject> postList, ParseException e) {
-                setProgressBarIndeterminateVisibility(false);
-                if (e == null) {
-                    // If there are results, update the list of posts
-                    // and notify the adapter
-                    posts.clear();
-                    for (ParseObject post : postList) {
-                        Note note = new Note(post.getObjectId(), post.getString("title"), post.getString("content"));
-                        posts.add(note);
-                    }
-                    ((ArrayAdapter<Note>) getListAdapter()).notifyDataSetChanged();
-                } else {
-                    Log.d(getClass().getSimpleName(), "Error: " + e.getMessage());
-                }
-
-            }
-        });
     }
 }
