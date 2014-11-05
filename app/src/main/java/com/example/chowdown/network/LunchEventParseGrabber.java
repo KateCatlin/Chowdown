@@ -1,11 +1,30 @@
 package com.example.chowdown.network;
 
+import android.app.Activity;
+
 import com.example.chowdown.models.LunchEvent;
+import com.parse.Parse;
+import com.parse.ParseObject;
 
 /**
  * Created by mattlauer on 2014-11-04.
  */
 public class LunchEventParseGrabber {
+
+    private static String APPLICATION_ID = "hQ5iOAVCIZ4BCepP1zco5r1HcoTp0uuvQUhLgUyX";
+    private static String CLIENT_KEY = "Hi4IYWhFI3L7EJLaX5KIRTTJvlt6DvBQHSDSTKgS";
+
+    public LunchEventParseGrabber(Activity activity) {
+        Parse.initialize(activity, APPLICATION_ID, CLIENT_KEY);
+    }
+
+    public void testPostToParse() {
+        ParseObject testObject = new ParseObject("ExtractedParceCall");
+        testObject.put("didthiswork", "yes");
+        testObject.saveInBackground();
+    }
+
+
     private void grabEventIDFromParse(LunchEvent lunchEvent) {
         // Use Parse to grab the objectID for the Parse record associated with this LunchEvent.
         // Assumes the LunchEvent is already saved to Parse.

@@ -6,25 +6,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.chowdown.R;
-import com.parse.Parse;
-import com.parse.ParseObject;
-
+import com.example.chowdown.network.LunchEventParseGrabber;
 
 public class MainActivity extends Activity {
-
-    String APPLICATION_ID = "hQ5iOAVCIZ4BCepP1zco5r1HcoTp0uuvQUhLgUyX";
-    String CLIENT_KEY = "Hi4IYWhFI3L7EJLaX5KIRTTJvlt6DvBQHSDSTKgS";
+    LunchEventParseGrabber lunchEventParseGrabber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Parse.initialize(this, APPLICATION_ID, CLIENT_KEY);
+        lunchEventParseGrabber = new LunchEventParseGrabber(this);
+        lunchEventParseGrabber.testPostToParse();
 
-        ParseObject testObject = new ParseObject("TestObject");
-        testObject.put("foo", "bar");
-        testObject.saveInBackground();
     }
 
 
