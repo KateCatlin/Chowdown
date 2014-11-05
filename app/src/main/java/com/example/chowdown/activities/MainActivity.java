@@ -1,8 +1,10 @@
 package com.example.chowdown.activities;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -15,6 +17,7 @@ public class MainActivity extends Activity {
 
     String APPLICATION_ID = "hQ5iOAVCIZ4BCepP1zco5r1HcoTp0uuvQUhLgUyX";
     String CLIENT_KEY = "Hi4IYWhFI3L7EJLaX5KIRTTJvlt6DvBQHSDSTKgS";
+    public static final String USERNAME_KEY = "USERNAME_KEY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +29,15 @@ public class MainActivity extends Activity {
         ParseObject testObject = new ParseObject("TestObject");
         testObject.put("foo", "bar");
         testObject.saveInBackground();
+
+        String username = PreferenceManager.getDefaultSharedPreferences(this).getString(USERNAME_KEY, null);
+
+        if (username == null){
+            final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+
+
+        }
+
 
 
     }
