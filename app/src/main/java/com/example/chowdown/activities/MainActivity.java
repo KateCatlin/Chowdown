@@ -18,7 +18,6 @@ public class MainActivity extends Activity {
 
         lunchEventParseGrabber = new LunchEventParseGrabber(this);
         lunchEventParseGrabber.testPostToParse();
-
     }
 
 

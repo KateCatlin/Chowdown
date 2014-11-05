@@ -6,6 +6,12 @@ import com.example.chowdown.models.LunchEvent;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
+import org.json.JSONArray;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+
 /**
  * Created by mattlauer on 2014-11-04.
  */
@@ -14,16 +20,34 @@ public class LunchEventParseGrabber {
     private static String APPLICATION_ID = "hQ5iOAVCIZ4BCepP1zco5r1HcoTp0uuvQUhLgUyX";
     private static String CLIENT_KEY = "Hi4IYWhFI3L7EJLaX5KIRTTJvlt6DvBQHSDSTKgS";
 
-    public LunchEventParseGrabber(Activity activity) {
-        Parse.initialize(activity, APPLICATION_ID, CLIENT_KEY);
+    public LunchEventParseGrabber(Activity currentActivity) {
+        Parse.initialize(currentActivity, APPLICATION_ID, CLIENT_KEY);
     }
 
     public void testPostToParse() {
-        ParseObject testObject = new ParseObject("ExtractedParceCall");
-        testObject.put("didthiswork", "yes");
+
+        Date currentDate = new Date();
+        JSONArray attendees = new JSONArray(Arrays.asList(new String[] {"guy1", "guy2"}));
+
+
+        ParseObject testObject = new ParseObject("LunchEvent");
+        testObject.put("startDate", currentDate);
+        testObject.put("endDate", currentDate);
+        testObject.put("voteDate", currentDate);
+        testObject.put("attendees", attendees);
+        testObject.put("topRestaurant", "Slices");
         testObject.saveInBackground();
     }
 
+//    public String testLunchQuery() {
+//
+//    }
+
+    public ArrayList<LunchEvent> getLunchEvents(){
+        ArrayList<LunchEvent> lunchEvents = new ArrayList<LunchEvent>();
+
+        return lunchEvents;
+    }
 
     private void grabEventIDFromParse(LunchEvent lunchEvent) {
         // Use Parse to grab the objectID for the Parse record associated with this LunchEvent.
