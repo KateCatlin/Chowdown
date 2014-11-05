@@ -9,6 +9,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseException;
 
+import org.joda.time.DateTime;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
@@ -30,14 +31,16 @@ public class LunchEventParseGrabber {
 
     public void testPostToParse() {
 
-        Date currentDate = new Date();
         JSONArray attendees = new JSONArray(Arrays.asList(new String[] {"boy1", "woman2", "dog1", "cat1"}));
+
+        DateTime dt = new DateTime(2014, 11, 5, 4, 7, 20);
+        Date dte = dt.toDate();
 
 
         ParseObject testObject = new ParseObject("LunchEvent");
-        testObject.put("startDate", currentDate);
-        testObject.put("endDate", currentDate);
-        testObject.put("voteDate", currentDate);
+        testObject.put("startDate", dte);
+        testObject.put("endDate", dte);
+        testObject.put("voteDate", dte);
         testObject.put("attendees", attendees);
         testObject.put("topRestaurant", "Lily Thai");
         testObject.saveInBackground();

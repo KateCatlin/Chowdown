@@ -16,6 +16,7 @@
     <string name="welcome_to_chowdown">Welcome to ChowDown!</string>
     <string name="username_prompt">Please enter a username to begin:</string>
     <string name="username_can_be_changed">(Change at any time, in the ChowDown Settings)</string>
+
     <string name="save">save</string>
 
 </resources>

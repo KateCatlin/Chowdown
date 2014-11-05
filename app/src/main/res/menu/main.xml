@@ -5,4 +5,15 @@
         android:title="@string/action_settings"
         android:orderInCategory="100"
         android:showAsAction="never" />
+    <item
+        android:id="@+id/action_refresh"
+        android:icon="@drawable/ic_launcher"
+        android:showAsAction="always|withText"
+        >
+    </item>
+
+    <item
+        android:id="@+id/action_new"
+        android:showAsAction="always|withText"
+        android:icon="@drawable/ic_launcher"/>
 </menu>

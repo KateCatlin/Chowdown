@@ -15,6 +15,8 @@ import com.example.chowdown.models.LunchEvent;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -25,11 +27,14 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
 
         lunchEventParseGrabber = new LunchEventParseGrabber(this);
+
+        lunchEventParseGrabber.testPostToParse();
 
         List<ParseObject> pOL = lunchEventParseGrabber.getLunchEvents();
         for (ParseObject pO: pOL) {
@@ -41,7 +46,7 @@ public class MainActivity extends Activity {
         ParseObject testObject = new ParseObject("TestObject");
         testObject.put("foo", "bar");
         testObject.saveInBackground();
-        
+
         String dummyID1 = "1";
         String dummyID2 = "2";
         String dummyID3 = "3";
