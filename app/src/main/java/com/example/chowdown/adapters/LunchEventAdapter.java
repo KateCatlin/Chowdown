@@ -47,7 +47,7 @@ public class LunchEventAdapter extends ArrayAdapter<LunchEvent> {
 
         LunchEvent lunchObject = getItem(position);
 
-        lunchEventArrayList = MainActivity.arrayLunchEvents;
+//        lunchEventArrayList = MainActivity.arrayLunchEvents;
 
 //        this.eventID = eventID;
 //        this.startDate = startDate;
