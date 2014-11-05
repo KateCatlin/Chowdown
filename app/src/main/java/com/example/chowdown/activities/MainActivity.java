@@ -1,12 +1,17 @@
 package com.example.chowdown.activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
 import com.example.chowdown.R;
+import com.example.chowdown.adapters.LunchEventAdapter;
 import com.example.chowdown.network.LunchEventParseGrabber;
 import com.parse.ParseObject;
 
@@ -15,6 +20,7 @@ import com.example.chowdown.models.LunchEvent;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
+import org.joda.time.DateTime;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
@@ -23,13 +29,19 @@ import java.util.Date;
 
 
 public class MainActivity extends Activity {
+    LunchEventAdapter mLunchEventAdapter;
     LunchEventParseGrabber lunchEventParseGrabber;
+    public static ArrayList<LunchEvent> arrayOfLunches = new ArrayList<LunchEvent>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ListView listView = (ListView) findViewById(R.id.listview);
+
+        mLunchEventAdapter = new LunchEventAdapter(this, arrayOfLunches);
 
 
         lunchEventParseGrabber = new LunchEventParseGrabber(this);
@@ -50,16 +62,30 @@ public class MainActivity extends Activity {
         String dummyID1 = "1";
         String dummyID2 = "2";
         String dummyID3 = "3";
-        Date dummyDate = new Date();
-        String[] eventAttendeesStringArray = {"Cory", "Kate", "Ken", "Matt"};
-        ArrayList<String> eventAttendees = new ArrayList<String>(Arrays.asList(eventAttendeesStringArray));
+        DateTime dummyDate = new DateTime(2014, 11, 5, 4, 50, 30);
+        ArrayList<String> eventAttendeesStringArray = new ArrayList<String>();
+        eventAttendeesStringArray.add("Cory");
+        eventAttendeesStringArray.add("Kate");
+        eventAttendeesStringArray.add("Ken");
+        eventAttendeesStringArray.add("Matt");
+
         String topRestaurant1 = "Steve's Deli";
         String topRestaurant2 = "Al's";
         String topRestaurant3 = "7Greens";
 
-        LunchEvent lunch1 = new LunchEvent(dummyID1, dummyDate, dummyDate, dummyDate, eventAttendees, topRestaurant1);
-        LunchEvent lunch2 = new LunchEvent(dummyID2, dummyDate, dummyDate, dummyDate, eventAttendees, topRestaurant2);
-        LunchEvent lunch3 = new LunchEvent(dummyID3, dummyDate, dummyDate, dummyDate, eventAttendees, topRestaurant3);
+        LunchEvent lunch1 = new LunchEvent(dummyID1, "Cory's Lunch", dummyDate, dummyDate, dummyDate, eventAttendeesStringArray, topRestaurant1);
+        LunchEvent lunch2 = new LunchEvent(dummyID2, "Kate's Lunch", dummyDate, dummyDate, dummyDate, eventAttendeesStringArray, topRestaurant2);
+        LunchEvent lunch3 = new LunchEvent(dummyID3, "Ken's Lunch", dummyDate, dummyDate, dummyDate, eventAttendeesStringArray, topRestaurant3);
+        LunchEvent lunch4 = new LunchEvent(dummyID3, "Matt's Lunch", dummyDate, dummyDate, dummyDate, eventAttendeesStringArray, topRestaurant3);
+
+        arrayOfLunches.add(lunch1);
+        arrayOfLunches.add(lunch2);
+        arrayOfLunches.add(lunch3);
+        arrayOfLunches.add(lunch4);
+
+        mLunchEventAdapter.addAll(arrayOfLunches);
+
+        listView.setAdapter(mLunchEventAdapter);
 
     }
 

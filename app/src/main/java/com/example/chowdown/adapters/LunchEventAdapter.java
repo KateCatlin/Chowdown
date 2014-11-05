@@ -2,6 +2,7 @@ package com.example.chowdown.adapters;
 
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,32 +48,25 @@ public class LunchEventAdapter extends ArrayAdapter<LunchEvent> {
 
         LunchEvent lunchObject = getItem(position);
 
-//        lunchEventArrayList = MainActivity.arrayLunchEvents;
-
-//        this.eventID = eventID;
-//        this.startDate = startDate;
-//        this.endDate = endDate;
-//        this.votingDate = votingDate;
-//        this.eventAttendees = eventAttendees;
-//        this.topRestaurant = topRestaurant;
+        lunchEventArrayList = MainActivity.arrayOfLunches;
 
         TextView date = (TextView) thisRow.findViewById(R.id.text_date);
-//        date.setText(lunchObject.getStartDate());
+        date.setText(lunchObject.getStartDate().getMonthOfYear() + "/" + lunchObject.getStartDate().getDayOfMonth());
 
         TextView time = (TextView) thisRow.findViewById(R.id.text_time_frame);
-        date.setText("!!!!!!!!!!!!");
+        date.setText(lunchObject.getStartDate().getHourOfDay() + ":" + lunchObject.getStartDate().getMinuteOfHour() + " - " + lunchObject.getEndDate().getHourOfDay() + ":" + lunchObject.getEndDate().getMinuteOfHour());
 
-        TextView lunchIndentifier = (TextView) thisRow.findViewById(R.id.text_lunch_identifier);
-        lunchIndentifier.setText("!!!!!!!!!!!!");
+        TextView lunchDescription = (TextView) thisRow.findViewById(R.id.text_lunch_description);
+        lunchDescription.setText(lunchObject.getDescription());
 
         TextView lunchStarter = (TextView) thisRow.findViewById(R.id.text_started_by);
-        lunchIndentifier.setText("!!!!!!!!!!!!");
+        lunchStarter.setText(lunchObject.getEventStarter());
 
-        TextView attendees = (TextView) thisRow.findViewById(R.id.text_attending);
-        lunchIndentifier.setText("!!!!!!!!!!!!");
+        TextView attending = (TextView) thisRow.findViewById(R.id.text_attending);
+        attending.setText( "Maybe Attending" );
 
-        TextView text_started_by = (TextView) thisRow.findViewById(R.id.voting_status);
-        lunchIndentifier.setText("!!!!!!!!!!!!");
+        TextView votingStatus = (TextView) thisRow.findViewById(R.id.voting_status);
+        votingStatus.setText( "No Vote");
 
 
         return thisRow;
