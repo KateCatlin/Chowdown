@@ -6,8 +6,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.chowdown.R;
+import com.example.chowdown.models.LunchEvent;
 import com.parse.Parse;
 import com.parse.ParseObject;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 
 
 public class MainActivity extends Activity {
@@ -25,6 +30,20 @@ public class MainActivity extends Activity {
         ParseObject testObject = new ParseObject("TestObject");
         testObject.put("foo", "bar");
         testObject.saveInBackground();
+
+        String dummyID1 = "1";
+        String dummyID2 = "2";
+        String dummyID3 = "3";
+        Date dummyDate = new Date();
+        String[] eventAttendeesStringArray = {"Cory", "Kate", "Ken", "Matt"};
+        ArrayList<String> eventAttendees = new ArrayList<String>(Arrays.asList(eventAttendeesStringArray));
+        String topRestaurant1 = "Steve's Deli";
+        String topRestaurant2 = "Al's";
+        String topRestaurant3 = "7Greens";
+
+        LunchEvent lunch1 = new LunchEvent(dummyID1, dummyDate, dummyDate, dummyDate, eventAttendees, topRestaurant1);
+        LunchEvent lunch2 = new LunchEvent(dummyID2, dummyDate, dummyDate, dummyDate, eventAttendees, topRestaurant2);
+        LunchEvent lunch3 = new LunchEvent(dummyID3, dummyDate, dummyDate, dummyDate, eventAttendees, topRestaurant3);
     }
 
 
