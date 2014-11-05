@@ -1,33 +1,42 @@
 package com.example.chowdown.activities;
 
-        import android.app.Activity;
-        import android.content.Intent;
-        import android.os.Bundle;
-        import android.view.Menu;
-        import android.view.MenuItem;
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
-        import com.example.chowdown.R;
-        import com.example.chowdown.models.LunchEvent;
-        import com.parse.Parse;
-        import com.parse.ParseObject;
+import com.example.chowdown.R;
+import com.example.chowdown.network.LunchEventParseGrabber;
+import com.parse.ParseObject;
 
-        import java.util.ArrayList;
-        import java.util.Arrays;
-        import java.util.Date;
+import java.util.List;
+import com.example.chowdown.models.LunchEvent;
+import com.parse.Parse;
+import com.parse.ParseObject;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 
 
 public class MainActivity extends Activity {
-
-    String APPLICATION_ID = "hQ5iOAVCIZ4BCepP1zco5r1HcoTp0uuvQUhLgUyX";
-    String CLIENT_KEY = "Hi4IYWhFI3L7EJLaX5KIRTTJvlt6DvBQHSDSTKgS";
-    public static ArrayList<LunchEvent> arrayLunchEvents = new ArrayList<LunchEvent>();
+    LunchEventParseGrabber lunchEventParseGrabber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Parse.initialize(this, APPLICATION_ID, CLIENT_KEY);
+
+        lunchEventParseGrabber = new LunchEventParseGrabber(this);
+
+        List<ParseObject> pOL = lunchEventParseGrabber.getLunchEvents();
+        for (ParseObject pO: pOL) {
+            System.out.println(pO.getString("topRestaurant"));
+        }
+
+//        Parse.initialize(this, APPLICATION_ID, CLIENT_KEY);
 
         ParseObject testObject = new ParseObject("TestObject");
         testObject.put("foo", "bar");
@@ -47,9 +56,6 @@ public class MainActivity extends Activity {
         LunchEvent lunch2 = new LunchEvent(dummyID2, dummyDate, dummyDate, dummyDate, eventAttendees, topRestaurant2);
         LunchEvent lunch3 = new LunchEvent(dummyID3, dummyDate, dummyDate, dummyDate, eventAttendees, topRestaurant3);
 
-        arrayLunchEvents.add(lunch1);
-        arrayLunchEvents.add(lunch2);
-        arrayLunchEvents.add(lunch3);
     }
 
 
