@@ -7,6 +7,9 @@ import android.view.MenuItem;
 
 import com.example.chowdown.R;
 import com.example.chowdown.network.LunchEventParseGrabber;
+import com.parse.ParseObject;
+
+import java.util.List;
 
 public class MainActivity extends Activity {
     LunchEventParseGrabber lunchEventParseGrabber;
@@ -17,7 +20,11 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         lunchEventParseGrabber = new LunchEventParseGrabber(this);
-        lunchEventParseGrabber.testPostToParse();
+//        lunchEventParseGrabber.testPostToParse();
+        List<ParseObject> pOL = lunchEventParseGrabber.getLunchEvents();
+        for (ParseObject pO: pOL) {
+            System.out.println(pO.getString("topRestaurant"));
+        }
     }
 
 

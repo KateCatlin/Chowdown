@@ -1,16 +1,20 @@
 package com.example.chowdown.network;
 
 import android.app.Activity;
+import android.util.Log;
 
 import com.example.chowdown.models.LunchEvent;
 import com.parse.Parse;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseException;
 
 import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by mattlauer on 2014-11-04.
@@ -27,7 +31,7 @@ public class LunchEventParseGrabber {
     public void testPostToParse() {
 
         Date currentDate = new Date();
-        JSONArray attendees = new JSONArray(Arrays.asList(new String[] {"guy1", "guy2"}));
+        JSONArray attendees = new JSONArray(Arrays.asList(new String[] {"boy1", "woman2", "dog1", "cat1"}));
 
 
         ParseObject testObject = new ParseObject("LunchEvent");
@@ -35,7 +39,7 @@ public class LunchEventParseGrabber {
         testObject.put("endDate", currentDate);
         testObject.put("voteDate", currentDate);
         testObject.put("attendees", attendees);
-        testObject.put("topRestaurant", "Slices");
+        testObject.put("topRestaurant", "Lily Thai");
         testObject.saveInBackground();
     }
 
@@ -43,10 +47,42 @@ public class LunchEventParseGrabber {
 //
 //    }
 
-    public ArrayList<LunchEvent> getLunchEvents(){
-        ArrayList<LunchEvent> lunchEvents = new ArrayList<LunchEvent>();
+    public List<ParseObject> getLunchEvents(){
+        List<ParseObject> parseObjectList = null;
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("LunchEvent");
 
-        return lunchEvents;
+        try {
+         parseObjectList = query.find();
+        } catch (ParseException e) {
+            Log.e("Error", e.getMessage());
+            e.printStackTrace();
+        }
+
+        return parseObjectList;
+//        try {
+//            Thread.sleep(10000);
+//            System.out.println("I'm sleeping");
+//            Log.v("I am ", "sleeping");
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+
+//        for(ParseObject po: parseObjectList) {
+//            System.out.println(po.getString("topRestaurant"));
+//            Log.v("Returned topRestaurant", po.getString("topRestaurant"));
+//        }
+//
+//        ArrayList<String> testList = new ArrayList<String>();
+//        testList.add("string 1");
+//
+//        for(String po: testList) {
+////            System.out.println(po.getString("topRestaurant"));
+//            Log.v("Returned topRestaurant", po);
+//        }
+//
+//        ArrayList<LunchEvent> lunchEvents = new ArrayList<LunchEvent>();
+//
+//        return lunchEvents;
     }
 
     private void grabEventIDFromParse(LunchEvent lunchEvent) {
