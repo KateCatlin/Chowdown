@@ -14,6 +14,13 @@ public class LunchEvent {
     ArrayList<String> eventAttendees;
     String topRestaurant;
 
+    public LunchEvent(String eventID, Date startDate, Date endDate, Date votingDate) {
+        this.eventID = eventID;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.votingDate = votingDate;
+    }
+
     public String getEventID() {
         return eventID;
     }

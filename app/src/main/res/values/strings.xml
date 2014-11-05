@@ -15,5 +15,9 @@
     <string name="welcome_to_chowdown">Welcome to ChowDown!</string>
     <string name="username_prompt">Please enter a username to begin:</string>
     <string name="username_can_be_changed">(Change at any time, in the ChowDown Settings)</string>
+    <string name="action_new">New Note</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="title_activity_edit_note">Add/Edit</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>
