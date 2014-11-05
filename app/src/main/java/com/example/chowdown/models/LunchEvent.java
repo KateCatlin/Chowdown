@@ -21,7 +21,6 @@ public class LunchEvent {
         this.startDate = startDate;
         this.endDate = endDate;
         this.votingDate = votingDate;
-
         this.eventAttendees = eventAttendees;
         this.topRestaurant = topRestaurant;
     }

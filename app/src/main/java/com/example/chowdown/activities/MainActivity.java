@@ -20,6 +20,7 @@ public class MainActivity extends Activity {
 
     String APPLICATION_ID = "hQ5iOAVCIZ4BCepP1zco5r1HcoTp0uuvQUhLgUyX";
     String CLIENT_KEY = "Hi4IYWhFI3L7EJLaX5KIRTTJvlt6DvBQHSDSTKgS";
+    public static ArrayList<LunchEvent> arrayLunchEvents = new ArrayList<LunchEvent>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,10 @@ public class MainActivity extends Activity {
         LunchEvent lunch1 = new LunchEvent(dummyID1, dummyDate, dummyDate, dummyDate, eventAttendees, topRestaurant1);
         LunchEvent lunch2 = new LunchEvent(dummyID2, dummyDate, dummyDate, dummyDate, eventAttendees, topRestaurant2);
         LunchEvent lunch3 = new LunchEvent(dummyID3, dummyDate, dummyDate, dummyDate, eventAttendees, topRestaurant3);
+
+        arrayLunchEvents.add(lunch1);
+        arrayLunchEvents.add(lunch2);
+        arrayLunchEvents.add(lunch3);
     }
 
 
