@@ -12,6 +12,7 @@ import android.widget.ListView;
 
 import com.example.chowdown.R;
 import com.example.chowdown.adapters.LunchEventAdapter;
+import com.example.chowdown.models.ParseConverterObject;
 import com.example.chowdown.network.LunchEventParseGrabber;
 import com.parse.ParseObject;
 
@@ -31,6 +32,7 @@ import java.util.Date;
 public class MainActivity extends Activity {
     LunchEventAdapter mLunchEventAdapter;
     LunchEventParseGrabber lunchEventParseGrabber;
+    ParseConverterObject mParseConverterObject;
     public static ArrayList<LunchEvent> arrayOfLunches = new ArrayList<LunchEvent>();
 
     @Override
@@ -41,23 +43,20 @@ public class MainActivity extends Activity {
 
         ListView listView = (ListView) findViewById(R.id.listview);
 
-        mLunchEventAdapter = new LunchEventAdapter(this, arrayOfLunches);
-
-
         lunchEventParseGrabber = new LunchEventParseGrabber(this);
 
         lunchEventParseGrabber.testPostToParse();
 
         List<ParseObject> pOL = lunchEventParseGrabber.getLunchEvents();
+
+        mParseConverterObject = new ParseConverterObject();
+
+
         for (ParseObject pO: pOL) {
-            System.out.println(pO.getString("topRestaurant"));
+
+            arrayOfLunches.add(mParseConverterObject.parseToObject(pO));
+//            System.out.println(pO.getString("topRestaurant"));
         }
-
-//        Parse.initialize(this, APPLICATION_ID, CLIENT_KEY);
-
-        ParseObject testObject = new ParseObject("TestObject");
-        testObject.put("foo", "bar");
-        testObject.saveInBackground();
 
         String dummyID1 = "1";
         String dummyID2 = "2";
@@ -82,6 +81,8 @@ public class MainActivity extends Activity {
         arrayOfLunches.add(lunch2);
         arrayOfLunches.add(lunch3);
         arrayOfLunches.add(lunch4);
+
+        mLunchEventAdapter = new LunchEventAdapter(this, arrayOfLunches);
 
         mLunchEventAdapter.addAll(arrayOfLunches);
 
