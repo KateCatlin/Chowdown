@@ -37,27 +37,21 @@ public class ParseConverterObject {
 
     public LunchEvent parseToObject(ParseObject mParseObject) {
 
-        Log.d(LOG_CAT, "Made it into parseToObject");
 
 
 
         eventID = mParseObject.getString("objectID");
-        Log.d(LOG_CAT, "eventID is " + eventID);
 
         description = mParseObject.getString("eventDescription");
-        Log.d(LOG_CAT, "eventDescription is " + description);
 
         fakeStartDate = mParseObject.getDate("startDate");
         startDate = new DateTime(fakeStartDate);
-        Log.d(LOG_CAT, "startDate is " + startDate);
 
         fakeEndDate = mParseObject.getDate("endDate");
         endDate = new DateTime(fakeEndDate);
-        Log.d(LOG_CAT, "endDate is " + endDate);
 
         fakeVotingDate = mParseObject.getDate("voteDate");
         votingDate = new DateTime(fakeVotingDate);
-        Log.d(LOG_CAT, "votingDate is " + votingDate);
 
         eventAttendees = new ArrayList<String>();
         JSONArray mJsonArray = (JSONArray) mParseObject.getJSONArray("attendees");
@@ -72,9 +66,7 @@ public class ParseConverterObject {
             return null;
         }
 
-
         topRestaurant = mParseObject.getString("topRestaurant");
-        Log.d(LOG_CAT, "topRestaurant is " + topRestaurant);
 
         mLunchEvent = new LunchEvent(eventID, description, startDate, endDate, votingDate, eventAttendees, topRestaurant);
 

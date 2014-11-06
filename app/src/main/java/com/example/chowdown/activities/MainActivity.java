@@ -50,19 +50,11 @@ public class MainActivity extends Activity {
 
         List<ParseObject> pOL = lunchEventParseGrabber.getLunchEvents();
 
-//        mParseConverterObject = new ParseConverterObject();
-
         int i = 0;
         for (ParseObject pO: pOL) {
-//            arrayOfLunches.add(mParseConverterObject.parseToObject(pO));
             arrayOfLunches.add(i, mParseConverterObject.parseToObject(pO));
-//            Log.d("Log_Cat", "arrayOfLunches in Main is " + arrayOfLunches.get(i).getDescription());
-//            System.out.println(pO.getString("topRestaurant"));
             i++;
         }
-
-        Log.d("Log_Cat", "arrayOfLunches in Main is " + arrayOfLunches.get(0).getStartDate());
-        Log.d("Log_Cat", "arrayOfLunches in Main is " + arrayOfLunches.get(1).getStartDate());
 
         mLunchEventAdapter = new LunchEventAdapter(this, arrayOfLunches);
 
