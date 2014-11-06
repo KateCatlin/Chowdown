@@ -39,10 +39,12 @@ public class LunchEventParseGrabber {
 
         ParseObject testObject = new ParseObject("LunchEvent");
         testObject.put("startDate", dte);
+        testObject.put("eventDescription", "PARTY");
         testObject.put("endDate", dte);
         testObject.put("voteDate", dte);
         testObject.put("attendees", attendees);
         testObject.put("topRestaurant", "Lily Thai");
+        testObject.put("objectID", "10103930");
         testObject.saveInBackground();
     }
 

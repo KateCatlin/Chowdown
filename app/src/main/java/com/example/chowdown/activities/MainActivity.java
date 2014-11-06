@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,7 +33,7 @@ import java.util.Date;
 public class MainActivity extends Activity {
     LunchEventAdapter mLunchEventAdapter;
     LunchEventParseGrabber lunchEventParseGrabber;
-    ParseConverterObject mParseConverterObject;
+    ParseConverterObject mParseConverterObject = new ParseConverterObject();
     public static ArrayList<LunchEvent> arrayOfLunches = new ArrayList<LunchEvent>();
 
     @Override
@@ -49,38 +50,43 @@ public class MainActivity extends Activity {
 
         List<ParseObject> pOL = lunchEventParseGrabber.getLunchEvents();
 
-        mParseConverterObject = new ParseConverterObject();
+//        mParseConverterObject = new ParseConverterObject();
 
-
+        int i = 0;
         for (ParseObject pO: pOL) {
-
-            arrayOfLunches.add(mParseConverterObject.parseToObject(pO));
+//            arrayOfLunches.add(mParseConverterObject.parseToObject(pO));
+            arrayOfLunches.add(i, mParseConverterObject.parseToObject(pO));
+//            Log.d("Log_Cat", "arrayOfLunches in Main is " + arrayOfLunches.get(i).getDescription());
 //            System.out.println(pO.getString("topRestaurant"));
+            i++;
         }
 
-        String dummyID1 = "1";
-        String dummyID2 = "2";
-        String dummyID3 = "3";
-        DateTime dummyDate = new DateTime(2014, 11, 5, 4, 50, 30);
-        ArrayList<String> eventAttendeesStringArray = new ArrayList<String>();
-        eventAttendeesStringArray.add("Cory");
-        eventAttendeesStringArray.add("Kate");
-        eventAttendeesStringArray.add("Ken");
-        eventAttendeesStringArray.add("Matt");
+        Log.d("Log_Cat", "arrayOfLunches in Main is " + arrayOfLunches.get(0).getStartDate());
+        Log.d("Log_Cat", "arrayOfLunches in Main is " + arrayOfLunches.get(1).getStartDate());
 
-        String topRestaurant1 = "Steve's Deli";
-        String topRestaurant2 = "Al's";
-        String topRestaurant3 = "7Greens";
-
-        LunchEvent lunch1 = new LunchEvent(dummyID1, "Cory's Lunch", dummyDate, dummyDate, dummyDate, eventAttendeesStringArray, topRestaurant1);
-        LunchEvent lunch2 = new LunchEvent(dummyID2, "Kate's Lunch", dummyDate, dummyDate, dummyDate, eventAttendeesStringArray, topRestaurant2);
-        LunchEvent lunch3 = new LunchEvent(dummyID3, "Ken's Lunch", dummyDate, dummyDate, dummyDate, eventAttendeesStringArray, topRestaurant3);
-        LunchEvent lunch4 = new LunchEvent(dummyID3, "Matt's Lunch", dummyDate, dummyDate, dummyDate, eventAttendeesStringArray, topRestaurant3);
-
-        arrayOfLunches.add(lunch1);
-        arrayOfLunches.add(lunch2);
-        arrayOfLunches.add(lunch3);
-        arrayOfLunches.add(lunch4);
+//        String dummyID1 = "1";
+//        String dummyID2 = "2";
+//        String dummyID3 = "3";
+//        DateTime dummyDate = new DateTime(2014, 11, 5, 4, 50, 30);
+//        ArrayList<String> eventAttendeesStringArray = new ArrayList<String>();
+//        eventAttendeesStringArray.add("Cory");
+//        eventAttendeesStringArray.add("Kate");
+//        eventAttendeesStringArray.add("Ken");
+//        eventAttendeesStringArray.add("Matt");
+//
+//        String topRestaurant1 = "Steve's Deli";
+//        String topRestaurant2 = "Al's";
+//        String topRestaurant3 = "7Greens";
+//
+//        LunchEvent lunch1 = new LunchEvent(dummyID1, "Cory's Lunch", dummyDate, dummyDate, dummyDate, eventAttendeesStringArray, topRestaurant1);
+//        LunchEvent lunch2 = new LunchEvent(dummyID2, "Kate's Lunch", dummyDate, dummyDate, dummyDate, eventAttendeesStringArray, topRestaurant2);
+//        LunchEvent lunch3 = new LunchEvent(dummyID3, "Ken's Lunch", dummyDate, dummyDate, dummyDate, eventAttendeesStringArray, topRestaurant3);
+//        LunchEvent lunch4 = new LunchEvent(dummyID3, "Matt's Lunch", dummyDate, dummyDate, dummyDate, eventAttendeesStringArray, topRestaurant3);
+//
+//        arrayOfLunches.add(lunch1);
+//        arrayOfLunches.add(lunch2);
+//        arrayOfLunches.add(lunch3);
+//        arrayOfLunches.add(lunch4);
 
         mLunchEventAdapter = new LunchEventAdapter(this, arrayOfLunches);
 
