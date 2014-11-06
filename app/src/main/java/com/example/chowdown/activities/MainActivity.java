@@ -1,6 +1,7 @@
 package com.example.chowdown.activities;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.chowdown.R;
+import com.example.chowdown.fragments.LoginDialogFragment;
 import com.example.chowdown.models.LunchEvent;
 import com.parse.Parse;
 import com.parse.ParseObject;
@@ -46,12 +48,15 @@ public class MainActivity extends Activity {
         String topRestaurant3 = "7Greens";
 
         String username = PreferenceManager.getDefaultSharedPreferences(this).getString(USERNAME_KEY, null);
+//        if (username == null){
 
-        if (username == null){
-            final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            LoginDialogFragment loginDialogFragment = new LoginDialogFragment();
 
-
-        }
+            loginDialogFragment.setCancelable(false);
+            loginDialogFragment.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+            loginDialogFragment.show(ft, "dialog");
+//        }
 
         LunchEvent lunch1 = new LunchEvent(dummyID1, dummyDate, dummyDate, dummyDate, eventAttendees, topRestaurant1);
         LunchEvent lunch2 = new LunchEvent(dummyID2, dummyDate, dummyDate, dummyDate, eventAttendees, topRestaurant2);
