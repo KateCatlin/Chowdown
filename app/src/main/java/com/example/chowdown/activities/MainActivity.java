@@ -1,34 +1,31 @@
 package com.example.chowdown.activities;
 
 import android.app.Activity;
-import android.content.Context;
+import android.app.DialogFragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.chowdown.R;
 import com.example.chowdown.adapters.LunchEventAdapter;
+import com.example.chowdown.fragments.LoginDialogFragment;
+import com.example.chowdown.models.LunchEvent;
 import com.example.chowdown.network.LunchEventParseGrabber;
 import com.parse.ParseObject;
 
-import java.util.List;
-import com.example.chowdown.models.LunchEvent;
-import com.parse.Parse;
-import com.parse.ParseObject;
-
 import org.joda.time.DateTime;
-import org.json.JSONArray;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
+import java.util.List;
 
 
 public class MainActivity extends Activity {
+
+    public static final String USERNAME_KEY = "USERNAME_KEY";
     LunchEventAdapter mLunchEventAdapter;
     LunchEventParseGrabber lunchEventParseGrabber;
     public static ArrayList<LunchEvent> arrayOfLunches = new ArrayList<LunchEvent>();
@@ -73,6 +70,17 @@ public class MainActivity extends Activity {
         String topRestaurant2 = "Al's";
         String topRestaurant3 = "7Greens";
 
+        String username = PreferenceManager.getDefaultSharedPreferences(this).getString(USERNAME_KEY, null);
+        if (username == null){
+
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            LoginDialogFragment loginDialogFragment = new LoginDialogFragment();
+
+            loginDialogFragment.setCancelable(false);
+            loginDialogFragment.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+            loginDialogFragment.show(ft, "dialog");
+        }
+
         LunchEvent lunch1 = new LunchEvent(dummyID1, "Cory's Lunch", dummyDate, dummyDate, dummyDate, eventAttendeesStringArray, topRestaurant1);
         LunchEvent lunch2 = new LunchEvent(dummyID2, "Kate's Lunch", dummyDate, dummyDate, dummyDate, eventAttendeesStringArray, topRestaurant2);
         LunchEvent lunch3 = new LunchEvent(dummyID3, "Ken's Lunch", dummyDate, dummyDate, dummyDate, eventAttendeesStringArray, topRestaurant3);
@@ -86,7 +94,6 @@ public class MainActivity extends Activity {
         mLunchEventAdapter.addAll(arrayOfLunches);
 
         listView.setAdapter(mLunchEventAdapter);
-
     }
 
 
