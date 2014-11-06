@@ -1,36 +1,36 @@
 package com.example.chowdown.activities;
 
 import android.app.Activity;
-import android.content.Context;
+import android.app.DialogFragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.example.chowdown.R;
 import com.example.chowdown.adapters.LunchEventAdapter;
 import com.example.chowdown.models.ParseConverterObject;
 import com.example.chowdown.network.LunchEventParseGrabber;
+import com.example.chowdown.R;
+
 import com.parse.ParseObject;
 
-import java.util.List;
+import com.example.chowdown.fragments.LoginDialogFragment;
 import com.example.chowdown.models.LunchEvent;
-import com.parse.Parse;
-import com.parse.ParseObject;
+import com.example.chowdown.network.LunchEventParseGrabber;
 
 import org.joda.time.DateTime;
-import org.json.JSONArray;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
+import java.util.List;
 
 
 public class MainActivity extends Activity {
+
+    public static final String USERNAME_KEY = "USERNAME_KEY";
     LunchEventAdapter mLunchEventAdapter;
     LunchEventParseGrabber lunchEventParseGrabber;
     ParseConverterObject mParseConverterObject = new ParseConverterObject();
@@ -64,36 +64,11 @@ public class MainActivity extends Activity {
         Log.d("Log_Cat", "arrayOfLunches in Main is " + arrayOfLunches.get(0).getStartDate());
         Log.d("Log_Cat", "arrayOfLunches in Main is " + arrayOfLunches.get(1).getStartDate());
 
-//        String dummyID1 = "1";
-//        String dummyID2 = "2";
-//        String dummyID3 = "3";
-//        DateTime dummyDate = new DateTime(2014, 11, 5, 4, 50, 30);
-//        ArrayList<String> eventAttendeesStringArray = new ArrayList<String>();
-//        eventAttendeesStringArray.add("Cory");
-//        eventAttendeesStringArray.add("Kate");
-//        eventAttendeesStringArray.add("Ken");
-//        eventAttendeesStringArray.add("Matt");
-//
-//        String topRestaurant1 = "Steve's Deli";
-//        String topRestaurant2 = "Al's";
-//        String topRestaurant3 = "7Greens";
-//
-//        LunchEvent lunch1 = new LunchEvent(dummyID1, "Cory's Lunch", dummyDate, dummyDate, dummyDate, eventAttendeesStringArray, topRestaurant1);
-//        LunchEvent lunch2 = new LunchEvent(dummyID2, "Kate's Lunch", dummyDate, dummyDate, dummyDate, eventAttendeesStringArray, topRestaurant2);
-//        LunchEvent lunch3 = new LunchEvent(dummyID3, "Ken's Lunch", dummyDate, dummyDate, dummyDate, eventAttendeesStringArray, topRestaurant3);
-//        LunchEvent lunch4 = new LunchEvent(dummyID3, "Matt's Lunch", dummyDate, dummyDate, dummyDate, eventAttendeesStringArray, topRestaurant3);
-//
-//        arrayOfLunches.add(lunch1);
-//        arrayOfLunches.add(lunch2);
-//        arrayOfLunches.add(lunch3);
-//        arrayOfLunches.add(lunch4);
-
         mLunchEventAdapter = new LunchEventAdapter(this, arrayOfLunches);
 
         mLunchEventAdapter.addAll(arrayOfLunches);
 
         listView.setAdapter(mLunchEventAdapter);
-
     }
 
 
