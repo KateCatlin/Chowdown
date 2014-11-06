@@ -16,6 +16,8 @@ import com.example.chowdown.activities.MainActivity;
 import com.example.chowdown.models.LunchEvent;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.json.JSONArray;
 import org.w3c.dom.Text;
 
@@ -54,10 +56,12 @@ public class LunchEventAdapter extends ArrayAdapter<LunchEvent> {
         date.setText(lunchObject.getStartDate().getMonthOfYear() + "/" + lunchObject.getStartDate().getDayOfMonth());
 
         TextView time = (TextView) thisRow.findViewById(R.id.text_time_frame);
-        date.setText(lunchObject.getStartDate().getHourOfDay() + ":" + lunchObject.getStartDate().getMinuteOfHour() + " - " + lunchObject.getEndDate().getHourOfDay() + ":" + lunchObject.getEndDate().getMinuteOfHour());
+        time.setText(lunchObject.getStartDate().getHourOfDay() + ":" + lunchObject.getStartDate().getMinuteOfHour() + " - " + lunchObject.getEndDate().getHourOfDay() + ":" + lunchObject.getEndDate().getMinuteOfHour());
+
 
         TextView lunchDescription = (TextView) thisRow.findViewById(R.id.text_lunch_description);
         lunchDescription.setText(lunchObject.getDescription());
+        Log.d("LunchEventAdapter", "description is " + lunchObject.getDescription());
 
         TextView lunchStarter = (TextView) thisRow.findViewById(R.id.text_started_by);
         lunchStarter.setText(lunchObject.getEventStarter());

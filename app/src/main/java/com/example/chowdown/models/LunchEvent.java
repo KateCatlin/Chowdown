@@ -21,6 +21,7 @@ public class LunchEvent {
     public LunchEvent(String eventID, String description, DateTime startDate, DateTime endDate, DateTime votingDate,
                       ArrayList<String> eventAttendees, String topRestaurant) {
         this.eventID = eventID;
+        this.description = description;
         this.startDate = startDate;
         this.endDate = endDate;
         this.votingDate = votingDate;
