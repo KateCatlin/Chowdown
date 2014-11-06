@@ -7,8 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.chowdown.R;
@@ -16,16 +14,8 @@ import com.example.chowdown.activities.MainActivity;
 import com.example.chowdown.models.LunchEvent;
 
 import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-import org.json.JSONArray;
-import org.w3c.dom.Text;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Date;
-
-import com.example.chowdown.activities.MainActivity;
 
 
 public class LunchEventAdapter extends ArrayAdapter<LunchEvent> {
@@ -64,7 +54,7 @@ public class LunchEventAdapter extends ArrayAdapter<LunchEvent> {
         Log.d("LunchEventAdapter", "description is " + lunchObject.getDescription());
 
         TextView lunchStarter = (TextView) thisRow.findViewById(R.id.text_started_by);
-        lunchStarter.setText(lunchObject.getEventStarter());
+        lunchStarter.setText("Started by " + lunchObject.getEventStarter());
 
         TextView attending = (TextView) thisRow.findViewById(R.id.text_attending);
         attending.setText( "Maybe Attending" );

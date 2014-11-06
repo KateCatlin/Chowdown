@@ -3,7 +3,8 @@
 
     <string name="app_name">Chowdown</string>
     <string name="settings_name">Settings</string>
-    <string name="lunches_title">Join A Lunch</string>
+    <string name="lunches_title_text">Join A Lunch</string>
+    <string name="lunch_detail_title_text">Join This Lunch?</string>
     <string name="dummy_date">Nov 15</string>
     <string name="dummy_time_frame">12 PM - 1 PM</string>
     <string name="dummy_lunch_description">A lunch to celebrate Kansas!</string>
@@ -16,6 +17,10 @@
     <string name="welcome_to_chowdown">Welcome to ChowDown!</string>
     <string name="username_prompt">Please enter a username to begin:</string>
     <string name="username_can_be_changed">(Change at any time, in the ChowDown Settings)</string>
+    <string name="dummy_attendees">Attendees\n-Cory\n-Kate\n-Ken\n-Matt</string>
+    <string name="voting_details_text">Clicking YES will allow you to vote on the restaurant for this lunch</string>
+    <string name="yes_button_text">YES</string>
+    <string name="no_button_text">NO</string>
 
     <string name="save">save</string>
 
