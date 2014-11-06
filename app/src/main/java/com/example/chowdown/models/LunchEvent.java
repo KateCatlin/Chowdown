@@ -1,5 +1,7 @@
 package com.example.chowdown.models;
 
+import org.joda.time.DateTime;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -8,15 +10,18 @@ import java.util.Date;
  */
 public class LunchEvent {
     String eventID;
-    Date startDate;
-    Date endDate;
-    Date votingDate;
+    String description;
+    DateTime startDate;
+    DateTime endDate;
+    DateTime votingDate;
     ArrayList<String> eventAttendees;
     String topRestaurant;
 
-    public LunchEvent(String eventID, Date startDate, Date endDate, Date votingDate,
+
+    public LunchEvent(String eventID, String description, DateTime startDate, DateTime endDate, DateTime votingDate,
                       ArrayList<String> eventAttendees, String topRestaurant) {
         this.eventID = eventID;
+        this.description = description;
         this.startDate = startDate;
         this.endDate = endDate;
         this.votingDate = votingDate;
@@ -32,27 +37,31 @@ public class LunchEvent {
         this.eventID = eventID;
     }
 
-    public Date getStartDate() {
+    public String getDescription() { return description; }
+
+    public void setDescription(String title) { this.description = description; }
+
+    public DateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(DateTime startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public DateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(DateTime endDate) {
         this.endDate = endDate;
     }
 
-    public Date getVotingDate() {
+    public DateTime getVotingDate() {
         return votingDate;
     }
 
-    public void setVotingDate(Date votingDate) {
+    public void setVotingDate(DateTime votingDate) {
         this.votingDate = votingDate;
     }
 
@@ -63,6 +72,8 @@ public class LunchEvent {
     public void setEventAttendees(ArrayList<String> eventAttendees) {
         this.eventAttendees = eventAttendees;
     }
+
+    public String getEventStarter() {return eventAttendees.get(0); }
 
     public String getTopRestaurant() {
         return topRestaurant;
