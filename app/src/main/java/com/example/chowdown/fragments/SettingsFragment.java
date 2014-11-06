@@ -21,7 +21,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
         SharedPreferences sp = getPreferenceScreen().getSharedPreferences();
         EditTextPreference editTextPref = (EditTextPreference) findPreference(USERNAME_KEY);
-        editTextPref.setSummary(sp.getString(USERNAME_KEY,"Set Username"));
+        editTextPref.setSummary(sp.getString(USERNAME_KEY,null));
     }
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
