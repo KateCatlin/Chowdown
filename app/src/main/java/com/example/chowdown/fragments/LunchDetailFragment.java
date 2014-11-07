@@ -14,6 +14,7 @@ import com.example.chowdown.models.LunchEvent;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.Period;
+import org.joda.time.format.PeriodFormat;
 
 /**
  * Created by Borham on 11/6/14.
@@ -57,7 +58,7 @@ public class LunchDetailFragment extends Fragment {
         dateText.setText(chosenLunchEvent.getStartDate().getMonthOfYear() + "/" + chosenLunchEvent.getStartDate().getDayOfMonth());
 
         timeFrameText = (TextView)root.findViewById(R.id.text_detail_time_frame);
-        timeFrameText.setText(chosenLunchEvent.getStartDate().getHourOfDay() + ":" + chosenLunchEvent.getStartDate().getMinuteOfHour() + " - " + chosenLunchEvent.getEndDate().getHourOfDay() + ":" + chosenLunchEvent.getEndDate().getMinuteOfHour());
+        timeFrameText.setText(chosenLunchEvent.getStartDate().toString("H:mm") + " - " + chosenLunchEvent.getEndDate().toString("H:mm"));
 
         lunchDescriptionText = (TextView)root.findViewById(R.id.text_detail_lunch_description);
         String description = chosenLunchEvent.description;
@@ -124,8 +125,16 @@ public class LunchDetailFragment extends Fragment {
         }
 
         if (hoursUntilVotingEnds > 0) {
+            stringThatShowsWhenVotingEnds = stringThatShowsWhenVotingEnds + hoursUntilVotingEnds + " Hours ";
+        }
+
+        if (minutesLeftUntilVotingEnds > 0) {
             stringThatShowsWhenVotingEnds = stringThatShowsWhenVotingEnds + minutesLeftUntilVotingEnds + " Minutes";
         }
+
+
+        stringThatShowsWhenVotingEnds = "Time until voting ends:\n";
+        stringThatShowsWhenVotingEnds = stringThatShowsWhenVotingEnds + PeriodFormat.getDefault().print(timeLeftUntilVotingEnds);
 
         return stringThatShowsWhenVotingEnds;
     }
