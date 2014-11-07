@@ -70,15 +70,10 @@ public class MainActivity extends Activity implements View.OnClickListener, Adap
         Log.d(LOG_TAG, "ITEM CLICKED IN ADAPTER VIEW");
         LunchEvent chosenLunch = mLunchEventAdapter.getItem(position);
 
-//        Parcel lunchBox;
-//        chosenLunch.writeToParcel(lunchBox, );
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         LunchDetailFragment lunchDetailFragment = LunchDetailFragment.newInstance(chosenLunch);
         ft.add(R.id.detail_container,lunchDetailFragment).addToBackStack(null).commit();
 
-//        Intent detailIntent = new Intent(this, LunchDetailFragment.class);
-//        detailIntent.putExtra(CHOSEN_LUNCH_KEY, chosenLunch);
-//        startActivity(detailIntent);
     }
 
     @Override
