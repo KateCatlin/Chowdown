@@ -24,9 +24,7 @@ public class LunchEventAdapter extends ArrayAdapter<LunchEvent> {
     DateTime dt = new DateTime();
     int month = dt.getMonthOfYear();
 
-
     ArrayList<LunchEvent> lunchEventArrayList;
-
 
     public LunchEventAdapter(Context context, ArrayList<LunchEvent> lunchEventArrayList) {
         super(context, R.layout.row_lunch, lunchEventArrayList);
@@ -51,7 +49,6 @@ public class LunchEventAdapter extends ArrayAdapter<LunchEvent> {
 
         TextView lunchDescription = (TextView) thisRow.findViewById(R.id.text_lunch_description);
         lunchDescription.setText(lunchObject.getDescription());
-        Log.d("LunchEventAdapter", "description is " + lunchObject.getDescription());
 
         TextView lunchStarter = (TextView) thisRow.findViewById(R.id.text_started_by);
         lunchStarter.setText("Started by " + lunchObject.getEventStarter());
