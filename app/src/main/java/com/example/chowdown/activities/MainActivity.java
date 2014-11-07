@@ -1,11 +1,9 @@
 package com.example.chowdown.activities;
 
 import android.app.Activity;
-import android.app.DialogFragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,19 +11,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.example.chowdown.adapters.LunchEventAdapter;
-import com.example.chowdown.models.ParseConverterObject;
-import com.example.chowdown.network.LunchEventParseGrabber;
 import com.example.chowdown.R;
-
-import com.parse.ParseObject;
-
-import com.example.chowdown.fragments.LoginDialogFragment;
+import com.example.chowdown.adapters.LunchEventAdapter;
 import com.example.chowdown.fragments.LunchDetailFragment;
 import com.example.chowdown.models.LunchEvent;
+import com.example.chowdown.models.ParseConverterObject;
 import com.example.chowdown.network.LunchEventParseGrabber;
-
-import org.joda.time.DateTime;
+import com.parse.ParseObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,10 +71,13 @@ public class MainActivity extends Activity implements View.OnClickListener, Adap
 
 //        Parcel lunchBox;
 //        chosenLunch.writeToParcel(lunchBox, );
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        LunchDetailFragment lunchDetailFragment = LunchDetailFragment.newInstance(chosenLunch);
+        ft.add(R.id.detail_container,lunchDetailFragment).addToBackStack(null).commit();
 
-        Intent detailIntent = new Intent(this, LunchDetailFragment.class);
-        detailIntent.putExtra(CHOSEN_LUNCH_KEY, chosenLunch);
-        startActivity(detailIntent);
+//        Intent detailIntent = new Intent(this, LunchDetailFragment.class);
+//        detailIntent.putExtra(CHOSEN_LUNCH_KEY, chosenLunch);
+//        startActivity(detailIntent);
     }
 
     @Override
