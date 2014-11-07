@@ -6,16 +6,21 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
-import com.example.chowdown.R;
 import com.example.chowdown.adapters.LunchEventAdapter;
+import com.example.chowdown.models.ParseConverterObject;
+import com.example.chowdown.network.LunchEventParseGrabber;
+import com.example.chowdown.R;
+
+import com.parse.ParseObject;
+
 import com.example.chowdown.fragments.LoginDialogFragment;
 import com.example.chowdown.models.LunchEvent;
 import com.example.chowdown.network.LunchEventParseGrabber;
-import com.parse.ParseObject;
 
 import org.joda.time.DateTime;
 
@@ -28,6 +33,7 @@ public class MainActivity extends Activity {
     public static final String USERNAME_KEY = "USERNAME_KEY";
     LunchEventAdapter mLunchEventAdapter;
     LunchEventParseGrabber lunchEventParseGrabber;
+    ParseConverterObject mParseConverterObject = new ParseConverterObject();
     public static ArrayList<LunchEvent> arrayOfLunches = new ArrayList<LunchEvent>();
 
     @Override
@@ -38,58 +44,19 @@ public class MainActivity extends Activity {
 
         ListView listView = (ListView) findViewById(R.id.listview);
 
-        mLunchEventAdapter = new LunchEventAdapter(this, arrayOfLunches);
-
-
         lunchEventParseGrabber = new LunchEventParseGrabber(this);
 
         lunchEventParseGrabber.testPostToParse();
 
         List<ParseObject> pOL = lunchEventParseGrabber.getLunchEvents();
+
+        int i = 0;
         for (ParseObject pO: pOL) {
-            System.out.println(pO.getString("topRestaurant"));
+            arrayOfLunches.add(i, mParseConverterObject.parseToObject(pO));
+            i++;
         }
 
-//        Parse.initialize(this, APPLICATION_ID, CLIENT_KEY);
-
-        ParseObject testObject = new ParseObject("TestObject");
-        testObject.put("foo", "bar");
-        testObject.saveInBackground();
-
-        String dummyID1 = "1";
-        String dummyID2 = "2";
-        String dummyID3 = "3";
-        DateTime dummyDate = new DateTime(2014, 11, 5, 4, 50, 30);
-        ArrayList<String> eventAttendeesStringArray = new ArrayList<String>();
-        eventAttendeesStringArray.add("Cory");
-        eventAttendeesStringArray.add("Kate");
-        eventAttendeesStringArray.add("Ken");
-        eventAttendeesStringArray.add("Matt");
-
-        String topRestaurant1 = "Steve's Deli";
-        String topRestaurant2 = "Al's";
-        String topRestaurant3 = "7Greens";
-
-        String username = PreferenceManager.getDefaultSharedPreferences(this).getString(USERNAME_KEY, null);
-        if (username == null){
-
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            LoginDialogFragment loginDialogFragment = new LoginDialogFragment();
-
-            loginDialogFragment.setCancelable(false);
-            loginDialogFragment.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
-            loginDialogFragment.show(ft, "dialog");
-        }
-
-        LunchEvent lunch1 = new LunchEvent(dummyID1, "Cory's Lunch", dummyDate, dummyDate, dummyDate, eventAttendeesStringArray, topRestaurant1);
-        LunchEvent lunch2 = new LunchEvent(dummyID2, "Kate's Lunch", dummyDate, dummyDate, dummyDate, eventAttendeesStringArray, topRestaurant2);
-        LunchEvent lunch3 = new LunchEvent(dummyID3, "Ken's Lunch", dummyDate, dummyDate, dummyDate, eventAttendeesStringArray, topRestaurant3);
-        LunchEvent lunch4 = new LunchEvent(dummyID3, "Matt's Lunch", dummyDate, dummyDate, dummyDate, eventAttendeesStringArray, topRestaurant3);
-
-        arrayOfLunches.add(lunch1);
-        arrayOfLunches.add(lunch2);
-        arrayOfLunches.add(lunch3);
-        arrayOfLunches.add(lunch4);
+        mLunchEventAdapter = new LunchEventAdapter(this, arrayOfLunches);
 
         mLunchEventAdapter.addAll(arrayOfLunches);
 
