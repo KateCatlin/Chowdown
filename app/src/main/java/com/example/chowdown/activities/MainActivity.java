@@ -6,13 +6,17 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.chowdown.R;
 import com.example.chowdown.adapters.LunchEventAdapter;
 import com.example.chowdown.fragments.LoginDialogFragment;
+import com.example.chowdown.fragments.LunchDetailFragment;
 import com.example.chowdown.models.LunchEvent;
 import com.example.chowdown.network.LunchEventParseGrabber;
 import com.parse.ParseObject;
@@ -23,12 +27,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
     public static final String USERNAME_KEY = "USERNAME_KEY";
     LunchEventAdapter mLunchEventAdapter;
     LunchEventParseGrabber lunchEventParseGrabber;
     public static ArrayList<LunchEvent> arrayOfLunches = new ArrayList<LunchEvent>();
+    public static final String CHOSEN_LUNCH_KEY = "CHOSEN_LUNCH_KEY";
+    public static final String LOG_TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,8 +100,29 @@ public class MainActivity extends Activity {
         mLunchEventAdapter.addAll(arrayOfLunches);
 
         listView.setAdapter(mLunchEventAdapter);
+
+        listView.setOnItemClickListener(this);
+
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+
+        Log.d(LOG_TAG, "ITEM CLICKED IN ADAPTER VIEW");
+        LunchEvent chosenLunch = mLunchEventAdapter.getItem(position);
+
+//        Parcel lunchBox;
+//        chosenLunch.writeToParcel(lunchBox, );
+
+        Intent detailIntent = new Intent(this, LunchDetailFragment.class);
+        detailIntent.putExtra(CHOSEN_LUNCH_KEY, chosenLunch);
+        startActivity(detailIntent);
+    }
+
+    @Override
+    public void onClick(View view) {
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
