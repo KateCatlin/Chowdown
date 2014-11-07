@@ -1,25 +1,29 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/lunches_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/lunches_title_text"
-        android:textSize="30sp"
+        android:paddingBottom="10dp"
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp"/>
+        android:text="@string/lunches_title_text"
+        android:textSize="30sp"/>
 
     <ListView
         android:id="@+id/listview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/lunches_title">
-        </ListView>
+    </ListView>
 
+    <FrameLayout
+        android:id="@+id/detail_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </RelativeLayout>
