@@ -1,28 +1,18 @@
 package com.example.chowdown.activities;
 
 import android.app.Activity;
-import android.app.DialogFragment;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
+import com.example.chowdown.R;
 import com.example.chowdown.adapters.LunchEventAdapter;
+import com.example.chowdown.models.LunchEvent;
 import com.example.chowdown.models.ParseConverterObject;
 import com.example.chowdown.network.LunchEventParseGrabber;
-import com.example.chowdown.R;
-
 import com.parse.ParseObject;
-
-import com.example.chowdown.fragments.LoginDialogFragment;
-import com.example.chowdown.models.LunchEvent;
-import com.example.chowdown.network.LunchEventParseGrabber;
-
-import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 import java.util.List;
