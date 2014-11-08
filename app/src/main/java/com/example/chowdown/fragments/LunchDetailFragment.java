@@ -105,36 +105,7 @@ public class LunchDetailFragment extends Fragment {
         Interval votingInterval = new Interval(currentDateTime, chosenLunchEvent.getVotingDate());
         Period timeLeftUntilVotingEnds = votingInterval.toPeriod();
 
-        String stringThatShowsWhenVotingEnds = "Time until voting ends:\n";
-        int yearsUntilVotingEnds = timeLeftUntilVotingEnds.getYears();
-        int monthsUntilVotingEnds = timeLeftUntilVotingEnds.getMonths();
-        int daysUntilVotingEnds = timeLeftUntilVotingEnds.getDays();
-        int hoursUntilVotingEnds = timeLeftUntilVotingEnds.getHours();
-        int minutesLeftUntilVotingEnds = timeLeftUntilVotingEnds.getMinutes();
-
-        if (yearsUntilVotingEnds > 0) {
-            stringThatShowsWhenVotingEnds = stringThatShowsWhenVotingEnds + yearsUntilVotingEnds + " Years ";
-        }
-
-        if (monthsUntilVotingEnds > 0) {
-            stringThatShowsWhenVotingEnds = stringThatShowsWhenVotingEnds + monthsUntilVotingEnds + " Months ";
-        }
-
-        if (daysUntilVotingEnds > 0) {
-            stringThatShowsWhenVotingEnds = stringThatShowsWhenVotingEnds + daysUntilVotingEnds + " Days ";
-        }
-
-        if (hoursUntilVotingEnds > 0) {
-            stringThatShowsWhenVotingEnds = stringThatShowsWhenVotingEnds + hoursUntilVotingEnds + " Hours ";
-        }
-
-        if (minutesLeftUntilVotingEnds > 0) {
-            stringThatShowsWhenVotingEnds = stringThatShowsWhenVotingEnds + minutesLeftUntilVotingEnds + " Minutes";
-        }
-
-
-        stringThatShowsWhenVotingEnds = "Time until voting ends:\n";
-        stringThatShowsWhenVotingEnds = stringThatShowsWhenVotingEnds + PeriodFormat.getDefault().print(timeLeftUntilVotingEnds);
+        String stringThatShowsWhenVotingEnds = "Time until voting ends:\n" + PeriodFormat.getDefault().print(timeLeftUntilVotingEnds);
 
         return stringThatShowsWhenVotingEnds;
     }
