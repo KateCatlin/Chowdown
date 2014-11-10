@@ -21,8 +21,9 @@
     <string name="voting_details_text">Clicking YES will allow you to vote on the restaurant for this lunch</string>
     <string name="yes_button_text">YES</string>
     <string name="no_button_text">NO</string>
-
     <string name="save">save</string>
+    <string name="title_activity_ranking">RankingActivity</string>
+    <string name="hello_world">Hello world!</string>
 
     <string name="organizer_label">Organizer</string>
 

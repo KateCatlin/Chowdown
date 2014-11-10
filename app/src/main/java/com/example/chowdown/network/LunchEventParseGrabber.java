@@ -5,14 +5,13 @@ import android.util.Log;
 
 import com.example.chowdown.models.LunchEvent;
 import com.parse.Parse;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseException;
 
 import org.joda.time.DateTime;
 import org.json.JSONArray;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -33,7 +32,7 @@ public class LunchEventParseGrabber {
 
         JSONArray attendees = new JSONArray(Arrays.asList(new String[] {"boy1", "woman2", "dog1", "cat1"}));
 
-        DateTime dt = new DateTime(2014, 11, 5, 4, 7, 20);
+        DateTime dt = new DateTime(2014, 11, 15, 4, 7, 20);
         Date dte = dt.toDate();
 
 
