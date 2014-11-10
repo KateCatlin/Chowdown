@@ -22,9 +22,9 @@ public class RankingActivity extends Activity {
         DynamicListView topRestaurantsListView = (DynamicListView) findViewById(R.id.ranked_restaurants_listview);
 
         ArrayList<String> restaurants = new ArrayList<String>();
-        restaurants.add("Restaurant 1");
-        restaurants.add("Restaurant 2");
-        restaurants.add("Restaurant 3");
+        restaurants.add("Slices");
+        restaurants.add("Orchid Thai");
+        restaurants.add("TAQO");
         StableArrayAdapter adapter = new StableArrayAdapter(this, R.layout.list_item_restaurant, restaurants);
 
         topRestaurantsListView.setCheeseList(restaurants);
