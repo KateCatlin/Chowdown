@@ -35,8 +35,6 @@ public class RankingActivity extends Activity {
     public static final String TAQO_OBJECT_ID = "YqLy4jHA2T";
     public static final String SLICE_OBJECT_ID = "A1ItP7AEuy";
     String lunchEventID;
-    public HashMap<String, String> restaurantIds;
-
 
     List<ParseObject> pOL;
     ParseObject testLunchEvent;
@@ -85,10 +83,6 @@ public class RankingActivity extends Activity {
         restaurants.add("Slice");
         restaurants.add("Orchid Thai");
         restaurants.add("TAQO");
-        restaurantIds = new HashMap<String, String>();
-        restaurantIds.put("Slice", "A1ItP7AEuy");
-        restaurantIds.put("Orchid Thai", "doLgBRhEzo");
-        restaurantIds.put("TAQO", "YqLy4jHA2T");
         restaurantAdaptor = new StableArrayAdapter(this, R.layout.list_item_restaurant, restaurants);
 
         topRestaurantsListView.setCheeseList(restaurants);
