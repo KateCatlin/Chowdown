@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Adapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -22,6 +25,7 @@ import java.util.List;
 
 public class RankingActivity extends Activity {
 
+
     public static final String CHOSEN_LUNCH_EVENT_ID = "CHOSEN_LUNCH_EVENT_ID";
     public static final String ORCHID_THAI_OBJECT_ID = "doLgBRhEzo";
     public static final String TAQO_OBJECT_ID = "YqLy4jHA2T";
@@ -29,6 +33,9 @@ public class RankingActivity extends Activity {
 
     List<ParseObject> pOL;
     ParseObject testLunchEvent;
+
+    StableArrayAdapter restaurantAdaptor;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,11 +78,19 @@ public class RankingActivity extends Activity {
         restaurants.add("Slices");
         restaurants.add("Orchid Thai");
         restaurants.add("TAQO");
-        StableArrayAdapter adapter = new StableArrayAdapter(this, R.layout.list_item_restaurant, restaurants);
+        restaurantAdaptor = new StableArrayAdapter(this, R.layout.list_item_restaurant, restaurants);
 
         topRestaurantsListView.setCheeseList(restaurants);
-        topRestaurantsListView.setAdapter(adapter);
+        topRestaurantsListView.setAdapter(restaurantAdaptor);
         topRestaurantsListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
+        Button submitButton = (Button) findViewById(R.id.submit_vote_button);
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("item 1 is" + restaurantAdaptor.getItem(0));
+            }
+        });
     }
 
 
