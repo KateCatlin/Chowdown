@@ -3,7 +3,6 @@ package com.example.chowdown.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,11 +12,9 @@ import android.widget.TextView;
 
 import com.example.chowdown.R;
 import com.example.chowdown.adapters.StableArrayAdapter;
+import com.example.chowdown.network.VoteParseGrabber;
 import com.example.chowdown.views.DynamicListView;
-import com.parse.FindCallback;
-import com.parse.ParseException;
 import com.parse.ParseObject;
-import com.parse.ParseQuery;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +32,8 @@ public class RankingActivity extends Activity {
 
     StableArrayAdapter restaurantAdaptor;
 
+    VoteParseGrabber voteParseGrabber;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,29 +46,11 @@ public class RankingActivity extends Activity {
         TextView testTextView2 = (TextView) findViewById(R.id.title_text_view);
         testTextView1.setText(lunchEventID);
 
-        ParseObject submitTestVote = new ParseObject("Vote");
-        submitTestVote.put("userID", "FakeUser");
-        submitTestVote.put("vote1", ParseObject.createWithoutData("Restaurant", ORCHID_THAI_OBJECT_ID));
-        submitTestVote.put("vote2", ParseObject.createWithoutData("Restaurant", TAQO_OBJECT_ID));
-        submitTestVote.put("vote3", ParseObject.createWithoutData("Restaurant", SLICE_OBJECT_ID));
-        submitTestVote.put("voteForLunch", ParseObject.createWithoutData("LunchEvent", lunchEventID));
+        voteParseGrabber = new VoteParseGrabber(this);
 
-        submitTestVote.saveInBackground();
+        voteParseGrabber.testPostToParse(lunchEventID);
 
-        ParseQuery<ParseObject> voteQuery = ParseQuery.getQuery("Vote");
-        voteQuery.whereEqualTo("voteForLunch", ParseObject.createWithoutData("LunchEvent", lunchEventID));
-
-        voteQuery.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> results, ParseException e) {
-                if (e != null) {
-                    Log.d("findVotes", "The request failed.");
-                } else {
-                    Log.d("findVotes", "Found the votes.");
-                    Log.d("results", results.toString());
-                }
-            }
-        });
+        pOL = voteParseGrabber.getVotesByLunchID(lunchEventID);
 
         DynamicListView topRestaurantsListView = (DynamicListView) findViewById(R.id.ranked_restaurants_listview);
 

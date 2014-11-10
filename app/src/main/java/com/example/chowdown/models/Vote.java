@@ -12,6 +12,10 @@ public class Vote {
     private String thirdChoice;
 
     Vote(String lunchId, String userId, String firstChoice, String secondChoice, String thirdChoice) {
-
+        this.lunchId = lunchId;
+        this.userId = userId;
+        this.firstChoice = firstChoice;
+        this.secondChoice = secondChoice;
+        this.thirdChoice = thirdChoice;
     }
 }

@@ -47,7 +47,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Adap
 
         int i = 0;
         for (ParseObject pO: pOL) {
-            arrayOfLunches.add(i, mParseConverterObject.parseToObject(pO));
+            arrayOfLunches.add(i, mParseConverterObject.parseToLunchEvent(pO));
             i++;
         }
 
