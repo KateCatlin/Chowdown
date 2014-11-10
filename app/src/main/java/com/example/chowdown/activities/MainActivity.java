@@ -1,11 +1,9 @@
 package com.example.chowdown.activities;
 
 import android.app.Activity;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,7 +12,6 @@ import android.widget.ListView;
 
 import com.example.chowdown.R;
 import com.example.chowdown.adapters.LunchEventAdapter;
-import com.example.chowdown.fragments.LunchDetailFragment;
 import com.example.chowdown.models.LunchEvent;
 import com.example.chowdown.models.ParseConverterObject;
 import com.example.chowdown.network.LunchEventParseGrabber;
@@ -70,9 +67,9 @@ public class MainActivity extends Activity implements View.OnClickListener, Adap
         Log.d(LOG_TAG, "ITEM CLICKED IN ADAPTER VIEW");
         LunchEvent chosenLunch = mLunchEventAdapter.getItem(position);
 
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        LunchDetailFragment lunchDetailFragment = LunchDetailFragment.newInstance(chosenLunch);
-        ft.add(R.id.detail_container,lunchDetailFragment).addToBackStack(null).commit();
+        Intent detailIntent = new Intent(this, LunchDetailActivity.class);
+        detailIntent.putExtra(CHOSEN_LUNCH_KEY,chosenLunch);
+        startActivity(detailIntent);
 
     }
 
