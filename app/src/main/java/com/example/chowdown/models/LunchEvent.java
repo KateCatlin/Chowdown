@@ -1,21 +1,23 @@
 package com.example.chowdown.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by mattlauer on 2014-11-04.
  */
-public class LunchEvent {
-    String eventID;
-    String description;
-    DateTime startDate;
-    DateTime endDate;
-    DateTime votingDate;
-    ArrayList<String> eventAttendees;
-    String topRestaurant;
+public class LunchEvent implements Parcelable {
+    public String eventID;
+    public String description;
+    public DateTime startDate;
+    public DateTime endDate;
+    public DateTime votingDate;
+    public ArrayList<String> eventAttendees;
+    public String topRestaurant;
 
 
     public LunchEvent(String eventID, String description, DateTime startDate, DateTime endDate, DateTime votingDate,
@@ -82,4 +84,40 @@ public class LunchEvent {
     public void setTopRestaurant(String topRestaurant) {
         this.topRestaurant = topRestaurant;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.eventID);
+        dest.writeString(this.description);
+        dest.writeSerializable(this.startDate);
+        dest.writeSerializable(this.endDate);
+        dest.writeSerializable(this.votingDate);
+        dest.writeSerializable(this.eventAttendees);
+        dest.writeString(this.topRestaurant);
+    }
+
+    private LunchEvent(Parcel in) {
+        this.eventID = in.readString();
+        this.description = in.readString();
+        this.startDate = (DateTime) in.readSerializable();
+        this.endDate = (DateTime) in.readSerializable();
+        this.votingDate = (DateTime) in.readSerializable();
+        this.eventAttendees = (ArrayList<String>) in.readSerializable();
+        this.topRestaurant = in.readString();
+    }
+
+    public static final Parcelable.Creator<LunchEvent> CREATOR = new Parcelable.Creator<LunchEvent>() {
+        public LunchEvent createFromParcel(Parcel source) {
+            return new LunchEvent(source);
+        }
+
+        public LunchEvent[] newArray(int size) {
+            return new LunchEvent[size];
+        }
+    };
 }
