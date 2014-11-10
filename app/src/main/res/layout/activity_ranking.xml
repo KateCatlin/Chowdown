@@ -18,6 +18,14 @@
         android:id="@+id/test_text_view2"
         android:text="@string/hello_world"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@id/test_text_view1"/>
+
+    <com.example.chowdown.views.DynamicListView
+        android:id="@+id/ranked_restaurants_listview"
+        android:background="#0000"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/test_text_view2" />
 
 </RelativeLayout>

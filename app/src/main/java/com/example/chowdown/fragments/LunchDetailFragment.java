@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.chowdown.R;
+import com.example.chowdown.activities.MainActivity;
 import com.example.chowdown.activities.RankingActivity;
 import com.example.chowdown.models.LunchEvent;
 
@@ -52,6 +53,7 @@ public class LunchDetailFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_lunch_detail, container, false);
 
         Bundle data = getArguments();
+
         final LunchEvent chosenLunchEvent = (LunchEvent) data.getParcelable(CHOSEN_LUNCH_KEY);
 
         titleText = (TextView)root.findViewById(R.id.lunch_detail_title);
@@ -86,7 +88,8 @@ public class LunchDetailFragment extends Fragment {
         noButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().getFragmentManager().popBackStack();
+                Intent mainIntent = new Intent(getActivity(), MainActivity.class);
+                startActivity(mainIntent);
             }
         });
 

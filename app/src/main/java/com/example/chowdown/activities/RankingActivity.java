@@ -6,15 +6,19 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.chowdown.R;
+import com.example.chowdown.adapters.StableArrayAdapter;
+import com.example.chowdown.views.DynamicListView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RankingActivity extends Activity {
@@ -71,6 +75,18 @@ public class RankingActivity extends Activity {
 
         //String topRestaurant = pOL.get(0).getString("vote1");
         //testTextView2.setText(topRestaurant);
+
+        DynamicListView topRestaurantsListView = (DynamicListView) findViewById(R.id.ranked_restaurants_listview);
+
+        ArrayList<String> restaurants = new ArrayList<String>();
+        restaurants.add("Restaurant 1");
+        restaurants.add("Restaurant 2");
+        restaurants.add("Restaurant 3");
+        StableArrayAdapter adapter = new StableArrayAdapter(this, R.layout.list_item_restaurant, restaurants);
+
+        topRestaurantsListView.setCheeseList(restaurants);
+        topRestaurantsListView.setAdapter(adapter);
+        topRestaurantsListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     }
 
 
