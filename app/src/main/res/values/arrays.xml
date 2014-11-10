@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="restaurants">
+        <item>"Slice"</item>
+        <item>"McDonald\'s"</item>
+        <item>"CK"</item>
+    </array>
+</resources>

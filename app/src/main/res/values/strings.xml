@@ -26,5 +26,6 @@
     <string name="hello_world">Hello world!</string>
 
     <string name="organizer_label">Organizer</string>
+    <string name="label_restaurant_first_choice">1st restaurant choice</string>
 
 </resources>
