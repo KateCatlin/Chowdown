@@ -24,11 +24,13 @@
         android:background="#0000"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/rank_restaurants_prompt" />
+        android:layout_centerVertical="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""/>
+        android:text="@string/submit_vote_button_text"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>
