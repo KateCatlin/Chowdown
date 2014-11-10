@@ -17,7 +17,8 @@ import com.example.chowdown.models.LunchEvent;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.Period;
-import org.joda.time.format.PeriodFormat;
+import org.joda.time.format.PeriodFormatter;
+import org.joda.time.format.PeriodFormatterBuilder;
 
 /**
  * Created by Borham on 11/6/14.
@@ -113,8 +114,26 @@ public class LunchDetailFragment extends Fragment {
         DateTime currentDateTime = DateTime.now();
         Interval votingInterval = new Interval(currentDateTime, chosenLunchEvent.getVotingDate());
         Period timeLeftUntilVotingEnds = votingInterval.toPeriod();
+        PeriodFormatter timeLeftFormatter = new PeriodFormatterBuilder()
+                .appendYears()
+                .appendSuffix(" year", " years")
+                .appendSeparator(", ")
+                .appendMonths()
+                .appendSuffix(" month", " months")
+                .appendSeparator(", ")
+                .appendDays()
+                .printZeroAlways()
+                .appendSuffix(" day", " days")
+                .appendSeparator(", ")
+                .appendHours()
+                .appendSuffix(" hour", " hours")
+                .appendSeparator(", and ")
+                .appendMinutes()
+                .appendSuffix(" minute", " minutes")
+                .toFormatter();
 
-        String stringThatShowsWhenVotingEnds = "Time until voting ends:\n" + PeriodFormat.getDefault().print(timeLeftUntilVotingEnds);
+
+        String stringThatShowsWhenVotingEnds = "Time until voting ends:\n" + timeLeftFormatter.print(timeLeftUntilVotingEnds);
 
         return stringThatShowsWhenVotingEnds;
     }
