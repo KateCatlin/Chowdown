@@ -3,7 +3,6 @@ package com.example.chowdown.network;
 import android.app.Activity;
 import android.util.Log;
 
-import com.example.chowdown.models.LunchEvent;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -47,68 +46,17 @@ public class LunchEventParseGrabber {
         testObject.saveInBackground();
     }
 
-//    public String testLunchQuery() {
-//
-//    }
-
-    public List<ParseObject> getLunchEvents(){
+    public List<ParseObject> getLunchEvents() {
         List<ParseObject> parseObjectList = null;
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("LunchEvent");
 
         try {
-         parseObjectList = query.find();
+            parseObjectList = query.find();
         } catch (ParseException e) {
             Log.e("Error", e.getMessage());
             e.printStackTrace();
         }
 
         return parseObjectList;
-//        try {
-//            Thread.sleep(10000);
-//            System.out.println("I'm sleeping");
-//            Log.v("I am ", "sleeping");
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-
-//        for(ParseObject po: parseObjectList) {
-//            System.out.println(po.getString("topRestaurant"));
-//            Log.v("Returned topRestaurant", po.getString("topRestaurant"));
-//        }
-//
-//        ArrayList<String> testList = new ArrayList<String>();
-//        testList.add("string 1");
-//
-//        for(String po: testList) {
-////            System.out.println(po.getString("topRestaurant"));
-//            Log.v("Returned topRestaurant", po);
-//        }
-//
-//        ArrayList<LunchEvent> lunchEvents = new ArrayList<LunchEvent>();
-//
-//        return lunchEvents;
-    }
-
-    private void grabEventIDFromParse(LunchEvent lunchEvent) {
-        // Use Parse to grab the objectID for the Parse record associated with this LunchEvent.
-        // Assumes the LunchEvent is already saved to Parse.
-        // Then set eventID using setter method.
-    }
-
-    private void grabDatesFromParse(LunchEvent lunchEvent) {
-        // Use Parse to grab all dates for a particular LunchEvent, and set them using the setter methods.
-        // Assumes the LunchEvent is already saved to Parse.
-    }
-
-    private void grabEventAttendeesFromParse(LunchEvent lunchEvent) {
-        // Use Parse to grab all user names associated with all votes that are tied to this LunchEvent ID.
-        // Store those name Strings into the eventAttendees ArrayList.
-        // Again assumes the entries have already been added to Parse.
-        // Then set eventAttendees using setter method.
-    }
-
-    public void setUpLunchEvent(LunchEvent lunchEvent) {
-        // Call the grab methods above to fill this LunchEvent in Java. These methods are private.
-        // User should just call setUpLunchEvent() when she needs a new LunchEvent.
     }
 }
