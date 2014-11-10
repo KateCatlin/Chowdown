@@ -3,15 +3,24 @@ package com.example.chowdown.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.chowdown.R;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseRelation;
+
+import java.util.List;
 
 public class RankingActivity extends Activity {
 
     public static final String CHOSEN_LUNCH_EVENT_ID = "CHOSEN_LUNCH_EVENT_ID";
+    List<ParseObject> pOL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,8 +29,48 @@ public class RankingActivity extends Activity {
 
         Intent intent = getIntent();
         String lunchEventID = intent.getStringExtra(CHOSEN_LUNCH_EVENT_ID);
-        TextView testTextView = (TextView) findViewById(R.id.test_text_view);
-        testTextView.setText(lunchEventID);
+        TextView testTextView1 = (TextView) findViewById(R.id.test_text_view1);
+        TextView testTextView2 = (TextView) findViewById(R.id.test_text_view2);
+        testTextView1.setText(lunchEventID);
+
+        ParseObject submitTestVote = new ParseObject("Vote");
+        submitTestVote.put("userID", "FakeUser");
+        submitTestVote.put("vote1", "Restaurant1");
+        submitTestVote.put("vote2", "Restaurant2");
+        submitTestVote.put("vote3", "Restaurant3");
+        submitTestVote.put("voteForLunch", ParseObject.createWithoutData("LunchEvent", lunchEventID));
+
+        submitTestVote.saveInBackground();
+
+        ParseQuery<ParseObject> lunchQuery = new ParseQuery<ParseObject>("LunchEvent");
+        lunchQuery.whereEqualTo("objectId", lunchEventID);
+        ParseObject testLunchEvent = new ParseObject("lunchEvent");
+
+        try {
+             testLunchEvent = lunchQuery.find().get(0);
+        } catch (ParseException e) {
+            Log.e("Error", e.getMessage());
+            e.printStackTrace();
+        }
+
+        // ParseQuery<ParseObject> voteQuery = new ParseQuery<ParseObject>("Vote");
+        ParseRelation<ParseObject> relation = testLunchEvent.getRelation("voteForLunch");
+
+        relation.getQuery().findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> results, ParseException e) {
+                if (e != null) {
+                    Log.d("findVotes", "The request failed.");
+                } else {
+                    Log.d("findVotes", "Found the votes.");
+                    setQueryResults(results);
+                    Log.d("results", pOL.toString());
+                }
+            }
+        });
+
+        //String topRestaurant = pOL.get(0).getString("vote1");
+        //testTextView2.setText(topRestaurant);
     }
 
 
@@ -42,5 +91,9 @@ public class RankingActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setQueryResults(List<ParseObject> results) {
+        pOL = results;
     }
 }
