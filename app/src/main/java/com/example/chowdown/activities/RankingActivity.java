@@ -4,7 +4,13 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
+
 import com.example.chowdown.R;
+import com.example.chowdown.adapters.StableArrayAdapter;
+import com.example.chowdown.views.DynamicListView;
+
+import java.util.ArrayList;
 
 public class RankingActivity extends Activity {
 
@@ -12,6 +18,18 @@ public class RankingActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ranking);
+
+        DynamicListView topRestaurantsListView = (DynamicListView) findViewById(R.id.ranked_restaurants_listview);
+
+        ArrayList<String> restaurants = new ArrayList<String>();
+        restaurants.add("Restaurant 1");
+        restaurants.add("Restaurant 2");
+        restaurants.add("Restaurant 3");
+        StableArrayAdapter adapter = new StableArrayAdapter(this, R.layout.list_item_restaurant, restaurants);
+
+        topRestaurantsListView.setCheeseList(restaurants);
+        topRestaurantsListView.setAdapter(adapter);
+        topRestaurantsListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     }
 
 
