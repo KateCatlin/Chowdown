@@ -1,6 +1,7 @@
 package com.example.chowdown.fragments;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.chowdown.R;
+import com.example.chowdown.activities.RankingActivity;
 import com.example.chowdown.models.LunchEvent;
 
 import org.joda.time.DateTime;
@@ -93,7 +95,9 @@ public class LunchDetailFragment extends Fragment {
             public void onClick(View view) {
 
                 //sends user to voting activity
-
+                // For now, just launches the ranking activity with no extras. Add extras later.
+                Intent rankingIntent = new Intent(getActivity(), RankingActivity.class);
+                startActivity(rankingIntent);
             }
         });
 
