@@ -1,6 +1,7 @@
 package com.example.chowdown.activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,10 +14,13 @@ import android.widget.TextView;
 import com.example.chowdown.R;
 import com.example.chowdown.adapters.StableArrayAdapter;
 import com.example.chowdown.network.VoteParseGrabber;
+import com.example.chowdown.models.Vote;
+import com.example.chowdown.network.ParsePutter;
 import com.example.chowdown.views.DynamicListView;
 import com.parse.ParseObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class RankingActivity extends Activity {
@@ -26,6 +30,7 @@ public class RankingActivity extends Activity {
     public static final String ORCHID_THAI_OBJECT_ID = "doLgBRhEzo";
     public static final String TAQO_OBJECT_ID = "YqLy4jHA2T";
     public static final String SLICE_OBJECT_ID = "A1ItP7AEuy";
+    String lunchEventID;
 
     List<ParseObject> pOL;
     ParseObject testLunchEvent;
@@ -41,7 +46,7 @@ public class RankingActivity extends Activity {
         setContentView(R.layout.activity_ranking);
 
         Intent intent = getIntent();
-        String lunchEventID = intent.getStringExtra(CHOSEN_LUNCH_EVENT_ID);
+        lunchEventID = intent.getStringExtra(CHOSEN_LUNCH_EVENT_ID);
         TextView testTextView1 = (TextView) findViewById(R.id.title_text_view);
         TextView testTextView2 = (TextView) findViewById(R.id.title_text_view);
         testTextView1.setText(lunchEventID);
@@ -55,7 +60,7 @@ public class RankingActivity extends Activity {
         DynamicListView topRestaurantsListView = (DynamicListView) findViewById(R.id.ranked_restaurants_listview);
 
         ArrayList<String> restaurants = new ArrayList<String>();
-        restaurants.add("Slices");
+        restaurants.add("Slice");
         restaurants.add("Orchid Thai");
         restaurants.add("TAQO");
         restaurantAdaptor = new StableArrayAdapter(this, R.layout.list_item_restaurant, restaurants);
@@ -65,10 +70,15 @@ public class RankingActivity extends Activity {
         topRestaurantsListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
         Button submitButton = (Button) findViewById(R.id.submit_vote_button);
+        final Activity thisActivity = this;
+
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("item 1 is" + restaurantAdaptor.getItem(0));
+                Vote newVote = new Vote(lunchEventID, restaurantAdaptor.getItem(0), restaurantAdaptor.getItem(1), restaurantAdaptor.getItem(2));
+//                System.out.println(newVote);
+                ParsePutter parsePutter = new ParsePutter(thisActivity);
+                parsePutter.saveVote(newVote);
             }
         });
     }
