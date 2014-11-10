@@ -22,11 +22,15 @@
         </activity>
         <activity
             android:name=".activities.SettingsActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
-            </activity>
+        </activity>
+        <activity
+            android:name=".activities.RankingActivity"
+            android:label="@string/title_activity_ranking" >
+        </activity>
     </application>
 
 </manifest>
