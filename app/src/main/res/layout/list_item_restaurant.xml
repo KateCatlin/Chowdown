@@ -2,7 +2,7 @@
 
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="I'm a restaurant!"
         android:background="#FFF"
@@ -11,4 +11,6 @@
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:minHeight="@dimen/list_item_height"
-        android:textColor="#000000"/>
+        android:textColor="#000000"
+        android:textAlignment="center"
+        />
