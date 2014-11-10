@@ -2,7 +2,6 @@ package com.example.chowdown.adapters;
 
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +43,7 @@ public class LunchEventAdapter extends ArrayAdapter<LunchEvent> {
         date.setText(lunchObject.getStartDate().getMonthOfYear() + "/" + lunchObject.getStartDate().getDayOfMonth());
 
         TextView time = (TextView) thisRow.findViewById(R.id.text_time_frame);
-        time.setText(lunchObject.getStartDate().getHourOfDay() + ":" + lunchObject.getStartDate().getMinuteOfHour() + " - " + lunchObject.getEndDate().getHourOfDay() + ":" + lunchObject.getEndDate().getMinuteOfHour());
+        time.setText(lunchObject.getStartDate().toString("H:mm") + " - " + lunchObject.getEndDate().toString("H:mm"));
 
 
         TextView lunchDescription = (TextView) thisRow.findViewById(R.id.text_lunch_description);

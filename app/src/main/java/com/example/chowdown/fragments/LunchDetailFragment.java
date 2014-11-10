@@ -14,6 +14,7 @@ import com.example.chowdown.models.LunchEvent;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.Period;
+import org.joda.time.format.PeriodFormat;
 
 /**
  * Created by Borham on 11/6/14.
@@ -57,7 +58,7 @@ public class LunchDetailFragment extends Fragment {
         dateText.setText(chosenLunchEvent.getStartDate().getMonthOfYear() + "/" + chosenLunchEvent.getStartDate().getDayOfMonth());
 
         timeFrameText = (TextView)root.findViewById(R.id.text_detail_time_frame);
-        timeFrameText.setText(chosenLunchEvent.getStartDate().getHourOfDay() + ":" + chosenLunchEvent.getStartDate().getMinuteOfHour() + " - " + chosenLunchEvent.getEndDate().getHourOfDay() + ":" + chosenLunchEvent.getEndDate().getMinuteOfHour());
+        timeFrameText.setText(chosenLunchEvent.getStartDate().toString("H:mm") + " - " + chosenLunchEvent.getEndDate().toString("H:mm"));
 
         lunchDescriptionText = (TextView)root.findViewById(R.id.text_detail_lunch_description);
         String description = chosenLunchEvent.description;
@@ -104,28 +105,7 @@ public class LunchDetailFragment extends Fragment {
         Interval votingInterval = new Interval(currentDateTime, chosenLunchEvent.getVotingDate());
         Period timeLeftUntilVotingEnds = votingInterval.toPeriod();
 
-        String stringThatShowsWhenVotingEnds = "Time until voting ends:\n";
-        int yearsUntilVotingEnds = timeLeftUntilVotingEnds.getYears();
-        int monthsUntilVotingEnds = timeLeftUntilVotingEnds.getMonths();
-        int daysUntilVotingEnds = timeLeftUntilVotingEnds.getDays();
-        int hoursUntilVotingEnds = timeLeftUntilVotingEnds.getHours();
-        int minutesLeftUntilVotingEnds = timeLeftUntilVotingEnds.getMinutes();
-
-        if (yearsUntilVotingEnds > 0) {
-            stringThatShowsWhenVotingEnds = stringThatShowsWhenVotingEnds + yearsUntilVotingEnds + " Years ";
-        }
-
-        if (monthsUntilVotingEnds > 0) {
-            stringThatShowsWhenVotingEnds = stringThatShowsWhenVotingEnds + monthsUntilVotingEnds + " Months ";
-        }
-
-        if (daysUntilVotingEnds > 0) {
-            stringThatShowsWhenVotingEnds = stringThatShowsWhenVotingEnds + daysUntilVotingEnds + " Days ";
-        }
-
-        if (hoursUntilVotingEnds > 0) {
-            stringThatShowsWhenVotingEnds = stringThatShowsWhenVotingEnds + minutesLeftUntilVotingEnds + " Minutes";
-        }
+        String stringThatShowsWhenVotingEnds = "Time until voting ends:\n" + PeriodFormat.getDefault().print(timeLeftUntilVotingEnds);
 
         return stringThatShowsWhenVotingEnds;
     }
