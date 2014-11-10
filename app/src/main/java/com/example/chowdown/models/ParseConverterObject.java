@@ -1,11 +1,5 @@
 package com.example.chowdown.models;
 
-import android.app.Activity;
-import android.util.Log;
-import com.parse.ParseObject;
-
-import com.example.chowdown.activities.MainActivity;
-import com.example.chowdown.network.LunchEventParseGrabber;
 import com.parse.ParseObject;
 
 import org.joda.time.DateTime;
@@ -14,7 +8,6 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.jar.JarException;
 
 /**
  * Created by katecatlin on 11/6/14.
@@ -40,7 +33,9 @@ public class ParseConverterObject {
 
 
 
-        eventID = mParseObject.getString("objectID");
+        //eventID = mParseObject.getString("objectId");
+        eventID = mParseObject.getObjectId();
+        //eventID = "Test String";
 
         description = mParseObject.getString("eventDescription");
 

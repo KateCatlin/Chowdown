@@ -33,6 +33,7 @@ public class LunchDetailFragment extends Fragment {
     public TextView votingStatusText;
     public TextView votingDetailsText;
     public static final String CHOSEN_LUNCH_KEY = "CHOSEN_LUNCH_KEY";
+    public static final String CHOSEN_LUNCH_EVENT_ID = "CHOSEN_LUNCH_EVENT_ID";
 
     public Button noButton;
     public Button yesButton;
@@ -53,7 +54,8 @@ public class LunchDetailFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_lunch_detail, container, false);
 
         Bundle data = getArguments();
-        LunchEvent chosenLunchEvent = data.getParcelable(CHOSEN_LUNCH_KEY);
+
+        final LunchEvent chosenLunchEvent = (LunchEvent) data.getParcelable(CHOSEN_LUNCH_KEY);
 
         titleText = (TextView)root.findViewById(R.id.lunch_detail_title);
         titleText.setText(R.string.lunch_detail_title_text);
@@ -100,6 +102,7 @@ public class LunchDetailFragment extends Fragment {
                 //sends user to voting activity
                 // For now, just launches the ranking activity with no extras. Add extras later.
                 Intent rankingIntent = new Intent(getActivity(), RankingActivity.class);
+                rankingIntent.putExtra(CHOSEN_LUNCH_EVENT_ID, chosenLunchEvent.getEventID());
                 startActivity(rankingIntent);
             }
         });
