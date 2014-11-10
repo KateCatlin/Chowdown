@@ -11,7 +11,34 @@ public class Vote {
     private String secondChoice;
     private String thirdChoice;
 
-    Vote(String lunchId, String userId, String firstChoice, String secondChoice, String thirdChoice) {
+    public Vote(String lunchId, String firstChoice, String secondChoice, String thirdChoice) {
+        this.lunchId = lunchId;
+        this.firstChoice = firstChoice;
+        this.secondChoice = secondChoice;
+        this.thirdChoice = thirdChoice;
+    }
 
+    public String getLunchId() {
+        return lunchId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getFirstChoice() {
+        return firstChoice;
+    }
+
+    public String getSecondChoice() {
+        return secondChoice;
+    }
+
+    public String getThirdChoice() {
+        return thirdChoice;
+    }
+
+    public String toString() {
+        return lunchId + firstChoice + secondChoice + thirdChoice;
     }
 }
