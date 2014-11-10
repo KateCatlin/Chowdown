@@ -24,6 +24,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class RankingActivity extends Activity {
@@ -34,6 +35,7 @@ public class RankingActivity extends Activity {
     public static final String TAQO_OBJECT_ID = "YqLy4jHA2T";
     public static final String SLICE_OBJECT_ID = "A1ItP7AEuy";
     String lunchEventID;
+    public HashMap<String, String> restaurantIds;
 
 
     List<ParseObject> pOL;
@@ -80,9 +82,13 @@ public class RankingActivity extends Activity {
         DynamicListView topRestaurantsListView = (DynamicListView) findViewById(R.id.ranked_restaurants_listview);
 
         ArrayList<String> restaurants = new ArrayList<String>();
-        restaurants.add("Slices");
+        restaurants.add("Slice");
         restaurants.add("Orchid Thai");
         restaurants.add("TAQO");
+        restaurantIds = new HashMap<String, String>();
+        restaurantIds.put("Slice", "A1ItP7AEuy");
+        restaurantIds.put("Orchid Thai", "doLgBRhEzo");
+        restaurantIds.put("TAQO", "YqLy4jHA2T");
         restaurantAdaptor = new StableArrayAdapter(this, R.layout.list_item_restaurant, restaurants);
 
         topRestaurantsListView.setCheeseList(restaurants);
