@@ -18,6 +18,26 @@ public class Vote {
         this.thirdChoice = thirdChoice;
     }
 
+    public String getLunchId() {
+        return lunchId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getFirstChoice() {
+        return firstChoice;
+    }
+
+    public String getSecondChoice() {
+        return secondChoice;
+    }
+
+    public String getThirdChoice() {
+        return thirdChoice;
+    }
+
     public String toString() {
         return lunchId + firstChoice + secondChoice + thirdChoice;
     }

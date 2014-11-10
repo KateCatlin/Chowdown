@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.example.chowdown.R;
 import com.example.chowdown.adapters.StableArrayAdapter;
 import com.example.chowdown.models.Vote;
+import com.example.chowdown.network.ParsePutter;
 import com.example.chowdown.views.DynamicListView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -52,14 +53,14 @@ public class RankingActivity extends Activity {
         TextView testTextView2 = (TextView) findViewById(R.id.title_text_view);
         testTextView1.setText(lunchEventID);
 
-        ParseObject submitTestVote = new ParseObject("Vote");
-        submitTestVote.put("userID", "FakeUser");
-        submitTestVote.put("vote1", ParseObject.createWithoutData("Restaurant", ORCHID_THAI_OBJECT_ID));
-        submitTestVote.put("vote2", ParseObject.createWithoutData("Restaurant", TAQO_OBJECT_ID));
-        submitTestVote.put("vote3", ParseObject.createWithoutData("Restaurant", SLICE_OBJECT_ID));
-        submitTestVote.put("voteForLunch", ParseObject.createWithoutData("LunchEvent", lunchEventID));
-
-        submitTestVote.saveInBackground();
+//        ParseObject submitTestVote = new ParseObject("Vote");
+//        submitTestVote.put("userID", "FakeUser");
+//        submitTestVote.put("vote1", ParseObject.createWithoutData("Restaurant", ORCHID_THAI_OBJECT_ID));
+//        submitTestVote.put("vote2", ParseObject.createWithoutData("Restaurant", TAQO_OBJECT_ID));
+//        submitTestVote.put("vote3", ParseObject.createWithoutData("Restaurant", SLICE_OBJECT_ID));
+//        submitTestVote.put("voteForLunch", ParseObject.createWithoutData("LunchEvent", lunchEventID));
+//
+//        submitTestVote.saveInBackground();
 
         ParseQuery<ParseObject> voteQuery = ParseQuery.getQuery("Vote");
         voteQuery.whereEqualTo("voteForLunch", ParseObject.createWithoutData("LunchEvent", lunchEventID));
@@ -89,12 +90,15 @@ public class RankingActivity extends Activity {
         topRestaurantsListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
         Button submitButton = (Button) findViewById(R.id.submit_vote_button);
+        final Activity thisActivity = this;
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Vote newVote = new Vote(lunchEventID, restaurantAdaptor.getItem(0), restaurantAdaptor.getItem(1), restaurantAdaptor.getItem(2));
-                System.out.println(newVote);
+//                System.out.println(newVote);
+                ParsePutter parsePutter = new ParsePutter(thisActivity);
+                parsePutter.saveVote(newVote);
             }
         });
     }
