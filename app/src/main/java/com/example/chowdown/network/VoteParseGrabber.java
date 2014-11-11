@@ -42,6 +42,9 @@ public class VoteParseGrabber {
         List<ParseObject> parseObjectList = null;
         ParseQuery<ParseObject> voteQuery = ParseQuery.getQuery("Vote");
         voteQuery.whereEqualTo("voteForLunch", ParseObject.createWithoutData("LunchEvent", lunchEventID));
+        voteQuery.include("vote1");
+        voteQuery.include("vote2");
+        voteQuery.include("vote3");
 
         voteQuery.findInBackground(new FindCallback<ParseObject>() {
             @Override

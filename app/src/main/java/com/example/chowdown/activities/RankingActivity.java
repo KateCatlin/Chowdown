@@ -1,7 +1,6 @@
 package com.example.chowdown.activities;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,14 +12,13 @@ import android.widget.TextView;
 
 import com.example.chowdown.R;
 import com.example.chowdown.adapters.StableArrayAdapter;
-import com.example.chowdown.network.VoteParseGrabber;
 import com.example.chowdown.models.Vote;
 import com.example.chowdown.network.ParsePutter;
+import com.example.chowdown.network.VoteParseGrabber;
 import com.example.chowdown.views.DynamicListView;
 import com.parse.ParseObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class RankingActivity extends Activity {
