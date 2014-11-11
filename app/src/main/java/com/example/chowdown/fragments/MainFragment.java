@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class MainFragment extends Fragment implements AdapterView.OnItemClickListener {
 
 
     public static final String USERNAME_KEY = "USERNAME_KEY";
@@ -57,11 +57,6 @@ public class MainFragment extends Fragment implements View.OnClickListener, Adap
 
     }
 
-    @Override
-    public void onClick(View view) {
-
-    }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,28 +64,7 @@ public class MainFragment extends Fragment implements View.OnClickListener, Adap
         setHasOptionsMenu(true);
         }
 
-    @Override
-    public void onStart () {
-        super.onStart();
-//        refreshLunches();
-    }
 
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.main, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            startActivity(new Intent(getActivity(), SettingsActivity.class));
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -110,6 +84,7 @@ public class MainFragment extends Fragment implements View.OnClickListener, Adap
         for (ParseObject pO: pOL) {
             arrayOfLunches.add(i, mParseConverterObject.parseToObject(pO));
             i++;
+
         }
 
         mLunchEventAdapter = new LunchEventAdapter(getActivity(), arrayOfLunches);
@@ -120,7 +95,7 @@ public class MainFragment extends Fragment implements View.OnClickListener, Adap
 
         listView.setOnItemClickListener(this);
 
-        return null;
+        return rootView;
     }
 
 }
