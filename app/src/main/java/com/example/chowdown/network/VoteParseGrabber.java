@@ -3,6 +3,8 @@ package com.example.chowdown.network;
 import android.app.Activity;
 import android.util.Log;
 
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
@@ -15,6 +17,10 @@ import java.util.List;
  * Created by mattlauer on 2014-11-10.
  */
 public class VoteParseGrabber {
+
+    //List<ParseObject> parseObjectList = null;
+    //HashMap<String, ArrayList<String>> voteResultHashMap = null;
+    Multimap<String, String> voteResultsMultimap = HashMultimap.create();
 
     private static String APPLICATION_ID = "hQ5iOAVCIZ4BCepP1zco5r1HcoTp0uuvQUhLgUyX";
     private static String CLIENT_KEY = "Hi4IYWhFI3L7EJLaX5KIRTTJvlt6DvBQHSDSTKgS";
@@ -38,8 +44,8 @@ public class VoteParseGrabber {
         submitTestVote.saveInBackground();
     }
 
-    public List<ParseObject> getVotesByLunchID(String lunchEventID) {
-        List<ParseObject> parseObjectList = null;
+//    public List<ParseObject> getVotesByLunchID(String lunchEventID) {
+    public Multimap<String, String> getVotesByLunchID(String lunchEventID) {
         ParseQuery<ParseObject> voteQuery = ParseQuery.getQuery("Vote");
         voteQuery.whereEqualTo("voteForLunch", ParseObject.createWithoutData("LunchEvent", lunchEventID));
         voteQuery.include("vote1");
@@ -57,16 +63,21 @@ public class VoteParseGrabber {
                 }
                 for (ParseObject vote : voteResults) {
                     ParseObject vote1 = vote.getParseObject("vote1");
-                    Log.d("vote1", vote1.getString("name"));
+                    //Log.d("vote1", vote1.getString("name"));
+                    //parseObjectList.add(vote1);
+                    voteResultsMultimap.put("firstChoice", vote1.getString("vote1"));
                     ParseObject vote2 = vote.getParseObject("vote2");
-                    Log.d("vote2", vote2.getString("name"));
+                    //Log.d("vote2", vote2.getString("name"));
+                    //parseObjectList.add(vote1);
+                    voteResultsMultimap.put("secondChoice", vote1.getString("vote2"));
                     ParseObject vote3 = vote.getParseObject("vote3");
-                    Log.d("vote3", vote3.getString("name"));
+                    //Log.d("vote3", vote3.getString("name"));
+                    //parseObjectList.add(vote1);
+                    voteResultsMultimap.put("thirdChoice", vote1.getString("vote3"));
                 }
             }
         });
-        return parseObjectList;
+        return voteResultsMultimap;
     }
-
 
 }
