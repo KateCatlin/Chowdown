@@ -15,8 +15,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="username">Username</string>
     <string name="welcome_to_chowdown">Welcome to ChowDown!</string>
-    <string name="username_prompt">Please enter a username to begin:</string>
-    <string name="username_can_be_changed">(Change at any time, in the ChowDown Settings)</string>
+    <string name="username_prompt">Please enter a username:</string>
+    <string name="username_can_be_changed">(Change any time, in the ChowDown Settings)</string>
     <string name="dummy_attendees">Attendees\n-Cory\n-Kate\n-Ken\n-Matt</string>
     <string name="voting_details_text">Clicking YES will allow you to vote on the restaurant for this lunch</string>
     <string name="yes_button_text">YES</string>

@@ -1,31 +1,23 @@
 package com.example.chowdown.activities;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.example.chowdown.R;
-import com.example.chowdown.adapters.LunchEventAdapter;
+import com.example.chowdown.fragments.LoginDialogFragment;
 import com.example.chowdown.fragments.MainFragment;
-import com.example.chowdown.models.LunchEvent;
-import com.example.chowdown.models.ParseConverterObject;
-import com.example.chowdown.network.LunchEventParseGrabber;
-import com.parse.ParseObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class MainActivity extends Activity  {
 
+    public static final String USERNAME_KEY = "USERNAME_KEY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +34,16 @@ public class MainActivity extends Activity  {
                     .add(R.id.container, mainFrag)
                     .commit();
         }
+
+        String username = PreferenceManager.getDefaultSharedPreferences(this).getString(USERNAME_KEY, null);
+        if (username == null){
+            DialogFragment loginDialog = new LoginDialogFragment();
+            loginDialog.setCancelable(false);
+            loginDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+            loginDialog.show(getFragmentManager(), "LoginDialogFragment");
+        }
+
+
     }
 
 
