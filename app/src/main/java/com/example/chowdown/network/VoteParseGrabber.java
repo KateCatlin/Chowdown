@@ -48,12 +48,20 @@ public class VoteParseGrabber {
 
         voteQuery.findInBackground(new FindCallback<ParseObject>() {
             @Override
-            public void done(List<ParseObject> results, ParseException e) {
+            public void done(List<ParseObject> voteResults, ParseException e) {
                 if (e != null) {
                     Log.d("findVotes", "The request failed.");
                 } else {
                     Log.d("findVotes", "Found the votes.");
-                    Log.d("results", results.toString());
+                    Log.d("results", voteResults.toString());
+                }
+                for (ParseObject vote : voteResults) {
+                    ParseObject vote1 = vote.getParseObject("vote1");
+                    Log.d("vote1", vote1.getString("name"));
+                    ParseObject vote2 = vote.getParseObject("vote2");
+                    Log.d("vote2", vote2.getString("name"));
+                    ParseObject vote3 = vote.getParseObject("vote3");
+                    Log.d("vote3", vote3.getString("name"));
                 }
             }
         });

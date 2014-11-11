@@ -23,7 +23,7 @@ public class MainActivity extends Activity  {
 
         FragmentManager fm = getFragmentManager();
         Fragment mainFrag = fm.findFragmentById(R.id.container);
-        
+
         if (mainFrag ==null) {
             mainFrag = new MainFragment();
             fm.beginTransaction()
