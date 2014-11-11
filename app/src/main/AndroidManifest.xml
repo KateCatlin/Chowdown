@@ -39,6 +39,10 @@
             android:name=".activities.RankingActivity"
             android:label="@string/title_activity_ranking">
         </activity>
+        <activity
+            android:name=".activities.PostVoteActivity"
+            android:label="@string/title_activity_post_vote">
+        </activity>
     </application>
 
 </manifest>

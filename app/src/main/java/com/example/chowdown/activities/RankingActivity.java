@@ -8,13 +8,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.chowdown.R;
 import com.example.chowdown.adapters.StableArrayAdapter;
+import com.example.chowdown.models.LunchEvent;
 import com.example.chowdown.models.Vote;
 import com.example.chowdown.network.ParsePutter;
 import com.example.chowdown.views.DynamicListView;
@@ -24,17 +24,19 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class RankingActivity extends Activity {
 
 
-    public static final String CHOSEN_LUNCH_EVENT_ID = "CHOSEN_LUNCH_EVENT_ID";
+    public static final String CHOSEN_LUNCH_EVENT_2 = "CHOSEN_LUNCH_EVENT_ID";
     public static final String ORCHID_THAI_OBJECT_ID = "doLgBRhEzo";
     public static final String TAQO_OBJECT_ID = "YqLy4jHA2T";
     public static final String SLICE_OBJECT_ID = "A1ItP7AEuy";
+    public static final String POST_VOTE_ACTIVITY_KEY = "POST_VOTE_ACTIVITY_KEY";
     String lunchEventID;
+    public static final String PASS_TO_RANKING_KEY = "PASS_TO_RANKING_KEY";
+    public static final String PASS_TO_POST_VOTE_ACTIVITY_KEY = "PASS_TO_POST_VOTE_ACTIVITY_KEY";
 
     List<ParseObject> pOL;
     ParseObject testLunchEvent;
@@ -47,10 +49,12 @@ public class RankingActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ranking);
 
+        final LunchEvent chosenLunchEvent = (LunchEvent) getIntent().getParcelableExtra(PASS_TO_RANKING_KEY);
+
         Intent intent = getIntent();
-        lunchEventID = intent.getStringExtra(CHOSEN_LUNCH_EVENT_ID);
+        lunchEventID = chosenLunchEvent.getEventID();
+        Log.d("LOG_TAG", "EventID is " + chosenLunchEvent.getEventID());
         TextView testTextView1 = (TextView) findViewById(R.id.title_text_view);
-        TextView testTextView2 = (TextView) findViewById(R.id.title_text_view);
         testTextView1.setText(lunchEventID);
 
 //        ParseObject submitTestVote = new ParseObject("Vote");
@@ -99,6 +103,13 @@ public class RankingActivity extends Activity {
 //                System.out.println(newVote);
                 ParsePutter parsePutter = new ParsePutter(thisActivity);
                 parsePutter.saveVote(newVote);
+
+                Intent postVoteIntent = new Intent(RankingActivity.this, PostVoteActivity.class);
+                Bundle mBundle = new Bundle();
+                mBundle.putParcelable(PASS_TO_POST_VOTE_ACTIVITY_KEY, chosenLunchEvent);
+                postVoteIntent.putExtras(mBundle);
+
+                startActivity(postVoteIntent);
             }
         });
     }
