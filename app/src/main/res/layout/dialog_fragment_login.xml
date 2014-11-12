@@ -41,7 +41,7 @@
             android:text="@string/username_prompt"
             android:textSize="20sp"/>
 
-        <LinearLayout
+        <RelativeLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
@@ -59,9 +59,25 @@
                 android:layout_weight="5"
                 />
 
+            <EditText
+                android:id="@+id/editText_password_entry"
+                android:layout_below="@id/editText_username_entry"
+                android:inputType="text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:layout_marginLeft="17dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="17dp"
+                android:hint="@string/password"
+                android:layout_weight="5"
+                />
+
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/editText_password_entry"
+                android:layout_centerHorizontal="true"
                 android:id="@+id/button_save"
                 android:layout_weight="1"
                 android:layout_marginTop="17dp"
@@ -71,7 +87,7 @@
                 android:singleLine="false"
                 android:background="@color/DarkSlateBlue"
                 android:textColor="@color/AntiqueWhite"/>
-        </LinearLayout>
+        </RelativeLayout>
 
         <TextView
             android:layout_width="wrap_content"
