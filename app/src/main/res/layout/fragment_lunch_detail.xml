@@ -4,8 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/fragment_lunch_detail"
-    tools:context=".DetailFragment"
-    android:background="@color/White">
+    tools:context=".DetailFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"

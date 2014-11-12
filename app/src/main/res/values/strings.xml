@@ -33,4 +33,6 @@
     <string name="fake_time">11:34</string>
     <string name="title_activity_post_vote">PostVoteActivity</string>
     <string name="confirm_button">Confirm</string>
+
+    <string name="add_new_lunch">Create New Lunch</string>
 </resources>
