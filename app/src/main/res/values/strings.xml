@@ -14,9 +14,10 @@
     <string name="action_settings">Settings</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="username">Username</string>
+    <string name="password">Password</string>
     <string name="welcome_to_chowdown">Welcome to ChowDown!</string>
-    <string name="username_prompt">Please enter a username to begin:</string>
-    <string name="username_can_be_changed">(Change at any time, in the ChowDown Settings)</string>
+    <string name="username_prompt">Create your lunch credentials:</string>
+    <string name="username_can_be_changed">(Change any time, in the ChowDown Settings)</string>
     <string name="dummy_attendees">Attendees\n-Cory\n-Kate\n-Ken\n-Matt</string>
     <string name="voting_details_text">Clicking YES will allow you to vote on the restaurant for this lunch</string>
     <string name="yes_button_text">YES</string>
@@ -29,4 +30,8 @@
     <string name="label_restaurant_first_choice">1st restaurant choice</string>
     <string name="rank_restaurants_prompt">Drag and drop the restaurants into your preferred order with the first restaurant being your top choice</string>
     <string name="submit_vote_button_text">Submit vote</string>
+    <string name="post_vote_title">Congrats dude, you\'re going to lunch at:</string>
+    <string name="fake_time">11:34</string>
+    <string name="title_activity_post_vote">PostVoteActivity</string>
+    <string name="confirm_button">Confirm</string>
 </resources>

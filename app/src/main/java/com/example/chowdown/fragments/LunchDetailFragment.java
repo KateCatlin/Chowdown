@@ -3,6 +3,7 @@ package com.example.chowdown.fragments;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +34,7 @@ public class LunchDetailFragment extends Fragment {
     public TextView votingStatusText;
     public TextView votingDetailsText;
     public static final String CHOSEN_LUNCH_KEY = "CHOSEN_LUNCH_KEY";
-    public static final String CHOSEN_LUNCH_EVENT_ID = "CHOSEN_LUNCH_EVENT_ID";
+    public static final String PASS_TO_RANKING_KEY = "PASS_TO_RANKING_KEY";
 
     public Button noButton;
     public Button yesButton;
@@ -56,6 +57,7 @@ public class LunchDetailFragment extends Fragment {
         Bundle data = getArguments();
 
         final LunchEvent chosenLunchEvent = (LunchEvent) data.getParcelable(CHOSEN_LUNCH_KEY);
+        Log.d("LOG_TAG", "EventID is " + chosenLunchEvent.getEventID());
 
         titleText = (TextView)root.findViewById(R.id.lunch_detail_title);
         titleText.setText(R.string.lunch_detail_title_text);
@@ -99,10 +101,11 @@ public class LunchDetailFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                //sends user to voting activity
-                // For now, just launches the ranking activity with no extras. Add extras later.
                 Intent rankingIntent = new Intent(getActivity(), RankingActivity.class);
-                rankingIntent.putExtra(CHOSEN_LUNCH_EVENT_ID, chosenLunchEvent.getEventID());
+                Bundle mBundle = new Bundle();
+                mBundle.putParcelable(PASS_TO_RANKING_KEY, chosenLunchEvent);
+                rankingIntent.putExtras(mBundle);
+
                 startActivity(rankingIntent);
             }
         });

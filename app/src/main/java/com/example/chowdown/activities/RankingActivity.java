@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.example.chowdown.R;
 import com.example.chowdown.adapters.StableArrayAdapter;
 import com.example.chowdown.controllers.VoteResultsReadyListener;
+import com.example.chowdown.models.LunchEvent;
 import com.example.chowdown.models.Vote;
 import com.example.chowdown.network.ParsePutter;
 import com.example.chowdown.network.VoteParseGrabber;
@@ -29,11 +30,14 @@ import java.util.Collection;
 public class RankingActivity extends Activity implements VoteResultsReadyListener {
 
 
-    public static final String CHOSEN_LUNCH_EVENT_ID = "CHOSEN_LUNCH_EVENT_ID";
+    public static final String CHOSEN_LUNCH_EVENT_2 = "CHOSEN_LUNCH_EVENT_ID";
     public static final String ORCHID_THAI_OBJECT_ID = "doLgBRhEzo";
     public static final String TAQO_OBJECT_ID = "YqLy4jHA2T";
     public static final String SLICE_OBJECT_ID = "A1ItP7AEuy";
+    public static final String POST_VOTE_ACTIVITY_KEY = "POST_VOTE_ACTIVITY_KEY";
     String lunchEventID;
+    public static final String PASS_TO_RANKING_KEY = "PASS_TO_RANKING_KEY";
+    public static final String PASS_TO_POST_VOTE_ACTIVITY_KEY = "PASS_TO_POST_VOTE_ACTIVITY_KEY";
 
     //List<ParseObject> pOL;
     Multimap<String, String> voteResultsMultimap = ArrayListMultimap.create();
@@ -50,8 +54,11 @@ public class RankingActivity extends Activity implements VoteResultsReadyListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ranking);
 
+        final LunchEvent chosenLunchEvent = (LunchEvent) getIntent().getParcelableExtra(PASS_TO_RANKING_KEY);
+
         Intent intent = getIntent();
-        lunchEventID = intent.getStringExtra(CHOSEN_LUNCH_EVENT_ID);
+        lunchEventID = chosenLunchEvent.getEventID();
+        Log.d("LOG_TAG", "EventID is " + chosenLunchEvent.getEventID());
         TextView testTextView1 = (TextView) findViewById(R.id.title_text_view);
         testTextView1.setText(lunchEventID);
 
@@ -103,6 +110,13 @@ public class RankingActivity extends Activity implements VoteResultsReadyListene
 //                System.out.println(newVote);
                 ParsePutter parsePutter = new ParsePutter(thisActivity);
                 parsePutter.saveVote(newVote);
+
+                Intent postVoteIntent = new Intent(RankingActivity.this, PostVoteActivity.class);
+                Bundle mBundle = new Bundle();
+                mBundle.putParcelable(PASS_TO_POST_VOTE_ACTIVITY_KEY, chosenLunchEvent);
+                postVoteIntent.putExtras(mBundle);
+
+                startActivity(postVoteIntent);
             }
         });
     }

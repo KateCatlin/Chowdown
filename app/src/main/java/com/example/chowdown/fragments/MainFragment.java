@@ -45,6 +45,7 @@ public class MainFragment extends Fragment implements AdapterView.OnItemClickLis
 
         Intent detailIntent = new Intent(getActivity(), LunchDetailActivity.class);
         detailIntent.putExtra(CHOSEN_LUNCH_KEY,chosenLunch);
+        Log.d(LOG_TAG, "EventID is " + chosenLunch.getEventID());
         startActivity(detailIntent);
 
     }
