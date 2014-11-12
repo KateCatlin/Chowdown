@@ -13,6 +13,10 @@ import android.view.MenuItem;
 import com.example.chowdown.R;
 import com.example.chowdown.fragments.LoginDialogFragment;
 import com.example.chowdown.fragments.MainFragment;
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 
 public class MainActivity extends Activity  {
@@ -41,6 +45,25 @@ public class MainActivity extends Activity  {
             loginDialog.setCancelable(false);
             loginDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
             loginDialog.show(getFragmentManager(), "LoginDialogFragment");
+        }
+
+        Parse.initialize(this, "hQ5iOAVCIZ4BCepP1zco5r1HcoTp0uuvQUhLgUyX", "Hi4IYWhFI3L7EJLaX5KIRTTJvlt6DvBQHSDSTKgS");
+        if (ParseUser.getCurrentUser() == null) {
+            ParseUser user = new ParseUser();
+            user.setUsername("TestyMcTesterson");
+            user.setPassword("password");
+            user.setEmail("T.McTesterson@gmail.com");
+
+            user.signUpInBackground(new SignUpCallback() {
+                public void done(ParseException e) {
+                    if (e == null) {
+                        // Hooray! Let them use the app now.
+                    } else {
+                        // Sign up didn't succeed. Look at the ParseException
+                        // to figure out what went wrong
+                    }
+                }
+            });
         }
 
 
