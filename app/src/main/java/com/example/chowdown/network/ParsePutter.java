@@ -5,6 +5,7 @@ import android.app.Activity;
 import com.example.chowdown.models.Vote;
 import com.parse.Parse;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 import java.util.HashMap;
 
@@ -29,12 +30,13 @@ public class ParsePutter {
         restaurantIds.put("TAQO", "YqLy4jHA2T");;
 
         ParseObject parseVoteObject = new ParseObject("Vote");
-        parseVoteObject.put("userId", "Fakey McFakerson");
+//        parseVoteObject.put("userId", "Fakey McFakerson");
 
         //need a way to get Restaurants' object ids first
         parseVoteObject.put("vote1", ParseObject.createWithoutData("Restaurant", restaurantIds.get(vote.getFirstChoice())));
         parseVoteObject.put("vote2", ParseObject.createWithoutData("Restaurant", restaurantIds.get(vote.getSecondChoice())));
         parseVoteObject.put("vote3", ParseObject.createWithoutData("Restaurant", restaurantIds.get(vote.getThirdChoice())));
+        parseVoteObject.put("user", ParseUser.getCurrentUser());
 
         parseVoteObject.put("voteForLunch", ParseObject.createWithoutData("LunchEvent", vote.getLunchId()));
         parseVoteObject.saveInBackground();
