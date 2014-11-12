@@ -17,15 +17,13 @@ import com.example.chowdown.controllers.VoteResultsReadyListener;
 import com.example.chowdown.models.LunchEvent;
 import com.example.chowdown.models.Vote;
 import com.example.chowdown.network.ParsePutter;
-import com.example.chowdown.network.VoteParseGrabber;
+import com.example.chowdown.network.VoteParseGrabberAndCalculator;
 import com.example.chowdown.views.DynamicListView;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.parse.ParseObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 
 public class RankingActivity extends Activity implements VoteResultsReadyListener {
 
@@ -45,7 +43,7 @@ public class RankingActivity extends Activity implements VoteResultsReadyListene
 
     StableArrayAdapter restaurantAdaptor;
 
-    VoteParseGrabber voteParseGrabber;
+    VoteParseGrabberAndCalculator voteParseGrabberAndCalculator;
 
 
 
@@ -62,7 +60,7 @@ public class RankingActivity extends Activity implements VoteResultsReadyListene
         TextView testTextView1 = (TextView) findViewById(R.id.title_text_view);
         testTextView1.setText(lunchEventID);
 
-        voteParseGrabber = new VoteParseGrabber(this, this);
+        voteParseGrabberAndCalculator = new VoteParseGrabberAndCalculator(this, this);
 
         //voteParseGrabber.testPostToParse(lunchEventID);
 
@@ -70,16 +68,16 @@ public class RankingActivity extends Activity implements VoteResultsReadyListene
         // THIS CODE GRABS ALL THE VOTES SUBMITTED FOR A PARTICULAR LUNCH EVENT
         // It should probably belong in a different place, some kind of utility.
         // We'll move it later
-        voteResultsMultimap = voteParseGrabber.getVotesByLunchID(lunchEventID);
+        voteParseGrabberAndCalculator.getVotesByLunchID(lunchEventID);
         // DELAY
-        try {
-            Thread.sleep(5000);
-            ArrayList<String> firstChoiceRestaurants = getArrayListsOfRestaurantVotes(voteResultsMultimap, "first");
-            Log.d("firstChoiceRestaurants", firstChoiceRestaurants.toString());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            Log.d("NoSleep", "NG");
-        }
+//        try {
+//            Thread.sleep(5000);
+        ArrayList<String> firstChoiceRestaurants = voteParseGrabberAndCalculator.getArrayListsOfRestaurantVotes("first");
+        Log.d("firstChoiceRestaurants", firstChoiceRestaurants.toString());
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//            Log.d("NoSleep", "NG");
+//        }
         //
 
         // WHY DOES THE LOG HAPPEN BEFORE I GET MY RESULTS?! HOW CAN I MAKE IT HAPPEN AFTERWARD?
@@ -139,35 +137,6 @@ public class RankingActivity extends Activity implements VoteResultsReadyListene
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public ArrayList<String> getArrayListsOfRestaurantVotes(Multimap<String, String> voteResultsMultimap, String rank) {
-        if (voteResultsMultimap == null) {
-            Log.d("NoMap", "NG");
-            return null;
-        }
-        if (rank.equals("first")) {
-            ArrayList<String> firstChoiceRestaurants = getArrayListFromCollection(voteResultsMultimap.get("firstChoice"));
-            Log.d("firstChoiceRestaurants", firstChoiceRestaurants.toString());
-            return firstChoiceRestaurants;
-        }
-        if (rank.equals("second")) {
-            ArrayList<String> secondChoiceRestaurants = getArrayListFromCollection(voteResultsMultimap.get("secondChoice"));
-            Log.d("secondChoiceRestaurants", secondChoiceRestaurants.toString());
-            return secondChoiceRestaurants;
-        }
-        if (rank.equals("third")) {
-            ArrayList<String> thirdChoiceRestaurants = getArrayListFromCollection(voteResultsMultimap.get("thirdChoice"));
-            Log.d("thirdChoiceRestaurants", thirdChoiceRestaurants.toString());
-            return thirdChoiceRestaurants;
-        }
-        return null;
-    }
-
-    public ArrayList<String> getArrayListFromCollection(Collection<String> collection) {
-        String[] stringArray = collection.toArray(new String[collection.size()]);
-        ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(stringArray));
-        return arrayList;
     }
 
     @Override

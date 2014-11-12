@@ -12,22 +12,23 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 /**
  * Created by mattlauer on 2014-11-10.
  */
-public class VoteParseGrabber {
+public class VoteParseGrabberAndCalculator {
 
     private VoteResultsReadyListener listener;
 
-    public VoteParseGrabber(VoteResultsReadyListener listener, Activity currentActivity) {
+    public VoteParseGrabberAndCalculator(VoteResultsReadyListener listener, Activity currentActivity) {
         Parse.initialize(currentActivity, APPLICATION_ID, CLIENT_KEY);
         this.listener = listener;
     }
 
-    //List<ParseObject> parseObjectList = null;
-    //HashMap<String, ArrayList<String>> voteResultHashMap = null;
     Multimap<String, String> voteResultsMultimap = ArrayListMultimap.create();
 
     private static String APPLICATION_ID = "hQ5iOAVCIZ4BCepP1zco5r1HcoTp0uuvQUhLgUyX";
@@ -49,13 +50,13 @@ public class VoteParseGrabber {
     }
 
 //    public List<ParseObject> getVotesByLunchID(String lunchEventID) {
-    public Multimap<String, String> getVotesByLunchID(String lunchEventID) {
+    public void getVotesByLunchID(String lunchEventID) {
+
         ParseQuery<ParseObject> voteQuery = ParseQuery.getQuery("Vote");
         voteQuery.whereEqualTo("voteForLunch", ParseObject.createWithoutData("LunchEvent", lunchEventID));
         voteQuery.include("vote1");
         voteQuery.include("vote2");
         voteQuery.include("vote3");
-
         voteQuery.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> voteResults, ParseException e) {
@@ -64,7 +65,6 @@ public class VoteParseGrabber {
                 } else {
                     Log.d("findVotes", "Found the votes.");
                     Log.d("results", voteResults.toString());
-
                     for (ParseObject vote : voteResults) {
                         ParseObject vote1 = vote.getParseObject("vote1");
                         String firstChoiceName = vote1.getString("name");
@@ -86,8 +86,36 @@ public class VoteParseGrabber {
                 }
             }
         });
-        Log.d("voteResultsMap", voteResultsMultimap.toString());
-        return voteResultsMultimap;
+
+    }
+
+    public ArrayList<String> getArrayListsOfRestaurantVotes(String rank) {
+        if (voteResultsMultimap == null) {
+            Log.d("NoMap", "NG");
+            return null;
+        }
+        if (rank.equals("first")) {
+            ArrayList<String> firstChoiceRestaurants = getArrayListFromCollection(voteResultsMultimap.get("firstChoice"));
+            Log.d("firstChoiceRestaurants", firstChoiceRestaurants.toString());
+            return firstChoiceRestaurants;
+        }
+        if (rank.equals("second")) {
+            ArrayList<String> secondChoiceRestaurants = getArrayListFromCollection(voteResultsMultimap.get("secondChoice"));
+            Log.d("secondChoiceRestaurants", secondChoiceRestaurants.toString());
+            return secondChoiceRestaurants;
+        }
+        if (rank.equals("third")) {
+            ArrayList<String> thirdChoiceRestaurants = getArrayListFromCollection(voteResultsMultimap.get("thirdChoice"));
+            Log.d("thirdChoiceRestaurants", thirdChoiceRestaurants.toString());
+            return thirdChoiceRestaurants;
+        }
+        return null;
+    }
+
+    public ArrayList<String> getArrayListFromCollection(Collection<String> collection) {
+        String[] stringArray = collection.toArray(new String[collection.size()]);
+        ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(stringArray));
+        return arrayList;
     }
 
 }
