@@ -43,7 +43,7 @@ public class RankingActivity extends Activity implements VoteResultsReadyListene
     public static final String PASS_TO_POST_VOTE_ACTIVITY_KEY = "PASS_TO_POST_VOTE_ACTIVITY_KEY";
 
     //List<ParseObject> pOL;
-    Multimap<String, String> voteResultsMultimap = ArrayListMultimap.create();
+    Multimap<String, Integer> voteResultsMultimap = ArrayListMultimap.create();
     ParseObject testLunchEvent;
 
     StableArrayAdapter restaurantAdaptor;
@@ -77,8 +77,8 @@ public class RankingActivity extends Activity implements VoteResultsReadyListene
         // DELAY
 //        try {
 //            Thread.sleep(5000);
-        ArrayList<String> firstChoiceRestaurants = voteParseGrabberAndCalculator.getArrayListsOfRestaurantVotes("first");
-        Log.d("firstChoiceRestaurants", firstChoiceRestaurants.toString());
+//        ArrayList<String> firstChoiceRestaurants = voteParseGrabberAndCalculator.getArrayListsOfRestaurantVotes("first");
+//        Log.d("firstChoiceRestaurants", firstChoiceRestaurants.toString());
 //        } catch (InterruptedException e) {
 //            e.printStackTrace();
 //            Log.d("NoSleep", "NG");
@@ -169,7 +169,7 @@ public class RankingActivity extends Activity implements VoteResultsReadyListene
     }
 
     @Override
-    public void voteResultsAreReady(Multimap<String, String> voteResultsReadyMultimap) {
+    public void voteResultsAreReady(Multimap<String, Integer> voteResultsReadyMultimap) {
         voteResultsMultimap = voteResultsReadyMultimap;
     }
 }

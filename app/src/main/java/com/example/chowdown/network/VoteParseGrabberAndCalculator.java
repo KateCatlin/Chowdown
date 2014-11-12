@@ -11,10 +11,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -29,7 +26,8 @@ public class VoteParseGrabberAndCalculator {
         this.listener = listener;
     }
 
-    Multimap<String, String> voteResultsMultimap = ArrayListMultimap.create();
+    Multimap<String, Integer> voteResultsMultimap = ArrayListMultimap.create();
+    HashMap<String, Integer> voteResultsHashMap = new HashMap<String, Integer>();
 
     private static String APPLICATION_ID = "hQ5iOAVCIZ4BCepP1zco5r1HcoTp0uuvQUhLgUyX";
     private static String CLIENT_KEY = "Hi4IYWhFI3L7EJLaX5KIRTTJvlt6DvBQHSDSTKgS";
@@ -49,23 +47,22 @@ public class VoteParseGrabberAndCalculator {
         submitTestVote.saveInBackground();
     }
 
-    public String calculateWinner(String lunchEventID) {
+    public void calculateWinner(String lunchEventID) {
         String winningRestaurant = null;
         getVotesByLunchID(lunchEventID);
-        ArrayList<String> firstChoiceRestaurants = getArrayListsOfRestaurantVotes("first");
-        Collections.sort(firstChoiceRestaurants);
+//        ArrayList<String> firstChoiceRestaurants = getArrayListsOfRestaurantVotes("first");
+//        Collections.sort(firstChoiceRestaurants);
 
-        return winningRestaurant;
+        listener.voteResultsAreReady(voteResultsMultimap);
     }
 
 //    public List<ParseObject> getVotesByLunchID(String lunchEventID) {
     public void getVotesByLunchID(String lunchEventID) {
 
         ParseQuery<ParseObject> voteQuery = ParseQuery.getQuery("Vote");
-        voteQuery.whereEqualTo("voteForLunch", ParseObject.createWithoutData("LunchEvent", lunchEventID));
-        voteQuery.include("vote1");
-        voteQuery.include("vote2");
-        voteQuery.include("vote3");
+        voteQuery.whereEqualTo("relatedLunch", ParseObject.createWithoutData("LunchEvent", lunchEventID));
+        voteQuery.include("restaurantChoice");
+        voteQuery.include("rank");
         voteQuery.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> voteResults, ParseException e) {
@@ -75,20 +72,15 @@ public class VoteParseGrabberAndCalculator {
                     Log.d("findVotes", "Found the votes.");
                     Log.d("results", voteResults.toString());
                     for (ParseObject vote : voteResults) {
-                        ParseObject vote1 = vote.getParseObject("vote1");
-                        String firstChoiceName = vote1.getString("name");
-                        Log.d("firstChoiceName", firstChoiceName);
-                        voteResultsMultimap.put("firstChoice", firstChoiceName);
+                        ParseObject restaurantChoice = vote.getParseObject("restaurantChoice");
 
-                        ParseObject vote2 = vote.getParseObject("vote2");
-                        String secondChoiceName = vote2.getString("name");
-                        Log.d("secondChoiceName", secondChoiceName);
-                        voteResultsMultimap.put("secondChoice", secondChoiceName);
+                        String restaurantChoiceName = restaurantChoice.getString("name");
+                        Log.d("restaurantChoiceName", restaurantChoiceName);
 
-                        ParseObject vote3 = vote.getParseObject("vote3");
-                        String thirdChoiceName = vote3.getString("name");
-                        Log.d("thirdChoiceName", thirdChoiceName);
-                        voteResultsMultimap.put("thirdChoice", thirdChoiceName);
+                        Integer restaurantChoiceRank = restaurantChoice.getInt("rank");
+                        Log.d("restaurantChoiceRank", restaurantChoiceRank.toString());
+
+                        voteResultsMultimap.put(restaurantChoiceName, restaurantChoiceRank);
 
                         Log.d("voteResultsMap", voteResultsMultimap.toString());
                     }
@@ -98,33 +90,33 @@ public class VoteParseGrabberAndCalculator {
 
     }
 
-    public ArrayList<String> getArrayListsOfRestaurantVotes(String rank) {
-        if (voteResultsMultimap == null) {
-            Log.d("NoMap", "NG");
-            return null;
-        }
-        if (rank.equals("first")) {
-            ArrayList<String> firstChoiceRestaurants = getArrayListFromCollection(voteResultsMultimap.get("firstChoice"));
-            Log.d("firstChoiceRestaurants", firstChoiceRestaurants.toString());
-            return firstChoiceRestaurants;
-        }
-        if (rank.equals("second")) {
-            ArrayList<String> secondChoiceRestaurants = getArrayListFromCollection(voteResultsMultimap.get("secondChoice"));
-            Log.d("secondChoiceRestaurants", secondChoiceRestaurants.toString());
-            return secondChoiceRestaurants;
-        }
-        if (rank.equals("third")) {
-            ArrayList<String> thirdChoiceRestaurants = getArrayListFromCollection(voteResultsMultimap.get("thirdChoice"));
-            Log.d("thirdChoiceRestaurants", thirdChoiceRestaurants.toString());
-            return thirdChoiceRestaurants;
-        }
-        return null;
-    }
-
-    public ArrayList<String> getArrayListFromCollection(Collection<String> collection) {
-        String[] stringArray = collection.toArray(new String[collection.size()]);
-        ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(stringArray));
-        return arrayList;
-    }
+//    public ArrayList<String> getArrayListsOfRestaurantVotes(String rank) {
+//        if (voteResultsMultimap == null) {
+//            Log.d("NoMap", "NG");
+//            return null;
+//        }
+//        if (rank.equals("first")) {
+//            ArrayList<String> firstChoiceRestaurants = getArrayListFromCollection(voteResultsMultimap.get("firstChoice"));
+//            Log.d("firstChoiceRestaurants", firstChoiceRestaurants.toString());
+//            return firstChoiceRestaurants;
+//        }
+//        if (rank.equals("second")) {
+//            ArrayList<String> secondChoiceRestaurants = getArrayListFromCollection(voteResultsMultimap.get("secondChoice"));
+//            Log.d("secondChoiceRestaurants", secondChoiceRestaurants.toString());
+//            return secondChoiceRestaurants;
+//        }
+//        if (rank.equals("third")) {
+//            ArrayList<String> thirdChoiceRestaurants = getArrayListFromCollection(voteResultsMultimap.get("thirdChoice"));
+//            Log.d("thirdChoiceRestaurants", thirdChoiceRestaurants.toString());
+//            return thirdChoiceRestaurants;
+//        }
+//        return null;
+//    }
+//
+//    public ArrayList<String> getArrayListFromCollection(Collection<String> collection) {
+//        String[] stringArray = collection.toArray(new String[collection.size()]);
+//        ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(stringArray));
+//        return arrayList;
+//    }
 
 }
