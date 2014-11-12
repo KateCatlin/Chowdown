@@ -7,15 +7,13 @@ public class Vote {
 
     private String lunchId;
     private String userId;
-    private String firstChoice;
-    private String secondChoice;
-    private String thirdChoice;
+    private String restaurantChoice;
+    private int rank;
 
-    public Vote(String lunchId, String firstChoice, String secondChoice, String thirdChoice) {
+    public Vote(String lunchId, String restaurantChoice, int rank) {
         this.lunchId = lunchId;
-        this.firstChoice = firstChoice;
-        this.secondChoice = secondChoice;
-        this.thirdChoice = thirdChoice;
+        this.restaurantChoice = restaurantChoice;
+        this.rank = rank;
     }
 
     public String getLunchId() {
@@ -26,19 +24,13 @@ public class Vote {
         return userId;
     }
 
-    public String getFirstChoice() {
-        return firstChoice;
+    public String getRestaurantChoice() {
+        return restaurantChoice;
     }
 
-    public String getSecondChoice() {
-        return secondChoice;
-    }
+    public int getRank() { return rank; }
 
-    public String getThirdChoice() {
-        return thirdChoice;
-    }
-
-    public String toString() {
-        return lunchId + firstChoice + secondChoice + thirdChoice;
-    }
+//    public String toString() {
+//        return lunchId + firstChoice + secondChoice + thirdChoice;
+//    }
 }

@@ -7,7 +7,6 @@ import com.example.chowdown.controllers.VoteResultsReadyListener;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.parse.FindCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -15,6 +14,7 @@ import com.parse.ParseQuery;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -25,7 +25,7 @@ public class VoteParseGrabberAndCalculator {
     private VoteResultsReadyListener listener;
 
     public VoteParseGrabberAndCalculator(VoteResultsReadyListener listener, Activity currentActivity) {
-        Parse.initialize(currentActivity, APPLICATION_ID, CLIENT_KEY);
+
         this.listener = listener;
     }
 
@@ -47,6 +47,15 @@ public class VoteParseGrabberAndCalculator {
         submitTestVote.put("voteForLunch", ParseObject.createWithoutData("LunchEvent", lunchEventID));
 
         submitTestVote.saveInBackground();
+    }
+
+    public String calculateWinner(String lunchEventID) {
+        String winningRestaurant = null;
+        getVotesByLunchID(lunchEventID);
+        ArrayList<String> firstChoiceRestaurants = getArrayListsOfRestaurantVotes("first");
+        Collections.sort(firstChoiceRestaurants);
+
+        return winningRestaurant;
     }
 
 //    public List<ParseObject> getVotesByLunchID(String lunchEventID) {

@@ -22,7 +22,6 @@ import com.example.chowdown.views.DynamicListView;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.parse.FindCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -74,7 +73,7 @@ public class RankingActivity extends Activity implements VoteResultsReadyListene
         // THIS CODE GRABS ALL THE VOTES SUBMITTED FOR A PARTICULAR LUNCH EVENT
         // It should probably belong in a different place, some kind of utility.
         // We'll move it later
-        voteParseGrabberAndCalculator.getVotesByLunchID(lunchEventID);
+        voteParseGrabberAndCalculator.calculateWinner(lunchEventID);
         // DELAY
 //        try {
 //            Thread.sleep(5000);
@@ -110,10 +109,14 @@ public class RankingActivity extends Activity implements VoteResultsReadyListene
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Vote newVote = new Vote(lunchEventID, restaurantAdaptor.getItem(0), restaurantAdaptor.getItem(1), restaurantAdaptor.getItem(2));
+                Vote vote1 = new Vote(lunchEventID, restaurantAdaptor.getItem(0), 1);
+                Vote vote2 = new Vote(lunchEventID, restaurantAdaptor.getItem(1), 2);
+                Vote vote3 = new Vote(lunchEventID, restaurantAdaptor.getItem(2), 3);
 //                System.out.println(newVote);
                 ParsePutter parsePutter = new ParsePutter(thisActivity);
-                parsePutter.saveVote(newVote);
+                parsePutter.saveVote(vote1);
+                parsePutter.saveVote(vote2);
+                parsePutter.saveVote(vote3);
 
                 Intent postVoteIntent = new Intent(RankingActivity.this, PostVoteActivity.class);
                 Bundle mBundle = new Bundle();
@@ -124,10 +127,9 @@ public class RankingActivity extends Activity implements VoteResultsReadyListene
             }
         });
 
-        Parse.initialize(this, "hQ5iOAVCIZ4BCepP1zco5r1HcoTp0uuvQUhLgUyX", "Hi4IYWhFI3L7EJLaX5KIRTTJvlt6DvBQHSDSTKgS");
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Vote");
         query.whereEqualTo("user", ParseUser.getCurrentUser());
-        query.whereEqualTo("voteForLunch", ParseObject.createWithoutData("LunchEvent", lunchEventID));
+        query.whereEqualTo("relatedLunch", ParseObject.createWithoutData("LunchEvent", lunchEventID));
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> parseObjects, ParseException e) {
