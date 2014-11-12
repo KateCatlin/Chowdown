@@ -54,6 +54,17 @@ public class LoginDialogFragment extends DialogFragment {
                     final String password = (mPasswordEditText.getText().toString());
                     Log.d(LOG_TAG, "THE PASSWORD IS: " + password);
 
+                    //saves the "saved" username in the editText to SharedPreferences
+                    PreferenceManager.getDefaultSharedPreferences(getActivity())
+                            .edit()
+                            .putString(USERNAME_KEY, username)
+                            .commit();
+
+                    PreferenceManager.getDefaultSharedPreferences(getActivity())
+                            .edit()
+                            .putString(PASSWORD_KEY, password)
+                            .commit();
+
                     ParseUser user = new ParseUser();
                     user.setUsername("my name");
                     user.setPassword("my pass");
@@ -62,25 +73,14 @@ public class LoginDialogFragment extends DialogFragment {
                     user.signUpInBackground(new SignUpCallback() {
                         public void done(ParseException e) {
                             if (e == null) {
-                                //saves the "saved" username in the editText to SharedPreferences
-                                PreferenceManager.getDefaultSharedPreferences(getActivity())
-                                        .edit()
-                                        .putString(USERNAME_KEY, username)
-                                        .commit();
-
-                                PreferenceManager.getDefaultSharedPreferences(getActivity())
-                                        .edit()
-                                        .putString(PASSWORD_KEY, password)
-                                        .commit();
-
-
+                                //
                             } else {
-                                Context context = getActivity();
-                                CharSequence text = "Something was wrong! Try again!";
-                                int duration = Toast.LENGTH_SHORT;
-
-                                Toast toast = Toast.makeText(context, text, duration);
-                                toast.show();
+//                                Context context = getActivity();
+//                                CharSequence text = "Something was wrong! Try again!";
+//                                int duration = Toast.LENGTH_SHORT;
+//
+//                                Toast toast = Toast.makeText(context, text, duration);
+//                                toast.show();
                             }
                         }
                     });
