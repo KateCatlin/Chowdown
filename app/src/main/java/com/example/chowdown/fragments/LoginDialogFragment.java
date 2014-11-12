@@ -66,9 +66,8 @@ public class LoginDialogFragment extends DialogFragment {
                             .commit();
 
                     ParseUser user = new ParseUser();
-                    user.setUsername("my name");
-                    user.setPassword("my pass");
-                    user.setEmail("email@example.com");
+                    user.setUsername(username);
+                    user.setPassword(password);
 
                     user.signUpInBackground(new SignUpCallback() {
                         public void done(ParseException e) {
