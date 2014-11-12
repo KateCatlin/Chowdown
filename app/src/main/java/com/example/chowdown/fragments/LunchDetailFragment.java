@@ -3,6 +3,7 @@ package com.example.chowdown.fragments;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +36,8 @@ public class LunchDetailFragment extends Fragment {
     public TextView votingDetailsText;
     public static final String CHOSEN_LUNCH_KEY = "CHOSEN_LUNCH_KEY";
     public static final String PASS_TO_RANKING_KEY = "PASS_TO_RANKING_KEY";
+    private CountDownTimer voteCountDownTimer;
+    private LunchEvent chosenLunchEvent;
 
     public Button noButton;
     public Button yesButton;
@@ -56,7 +59,7 @@ public class LunchDetailFragment extends Fragment {
 
         Bundle data = getArguments();
 
-        final LunchEvent chosenLunchEvent = (LunchEvent) data.getParcelable(CHOSEN_LUNCH_KEY);
+        chosenLunchEvent = (LunchEvent) data.getParcelable(CHOSEN_LUNCH_KEY);
         Log.d("LOG_TAG", "EventID is " + chosenLunchEvent.getEventID());
 
         titleText = (TextView)root.findViewById(R.id.lunch_detail_title);
@@ -110,7 +113,47 @@ public class LunchDetailFragment extends Fragment {
             }
         });
 
+        DateTime currentDateTime = DateTime.now();
+        Interval votingInterval = new Interval(currentDateTime, chosenLunchEvent.getVotingDate());
+        int millisecondsLeft = (int)(votingInterval.getEndMillis() - votingInterval.getStartMillis());
+        voteCountDownTimer = new CountDownTimer(millisecondsLeft, 1000) {
+            public void onTick(long millisUntilFinished) {
+                TextView votingStatus = (TextView) getActivity().findViewById(R.id.voting_status);
+                votingStatus.setText(getStringThatShowsWhenVotingEnds(chosenLunchEvent));
+            }
+
+            public void onFinish() {
+                TextView votingStatus = (TextView) getActivity().findViewById(R.id.voting_status);
+                votingStatus.setText("Too late!");
+            }
+        }.start();
+
         return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        DateTime currentDateTime = DateTime.now();
+        Interval votingInterval = new Interval(currentDateTime, chosenLunchEvent.getVotingDate());
+        int millisecondsLeft = (int)(votingInterval.getEndMillis() - votingInterval.getStartMillis());
+        voteCountDownTimer = new CountDownTimer(millisecondsLeft, 1000) {
+            public void onTick(long millisUntilFinished) {
+                TextView votingStatus = (TextView) getActivity().findViewById(R.id.voting_status);
+                votingStatus.setText(getStringThatShowsWhenVotingEnds(chosenLunchEvent));
+            }
+
+            public void onFinish() {
+                TextView votingStatus = (TextView) getActivity().findViewById(R.id.voting_status);
+                votingStatus.setText("Too late!");
+            }
+        }.start();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        voteCountDownTimer.cancel();
     }
 
     private String getStringThatShowsWhenVotingEnds(LunchEvent chosenLunchEvent) {
@@ -133,7 +176,11 @@ public class LunchDetailFragment extends Fragment {
                 .appendSeparator(", and ")
                 .appendMinutes()
                 .appendSuffix(" minute", " minutes")
+                .appendSeparator(", ")
+                .appendSeconds()
+                .appendSuffix(" second", " seconds")
                 .toFormatter();
+
 
 
         String stringThatShowsWhenVotingEnds = "Time until voting ends:\n" + timeLeftFormatter.print(timeLeftUntilVotingEnds);

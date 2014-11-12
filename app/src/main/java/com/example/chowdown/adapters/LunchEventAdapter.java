@@ -13,15 +13,24 @@ import com.example.chowdown.R;
 import com.example.chowdown.activities.MainActivity;
 import com.example.chowdown.fragments.MainFragment;
 import com.example.chowdown.models.LunchEvent;
+import com.parse.FindCallback;
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class LunchEventAdapter extends ArrayAdapter<LunchEvent> {
     private final Context mContext;
     String LOG_CAT = "LunchEventAdapter";
+    private static String APPLICATION_ID = "hQ5iOAVCIZ4BCepP1zco5r1HcoTp0uuvQUhLgUyX";
+    private static String CLIENT_KEY = "Hi4IYWhFI3L7EJLaX5KIRTTJvlt6DvBQHSDSTKgS";
 
     DateTime dt = new DateTime();
     int month = dt.getMonthOfYear();
@@ -57,8 +66,21 @@ public class LunchEventAdapter extends ArrayAdapter<LunchEvent> {
         lunchStarter.setText("Started by " + lunchObject.getEventStarter());
         Log.d(LOG_CAT, "started by is " + lunchStarter);
 
-        TextView attending = (TextView) thisRow.findViewById(R.id.text_attending);
-        attending.setText( "Maybe Attending" );
+        final TextView attending = (TextView) thisRow.findViewById(R.id.text_attending);
+        Parse.initialize(getContext(), APPLICATION_ID, CLIENT_KEY);
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Vote");
+        query.whereEqualTo("user", ParseUser.getCurrentUser());
+        query.whereEqualTo("voteForLunch", ParseObject.createWithoutData("LunchEvent", lunchObject.getEventID()));
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> parseObjects, ParseException e) {
+                if (parseObjects.size() == 0) {
+                    attending.setText("");
+                } else {
+                    attending.setText("You're SO going to this lunch!");
+                }
+            }
+        });
 
         TextView votingStatus = (TextView) thisRow.findViewById(R.id.voting_status);
         votingStatus.setText( "No Vote");
