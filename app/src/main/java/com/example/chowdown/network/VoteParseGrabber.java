@@ -77,6 +77,7 @@ public class VoteParseGrabber {
                 }
             }
         });
+        Log.d("voteResultsMap", voteResultsMultimap.toString());
         return voteResultsMultimap;
     }
 

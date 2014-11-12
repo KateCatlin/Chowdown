@@ -63,6 +63,7 @@ public class RankingActivity extends Activity {
         voteResultsMultimap = voteParseGrabber.getVotesByLunchID(lunchEventID);
         ArrayList<String> firstChoiceRestaurants = getArrayListsOfRestaurantVotes(voteResultsMultimap, "first");
         Log.d("firstChoiceRestaurants", firstChoiceRestaurants.toString());
+        // WHY DOES THE LOG HAPPEN BEFORE I GET MY RESULTS?! HOW CAN I MAKE IT HAPPEN AFTERWARD?
 
 
         // END OF VOTE MANIPULATION CODE
@@ -121,6 +122,7 @@ public class RankingActivity extends Activity {
         }
         if (rank.equals("first")) {
             ArrayList<String> firstChoiceRestaurants = getArrayListFromCollection(voteResultsMultimap.get("firstChoice"));
+            Log.d("firstChoiceRestaurants", firstChoiceRestaurants.toString());
             return firstChoiceRestaurants;
         }
         if (rank.equals("second")) {
