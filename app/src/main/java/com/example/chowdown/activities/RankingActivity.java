@@ -19,9 +19,11 @@ import com.example.chowdown.models.Vote;
 import com.example.chowdown.network.ParsePutter;
 import com.example.chowdown.views.DynamicListView;
 import com.parse.FindCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,6 +112,27 @@ public class RankingActivity extends Activity {
                 postVoteIntent.putExtras(mBundle);
 
                 startActivity(postVoteIntent);
+            }
+        });
+
+        Parse.initialize(this, "hQ5iOAVCIZ4BCepP1zco5r1HcoTp0uuvQUhLgUyX", "Hi4IYWhFI3L7EJLaX5KIRTTJvlt6DvBQHSDSTKgS");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Vote");
+        query.whereEqualTo("user", ParseUser.getCurrentUser());
+        query.whereEqualTo("voteForLunch", ParseObject.createWithoutData("LunchEvent", lunchEventID));
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> parseObjects, ParseException e) {
+                if (parseObjects.size() == 0) {
+                    System.out.println("*******You have not voted yet.  Please go ahead.  It's your duty!");
+                } else {
+                    System.out.println("************You've already voted!");
+                    Intent postVoteIntent = new Intent(RankingActivity.this, PostVoteActivity.class);
+                    Bundle mBundle = new Bundle();
+                    mBundle.putParcelable(PASS_TO_POST_VOTE_ACTIVITY_KEY, chosenLunchEvent);
+                    postVoteIntent.putExtras(mBundle);
+
+                    startActivity(postVoteIntent);
+                }
             }
         });
     }
