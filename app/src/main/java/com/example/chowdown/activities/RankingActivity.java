@@ -13,10 +13,12 @@ import android.widget.TextView;
 
 import com.example.chowdown.R;
 import com.example.chowdown.adapters.StableArrayAdapter;
+import com.example.chowdown.controllers.VoteResultsReadyListener;
 import com.example.chowdown.models.Vote;
 import com.example.chowdown.network.ParsePutter;
 import com.example.chowdown.network.VoteParseGrabber;
 import com.example.chowdown.views.DynamicListView;
+import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.parse.ParseObject;
 
@@ -24,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
-public class RankingActivity extends Activity {
+public class RankingActivity extends Activity implements VoteResultsReadyListener {
 
 
     public static final String CHOSEN_LUNCH_EVENT_ID = "CHOSEN_LUNCH_EVENT_ID";
@@ -34,12 +36,13 @@ public class RankingActivity extends Activity {
     String lunchEventID;
 
     //List<ParseObject> pOL;
-    Multimap<String, String> voteResultsMultimap = null;
+    Multimap<String, String> voteResultsMultimap = ArrayListMultimap.create();
     ParseObject testLunchEvent;
 
     StableArrayAdapter restaurantAdaptor;
 
     VoteParseGrabber voteParseGrabber;
+
 
 
     @Override
@@ -52,17 +55,26 @@ public class RankingActivity extends Activity {
         TextView testTextView1 = (TextView) findViewById(R.id.title_text_view);
         testTextView1.setText(lunchEventID);
 
-        voteParseGrabber = new VoteParseGrabber(this);
+        voteParseGrabber = new VoteParseGrabber(this, this);
 
-        voteParseGrabber.testPostToParse(lunchEventID);
+        //voteParseGrabber.testPostToParse(lunchEventID);
 
         //
         // THIS CODE GRABS ALL THE VOTES SUBMITTED FOR A PARTICULAR LUNCH EVENT
         // It should probably belong in a different place, some kind of utility.
         // We'll move it later
         voteResultsMultimap = voteParseGrabber.getVotesByLunchID(lunchEventID);
-        ArrayList<String> firstChoiceRestaurants = getArrayListsOfRestaurantVotes(voteResultsMultimap, "first");
-        Log.d("firstChoiceRestaurants", firstChoiceRestaurants.toString());
+        // DELAY
+        try {
+            Thread.sleep(5000);
+            ArrayList<String> firstChoiceRestaurants = getArrayListsOfRestaurantVotes(voteResultsMultimap, "first");
+            Log.d("firstChoiceRestaurants", firstChoiceRestaurants.toString());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            Log.d("NoSleep", "NG");
+        }
+        //
+
         // WHY DOES THE LOG HAPPEN BEFORE I GET MY RESULTS?! HOW CAN I MAKE IT HAPPEN AFTERWARD?
 
 
@@ -142,5 +154,10 @@ public class RankingActivity extends Activity {
         String[] stringArray = collection.toArray(new String[collection.size()]);
         ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(stringArray));
         return arrayList;
+    }
+
+    @Override
+    public void voteResultsAreReady(Multimap<String, String> voteResultsReadyMultimap) {
+        voteResultsMultimap = voteResultsReadyMultimap;
     }
 }
