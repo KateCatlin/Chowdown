@@ -91,6 +91,7 @@
             android:textSize="20dp" />
 
         <TextView
+            android:visibility="invisible"
             android:id="@+id/voting_details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -104,10 +105,11 @@
 
     </RelativeLayout>
 
-    <LinearLayout
+    <LinearLayout android:id="@+id/vote_button_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="2">
+        android:weightSum="2"
+        android:visibility="invisible">
 
         <Button
             android:id="@+id/no_button"
