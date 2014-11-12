@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +30,7 @@ import java.util.List;
 public class LunchDetailActivity extends Activity{
     public static final String CHOSEN_LUNCH_KEY = "CHOSEN_LUNCH_KEY";
     private LunchEvent chosenLunch;
+    public TextView votingStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
