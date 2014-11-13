@@ -71,7 +71,7 @@ public class MainFragment extends Fragment implements AdapterView.OnItemClickLis
         ListView listView = (ListView) rootView.findViewById(R.id.listview);
 
         lunchEventParseGrabber = new LunchEventParseGrabber(getActivity());
-        lunchEventParseGrabber.testPostToParse();
+//        lunchEventParseGrabber.testPostToParse();
 
         List<ParseObject> pOL = lunchEventParseGrabber.getLunchEvents();
 
