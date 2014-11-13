@@ -1,25 +1,17 @@
 package com.example.chowdown.fragments;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.hardware.Camera;
-import android.net.Uri;
-import android.os.Bundle;
 import android.app.Fragment;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
+
 import com.example.chowdown.R;
 import com.example.chowdown.activities.LunchDetailActivity;
-import com.example.chowdown.activities.SettingsActivity;
 import com.example.chowdown.adapters.LunchEventAdapter;
 import com.example.chowdown.models.LunchEvent;
 import com.example.chowdown.models.ParseConverterObject;
@@ -85,7 +77,7 @@ public class MainFragment extends Fragment implements AdapterView.OnItemClickLis
 
         int i = 0;
         for (ParseObject pO: pOL) {
-            arrayOfLunches.add(i, mParseConverterObject.parseToObject(pO));
+            arrayOfLunches.add(i, mParseConverterObject.parseObjectToLunchEvent(pO));
             i++;
 
         }
