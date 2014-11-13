@@ -118,16 +118,18 @@ public class LunchDetailFragment extends Fragment {
         int millisecondsLeft = (int)(votingInterval.getEndMillis() - votingInterval.getStartMillis());
         voteCountDownTimer = new CountDownTimer(millisecondsLeft, 1000) {
             public void onTick(long millisUntilFinished) {
-                TextView votingStatus = (TextView) getActivity().findViewById(R.id.voting_status);
-                votingStatus.setText(getStringThatShowsWhenVotingEnds(chosenLunchEvent));
+                if (getActivity() != null) {
+                    TextView votingStatus = (TextView) getActivity().findViewById(R.id.voting_status);
+                    votingStatus.setText(getStringThatShowsWhenVotingEnds(chosenLunchEvent));
+                }
             }
 
             public void onFinish() {
                 TextView votingStatus = (TextView) getActivity().findViewById(R.id.voting_status);
                 votingStatus.setText("Too late!");
             }
-        }.start();
-
+        };
+        voteCountDownTimer.start();
         return root;
     }
 
@@ -139,21 +141,31 @@ public class LunchDetailFragment extends Fragment {
         int millisecondsLeft = (int)(votingInterval.getEndMillis() - votingInterval.getStartMillis());
         voteCountDownTimer = new CountDownTimer(millisecondsLeft, 1000) {
             public void onTick(long millisUntilFinished) {
-                TextView votingStatus = (TextView) getActivity().findViewById(R.id.voting_status);
-                votingStatus.setText(getStringThatShowsWhenVotingEnds(chosenLunchEvent));
+                if (getActivity() != null) {
+                    TextView votingStatus = (TextView) getActivity().findViewById(R.id.voting_status);
+                    votingStatus.setText(getStringThatShowsWhenVotingEnds(chosenLunchEvent));
+                }
             }
 
             public void onFinish() {
                 TextView votingStatus = (TextView) getActivity().findViewById(R.id.voting_status);
                 votingStatus.setText("Too late!");
             }
-        }.start();
+        };
+        voteCountDownTimer.start();
     }
 
     @Override
     public void onPause() {
         super.onPause();
         voteCountDownTimer.cancel();
+        voteCountDownTimer = null;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        voteCountDownTimer = null;
     }
 
     private String getStringThatShowsWhenVotingEnds(LunchEvent chosenLunchEvent) {

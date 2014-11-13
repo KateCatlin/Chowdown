@@ -31,6 +31,7 @@ public class LunchDetailActivity extends Activity{
     public static final String CHOSEN_LUNCH_KEY = "CHOSEN_LUNCH_KEY";
     private LunchEvent chosenLunch;
     public TextView votingStatus;
+    public CountDownTimer voteCountdownTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
