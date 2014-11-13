@@ -1,7 +1,6 @@
 package com.example.chowdown.activities;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,7 +18,6 @@ import com.example.chowdown.models.Vote;
 import com.example.chowdown.network.ParsePutter;
 import com.example.chowdown.views.DynamicListView;
 import com.parse.FindCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -40,11 +38,7 @@ public class RankingActivity extends Activity {
     public static final String PASS_TO_RANKING_KEY = "PASS_TO_RANKING_KEY";
     public static final String PASS_TO_POST_VOTE_ACTIVITY_KEY = "PASS_TO_POST_VOTE_ACTIVITY_KEY";
 
-    List<ParseObject> pOL;
-    ParseObject testLunchEvent;
-
     StableArrayAdapter restaurantAdaptor;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,30 +52,6 @@ public class RankingActivity extends Activity {
         Log.d("LOG_TAG", "EventID is " + chosenLunchEvent.getEventID());
         TextView testTextView1 = (TextView) findViewById(R.id.title_text_view);
         testTextView1.setText(lunchEventID);
-
-//        ParseObject submitTestVote = new ParseObject("Vote");
-//        submitTestVote.put("userID", "FakeUser");
-//        submitTestVote.put("vote1", ParseObject.createWithoutData("Restaurant", ORCHID_THAI_OBJECT_ID));
-//        submitTestVote.put("vote2", ParseObject.createWithoutData("Restaurant", TAQO_OBJECT_ID));
-//        submitTestVote.put("vote3", ParseObject.createWithoutData("Restaurant", SLICE_OBJECT_ID));
-//        submitTestVote.put("voteForLunch", ParseObject.createWithoutData("LunchEvent", lunchEventID));
-//
-//        submitTestVote.saveInBackground();
-
-        ParseQuery<ParseObject> voteQuery = ParseQuery.getQuery("Vote");
-        voteQuery.whereEqualTo("voteForLunch", ParseObject.createWithoutData("LunchEvent", lunchEventID));
-
-        voteQuery.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> results, ParseException e) {
-                if (e != null) {
-                    Log.d("findVotes", "The request failed.");
-                } else {
-                    Log.d("findVotes", "Found the votes.");
-                    Log.d("results", results.toString());
-                }
-            }
-        });
 
         DynamicListView topRestaurantsListView = (DynamicListView) findViewById(R.id.ranked_restaurants_listview);
 
@@ -101,10 +71,17 @@ public class RankingActivity extends Activity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Vote newVote = new Vote(lunchEventID, restaurantAdaptor.getItem(0), restaurantAdaptor.getItem(1), restaurantAdaptor.getItem(2));
+                int rank1 = 1;
+                int rank2 = 2;
+                int rank3 = 3;
+                Vote vote1 = new Vote(lunchEventID, restaurantAdaptor.getItem(0), rank1);
+                Vote vote2 = new Vote(lunchEventID, restaurantAdaptor.getItem(1), rank2);
+                Vote vote3 = new Vote(lunchEventID, restaurantAdaptor.getItem(2), rank3);
 //                System.out.println(newVote);
                 ParsePutter parsePutter = new ParsePutter(thisActivity);
-                parsePutter.saveVote(newVote);
+                parsePutter.saveVote(vote1);
+                parsePutter.saveVote(vote2);
+                parsePutter.saveVote(vote3);
 
                 Intent postVoteIntent = new Intent(RankingActivity.this, PostVoteActivity.class);
                 Bundle mBundle = new Bundle();
@@ -115,10 +92,9 @@ public class RankingActivity extends Activity {
             }
         });
 
-        Parse.initialize(this, "hQ5iOAVCIZ4BCepP1zco5r1HcoTp0uuvQUhLgUyX", "Hi4IYWhFI3L7EJLaX5KIRTTJvlt6DvBQHSDSTKgS");
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Vote");
         query.whereEqualTo("user", ParseUser.getCurrentUser());
-        query.whereEqualTo("voteForLunch", ParseObject.createWithoutData("LunchEvent", lunchEventID));
+        query.whereEqualTo("relatedLunch", ParseObject.createWithoutData("LunchEvent", lunchEventID));
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> parseObjects, ParseException e) {
@@ -155,13 +131,5 @@ public class RankingActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public List<ParseObject> getQueryResults(List<ParseObject> results) {
-        return results;
-    }
-
-    public void setTestLunchEvent(ParseObject object) {
-        testLunchEvent = object;
     }
 }

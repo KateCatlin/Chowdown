@@ -25,17 +25,20 @@ public class ParseConverterObject {
     String topRestaurant;
     final String LOG_CAT = "ParseConverterObject";
     LunchEvent mLunchEvent;
+
+    String lunchId;
+    String userId;
+    String firstChoice;
+    String secondChoice;
+    String thirdChoice;
+
+    Vote vote;
     ParseObject mParseObject;
 
 
-    public LunchEvent parseToObject(ParseObject mParseObject) {
+    public LunchEvent parseObjectToLunchEvent(ParseObject mParseObject) {
 
-
-
-
-        //eventID = mParseObject.getString("objectId");
         eventID = mParseObject.getObjectId();
-        //eventID = "Test String";
 
         description = mParseObject.getString("eventDescription");
 
@@ -68,8 +71,5 @@ public class ParseConverterObject {
 
         return mLunchEvent;
     }
-
-
-
 
 }
