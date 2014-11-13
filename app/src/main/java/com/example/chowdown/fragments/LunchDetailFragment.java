@@ -149,7 +149,7 @@ public class LunchDetailFragment extends Fragment {
 
             public void onFinish() {
                 TextView votingStatus = (TextView) getActivity().findViewById(R.id.voting_status);
-                votingStatus.setText("Too late!");
+                votingStatus.setText("Voting over! You're eating at "+ chosenLunchEvent.getTopRestaurant());
             }
         };
         voteCountDownTimer.start();
