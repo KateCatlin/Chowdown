@@ -1,9 +1,8 @@
 package com.example.chowdown.network;
 
-import android.app.Activity;
 import android.util.Log;
 
-import com.example.chowdown.controllers.VoteResultsReadyListener;
+import com.example.chowdown.controllers.VoteResultsListener;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.parse.FindCallback;
@@ -17,11 +16,11 @@ import java.util.List;
 /**
  * Created by mattlauer on 2014-11-10.
  */
-public class VoteParseGrabberAndCalculator {
+public class VoteCalculator {
 
-    private VoteResultsReadyListener listener;
+    private VoteResultsListener listener;
 
-    public VoteParseGrabberAndCalculator(VoteResultsReadyListener listener, Activity currentActivity) {
+    public VoteCalculator(VoteResultsListener listener) {
 
         this.listener = listener;
     }
@@ -48,26 +47,15 @@ public class VoteParseGrabberAndCalculator {
     }
 
     public void calculateWinner(String lunchEventID) {
-        String winningRestaurant = null;
-        getVotesByLunchID(lunchEventID);
-//        ArrayList<String> firstChoiceRestaurants = getArrayListsOfRestaurantVotes("first");
-//        Collections.sort(firstChoiceRestaurants);
-
-        listener.voteResultsAreReady(voteResultsMultimap);
-    }
-
-//    public List<ParseObject> getVotesByLunchID(String lunchEventID) {
-    public void getVotesByLunchID(String lunchEventID) {
 
         ParseQuery<ParseObject> voteQuery = ParseQuery.getQuery("Vote");
         voteQuery.whereEqualTo("relatedLunch", ParseObject.createWithoutData("LunchEvent", lunchEventID));
         voteQuery.include("restaurantChoice");
-        voteQuery.include("rank");
         voteQuery.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> voteResults, ParseException e) {
                 if (e != null) {
-                    Log.d("findVotes", "The request failed.");
+                    Log.d("findVotes", "The request failed." + e.toString());
                 } else {
                     Log.d("findVotes", "Found the votes.");
                     Log.d("results", voteResults.toString());
@@ -77,13 +65,16 @@ public class VoteParseGrabberAndCalculator {
                         String restaurantChoiceName = restaurantChoice.getString("name");
                         Log.d("restaurantChoiceName", restaurantChoiceName);
 
-                        Integer restaurantChoiceRank = restaurantChoice.getInt("rank");
-                        Log.d("restaurantChoiceRank", restaurantChoiceRank.toString());
+                        int restaurantChoiceRank = vote.getInt("rank");
+                        Log.d("restaurantChoiceRank", String.valueOf(restaurantChoiceRank));
+                        //Log.d("restaurantChoiceRank", restaurantChoiceRank.toString());
 
                         voteResultsMultimap.put(restaurantChoiceName, restaurantChoiceRank);
 
                         Log.d("voteResultsMap", voteResultsMultimap.toString());
                     }
+
+                    //listener.voteResultsCalculated(winner);
                 }
             }
         });

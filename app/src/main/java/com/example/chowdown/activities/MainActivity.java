@@ -14,11 +14,9 @@ import com.example.chowdown.R;
 import com.example.chowdown.fragments.LoginDialogFragment;
 import com.example.chowdown.fragments.MainFragment;
 import com.parse.Parse;
-import com.parse.ParseException;
 import com.parse.ParseUser;
-import com.parse.SignUpCallback;
 
-public class MainActivity extends Activity  {
+public class MainActivity extends Activity {
 
     public static final String USERNAME_KEY = "USERNAME_KEY";
     private static String APPLICATION_ID = "hQ5iOAVCIZ4BCepP1zco5r1HcoTp0uuvQUhLgUyX";
@@ -74,4 +72,5 @@ public class MainActivity extends Activity  {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

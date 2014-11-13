@@ -13,14 +13,10 @@ import android.widget.TextView;
 
 import com.example.chowdown.R;
 import com.example.chowdown.adapters.StableArrayAdapter;
-import com.example.chowdown.controllers.VoteResultsReadyListener;
 import com.example.chowdown.models.LunchEvent;
 import com.example.chowdown.models.Vote;
 import com.example.chowdown.network.ParsePutter;
-import com.example.chowdown.network.VoteParseGrabberAndCalculator;
 import com.example.chowdown.views.DynamicListView;
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Multimap;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -30,7 +26,7 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RankingActivity extends Activity implements VoteResultsReadyListener {
+public class RankingActivity extends Activity {
 
 
     public static final String CHOSEN_LUNCH_EVENT_2 = "CHOSEN_LUNCH_EVENT_ID";
@@ -42,15 +38,7 @@ public class RankingActivity extends Activity implements VoteResultsReadyListene
     public static final String PASS_TO_RANKING_KEY = "PASS_TO_RANKING_KEY";
     public static final String PASS_TO_POST_VOTE_ACTIVITY_KEY = "PASS_TO_POST_VOTE_ACTIVITY_KEY";
 
-    //List<ParseObject> pOL;
-    Multimap<String, Integer> voteResultsMultimap = ArrayListMultimap.create();
-    ParseObject testLunchEvent;
-
     StableArrayAdapter restaurantAdaptor;
-
-    VoteParseGrabberAndCalculator voteParseGrabberAndCalculator;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,32 +52,6 @@ public class RankingActivity extends Activity implements VoteResultsReadyListene
         Log.d("LOG_TAG", "EventID is " + chosenLunchEvent.getEventID());
         TextView testTextView1 = (TextView) findViewById(R.id.title_text_view);
         testTextView1.setText(lunchEventID);
-
-        voteParseGrabberAndCalculator = new VoteParseGrabberAndCalculator(this, this);
-
-        //voteParseGrabber.testPostToParse(lunchEventID);
-
-        //
-        // THIS CODE GRABS ALL THE VOTES SUBMITTED FOR A PARTICULAR LUNCH EVENT
-        // It should probably belong in a different place, some kind of utility.
-        // We'll move it later
-        voteParseGrabberAndCalculator.calculateWinner(lunchEventID);
-        // DELAY
-//        try {
-//            Thread.sleep(5000);
-//        ArrayList<String> firstChoiceRestaurants = voteParseGrabberAndCalculator.getArrayListsOfRestaurantVotes("first");
-//        Log.d("firstChoiceRestaurants", firstChoiceRestaurants.toString());
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//            Log.d("NoSleep", "NG");
-//        }
-        //
-
-        // WHY DOES THE LOG HAPPEN BEFORE I GET MY RESULTS?! HOW CAN I MAKE IT HAPPEN AFTERWARD?
-
-
-        // END OF VOTE MANIPULATION CODE
-        //
 
         DynamicListView topRestaurantsListView = (DynamicListView) findViewById(R.id.ranked_restaurants_listview);
 
@@ -109,9 +71,12 @@ public class RankingActivity extends Activity implements VoteResultsReadyListene
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Vote vote1 = new Vote(lunchEventID, restaurantAdaptor.getItem(0), 1);
-                Vote vote2 = new Vote(lunchEventID, restaurantAdaptor.getItem(1), 2);
-                Vote vote3 = new Vote(lunchEventID, restaurantAdaptor.getItem(2), 3);
+                int rank1 = 1;
+                int rank2 = 2;
+                int rank3 = 3;
+                Vote vote1 = new Vote(lunchEventID, restaurantAdaptor.getItem(0), rank1);
+                Vote vote2 = new Vote(lunchEventID, restaurantAdaptor.getItem(1), rank2);
+                Vote vote3 = new Vote(lunchEventID, restaurantAdaptor.getItem(2), rank3);
 //                System.out.println(newVote);
                 ParsePutter parsePutter = new ParsePutter(thisActivity);
                 parsePutter.saveVote(vote1);
@@ -166,10 +131,5 @@ public class RankingActivity extends Activity implements VoteResultsReadyListene
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void voteResultsAreReady(Multimap<String, Integer> voteResultsReadyMultimap) {
-        voteResultsMultimap = voteResultsReadyMultimap;
     }
 }
