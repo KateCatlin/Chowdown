@@ -12,9 +12,12 @@ import com.parse.ParseQuery;
 import org.joda.time.DateTime;
 import org.json.JSONArray;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+
+import static com.parse.ParseObject.deleteAllInBackground;
 
 /**
  * Created by mattlauer on 2014-11-04.
@@ -28,24 +31,24 @@ public class LunchEventParseGrabber {
         Parse.initialize(currentActivity, APPLICATION_ID, CLIENT_KEY);
     }
 
-    public void testPostToParse() {
-
-        JSONArray attendees = new JSONArray(Arrays.asList(new String[] {"boy1", "woman2", "dog1", "cat1"}));
-
-        DateTime dt = new DateTime(2014, 11, 15, 4, 7, 20);
-        Date dte = dt.toDate();
-
-
-        ParseObject testObject = new ParseObject("LunchEvent");
-        testObject.put("startDate", dte);
-        testObject.put("eventDescription", "PARTY");
-        testObject.put("endDate", dte);
-        testObject.put("voteDate", dte);
-        testObject.put("attendees", attendees);
-        testObject.put("topRestaurant", "Lily Thai");
-        testObject.put("objectID", "10103930");
-        testObject.saveInBackground();
-    }
+//    public void testPostToParse() {
+//
+//        JSONArray attendees = new JSONArray(Arrays.asList(new String[] {"Kate", "Cory", "Matt", "Ken"}));
+//
+//        DateTime dt = new DateTime(2014, 11, 15, 4, 7, 20);
+//        Date dte = dt.toDate();
+//
+//
+//        ParseObject testObject = new ParseObject("LunchEvent");
+//        testObject.put("startDate", dte);
+//        testObject.put("eventDescription", "PARTY");
+//        testObject.put("endDate", dte);
+//        testObject.put("voteDate", dte);
+//        testObject.put("attendees", attendees);
+//        testObject.put("topRestaurant", "Lily Thai");
+//        testObject.put("objectID", "10103930");
+//        testObject.saveInBackground();
+//    }
 
 //    public String testLunchQuery() {
 //
@@ -54,15 +57,27 @@ public class LunchEventParseGrabber {
     public List<ParseObject> getLunchEvents(){
         List<ParseObject> parseObjectList = null;
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("LunchEvent");
+        ArrayList<ParseObject> upcomingEvents = new ArrayList<ParseObject>();
 
         try {
          parseObjectList = query.find();
+
+            //filtering just for events that have not past:
+            for (ParseObject x: parseObjectList) {
+                Date endDate = new Date();
+                Date currentDate = new Date();
+                endDate = x.getDate("endDate");
+                if(endDate.after(currentDate)) {
+                    upcomingEvents.add(x);
+                }
+            }
+
         } catch (ParseException e) {
             Log.e("Error", e.getMessage());
             e.printStackTrace();
         }
 
-        return parseObjectList;
+        return upcomingEvents;
 //        try {
 //            Thread.sleep(10000);
 //            System.out.println("I'm sleeping");
