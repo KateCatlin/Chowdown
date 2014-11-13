@@ -56,7 +56,7 @@ public class LunchDetailActivity extends Activity{
         Parse.initialize(this, "hQ5iOAVCIZ4BCepP1zco5r1HcoTp0uuvQUhLgUyX", "Hi4IYWhFI3L7EJLaX5KIRTTJvlt6DvBQHSDSTKgS");
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Vote");
         query.whereEqualTo("user", ParseUser.getCurrentUser());
-        query.whereEqualTo("voteForLunch", ParseObject.createWithoutData("LunchEvent", chosenLunch.getEventID()));
+        query.whereEqualTo("relatedLunch", ParseObject.createWithoutData("LunchEvent", chosenLunch.getEventID()));
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> parseObjects, ParseException e) {
