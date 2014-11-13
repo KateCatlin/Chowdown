@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.example.chowdown.controllers.VoteResultsListener;
 import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -12,6 +13,7 @@ import com.parse.ParseQuery;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by mattlauer on 2014-11-10.
@@ -25,7 +27,8 @@ public class VoteCalculator {
         this.listener = listener;
     }
 
-    Multimap<String, Integer> voteResultsMultimap = ArrayListMultimap.create();
+    Multimap<String, Integer> voteCollectionMultimap = ArrayListMultimap.create();
+    Multimap<String, Integer> voteResultsMultimap = HashMultimap.create();
     HashMap<String, Integer> voteResultsHashMap = new HashMap<String, Integer>();
 
     private static String APPLICATION_ID = "hQ5iOAVCIZ4BCepP1zco5r1HcoTp0uuvQUhLgUyX";
@@ -69,9 +72,16 @@ public class VoteCalculator {
                         Log.d("restaurantChoiceRank", String.valueOf(restaurantChoiceRank));
                         //Log.d("restaurantChoiceRank", restaurantChoiceRank.toString());
 
-                        voteResultsMultimap.put(restaurantChoiceName, restaurantChoiceRank);
+                        voteCollectionMultimap.put(restaurantChoiceName, restaurantChoiceRank);
 
-                        Log.d("voteResultsMap", voteResultsMultimap.toString());
+                        Log.d("voteResultsMap", voteCollectionMultimap.toString());
+                    }
+                    for (Map.Entry<String, Integer> entry : voteCollectionMultimap.entries()) {
+                        String restaurantName = entry.getKey();
+                        Log.d("restaurantName", restaurantName);
+                        Integer score = 0;
+                        Integer rank = entry.getValue();
+                        Log.d("rank", rank.toString());
                     }
 
                     //listener.voteResultsCalculated(winner);
