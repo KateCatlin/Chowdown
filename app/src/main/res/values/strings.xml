@@ -35,4 +35,14 @@
     <string name="confirm_button">Confirm</string>
 
     <string name="add_new_lunch">Create New Lunch</string>
+    <string name="create_lunch">Create Lunch</string>
+    <string name="lunch_description">Lunch Description</string>
+    <string name="enter_description">enter description here..</string>
+    <string name="lunch_start_time">Lunch Start Time</string>
+    <string name="lunch_end_time">Lunch End Time</string>
+    <string name="vote_end_time">Vote End Time</string>
+    <string name="choose_time">choose time</string>
+    <string name="lunch_created">Lunch Created. Voting Begins Now.</string>
+    <string name="set_time_date">Set Date/Time</string>
+    <string name="datetime_are_set">Date/Time are set</string>
 </resources>

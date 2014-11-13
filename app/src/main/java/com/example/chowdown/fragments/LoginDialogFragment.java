@@ -18,8 +18,8 @@ public class LoginDialogFragment extends DialogFragment {
     public LoginDialogFragment() {
     }
 
-    EditText mUsernameEditText;
-    Button mSaveButton;
+    public EditText mUsernameEditText;
+    public Button mSaveButton;
     public static final String USERNAME_KEY = "USERNAME_KEY";
     public static final String LOG_TAG = "LoginDialogFragment";
 
