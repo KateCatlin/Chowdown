@@ -30,7 +30,4 @@ public class Vote {
 
     public int getRank() { return rank; }
 
-//    public String toString() {
-//        return lunchId + firstChoice + secondChoice + thirdChoice;
-//    }
 }

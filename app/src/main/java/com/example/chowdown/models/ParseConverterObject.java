@@ -72,14 +72,4 @@ public class ParseConverterObject {
         return mLunchEvent;
     }
 
-//    public Vote parseObjectToVote(ParseObject parseObject, String lunchId, String userId, ) {
-//
-//        lunchId = parseObject
-//
-//        vote = new Vote(lunchId, userId, firstChoice, secondChoice, thirdChoice);
-//
-//        return vote;
-//    }
-
-
 }
