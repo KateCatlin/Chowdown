@@ -81,6 +81,15 @@ public class VoteCalculator {
                         Log.d("restaurantName", restaurantName);
                         Integer score = 0;
                         Integer rank = entry.getValue();
+                        if (rank == 1) {
+                            score = 3;
+                        }
+                        else if (rank == 2) {
+                            score = 2;
+                        }
+                        else if (rank == 3) {
+                            score = 1;
+                        }
                         Log.d("rank", rank.toString());
                     }
 
