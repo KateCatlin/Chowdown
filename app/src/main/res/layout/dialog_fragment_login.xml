@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|top"
-        android:background="@color/LightSkyBlue">
+        >
 
         <TextView
             android:layout_width="match_parent"
@@ -22,7 +22,7 @@
             android:textStyle="bold"
             android:textSize="22sp"
             android:textColor="@color/AntiqueWhite"
-            android:background="@color/DarkSlateBlue"
+            android:background="@color/DarkRed"
             android:paddingTop="17dp"
             android:paddingLeft="17dp"
             android:paddingRight="17dp"
@@ -85,7 +85,7 @@
                 android:layout_marginBottom="17dp"
                 android:text="@string/save"
                 android:singleLine="false"
-                android:background="@color/DarkSlateBlue"
+                android:background="@color/DarkGoldenrod"
                 android:textColor="@color/AntiqueWhite"/>
         </RelativeLayout>
 
