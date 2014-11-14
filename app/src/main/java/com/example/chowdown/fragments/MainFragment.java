@@ -43,12 +43,10 @@ public class MainFragment extends Fragment implements AdapterView.OnItemClickLis
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
-        Log.d(LOG_TAG, "ITEM CLICKED IN ADAPTER VIEW");
         LunchEvent chosenLunch = mLunchEventAdapter.getItem(position);
 
         Intent detailIntent = new Intent(getActivity(), LunchDetailActivity.class);
         detailIntent.putExtra(CHOSEN_LUNCH_KEY,chosenLunch);
-        Log.d(LOG_TAG, "EventID is " + chosenLunch.getEventID());
         startActivity(detailIntent);
 
     }
@@ -75,6 +73,14 @@ public class MainFragment extends Fragment implements AdapterView.OnItemClickLis
 
         List<ParseObject> pOL = lunchEventParseGrabber.getLunchEvents();
 
+//        if (arrayOfLunches != null) {
+//            Log.d(LOG_TAG, "Made it into not null");
+//        }
+
+//        mLunchEventAdapter.notifyDataSetInvalidated();
+
+
+
         int i = 0;
         for (ParseObject pO: pOL) {
             arrayOfLunches.add(i, mParseConverterObject.parseObjectToLunchEvent(pO));
@@ -83,6 +89,16 @@ public class MainFragment extends Fragment implements AdapterView.OnItemClickLis
         }
 
         mLunchEventAdapter = new LunchEventAdapter(getActivity(), arrayOfLunches);
+
+        try {
+            Log.d(LOG_TAG, "arrayList starts at " + arrayOfLunches.get(1).getDescription());
+            listView.
+            mLunchEventAdapter.clearAdapter();
+
+        }
+        catch (IndexOutOfBoundsException e) {
+            //
+        }
 
         mLunchEventAdapter.addAll(arrayOfLunches);
 

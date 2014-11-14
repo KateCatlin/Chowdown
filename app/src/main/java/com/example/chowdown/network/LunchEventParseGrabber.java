@@ -51,7 +51,7 @@ public class LunchEventParseGrabber {
         try {
          parseObjectList = query.find();
 
-            //filtering just for events that have not past:
+            //filtering just for events that have not passed:
             for (ParseObject x: parseObjectList) {
                 Date endDate = new Date();
                 Date currentDate = new Date();

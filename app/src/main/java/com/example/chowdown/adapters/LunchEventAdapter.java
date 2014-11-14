@@ -40,9 +40,15 @@ public class LunchEventAdapter extends ArrayAdapter<LunchEvent> {
         this.mContext = context;
     }
 
+    public void clearAdapter()
+    {
+        notifyDataSetChanged();
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         //Log.d(LOG_CAT, "Made it into View getView");
+
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View thisRow = inflater.inflate(R.layout.row_lunch, parent, false);
 
