@@ -3,6 +3,7 @@ package com.example.chowdown.fragments;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,12 @@ import android.widget.TextView;
 import com.example.chowdown.R;
 import com.example.chowdown.activities.MainActivity;
 import com.example.chowdown.activities.RankingActivity;
+import com.example.chowdown.controllers.VoteResultsListener;
 import com.example.chowdown.models.LunchEvent;
+import com.example.chowdown.network.VoteCalculator;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
+import com.parse.ParseObject;
 
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
@@ -24,7 +30,7 @@ import org.joda.time.format.PeriodFormatterBuilder;
 /**
  * Created by Borham on 11/6/14.
  */
-public class LunchDetailFragment extends Fragment {
+public class LunchDetailFragment extends Fragment implements VoteResultsListener {
     public TextView titleText;
     public TextView dateText;
     public TextView timeFrameText;
@@ -35,6 +41,12 @@ public class LunchDetailFragment extends Fragment {
     public TextView votingDetailsText;
     public static final String CHOSEN_LUNCH_KEY = "CHOSEN_LUNCH_KEY";
     public static final String PASS_TO_RANKING_KEY = "PASS_TO_RANKING_KEY";
+    private CountDownTimer voteCountDownTimer;
+    private LunchEvent chosenLunchEvent;
+
+    VoteCalculator voteCalculator;
+    Multimap<String, Integer> voteResultsMultimap = ArrayListMultimap.create();
+    ParseObject testLunchEvent;
 
     public Button noButton;
     public Button yesButton;
@@ -56,7 +68,9 @@ public class LunchDetailFragment extends Fragment {
 
         Bundle data = getArguments();
 
-        final LunchEvent chosenLunchEvent = data.getParcelable(CHOSEN_LUNCH_KEY);
+
+        chosenLunchEvent = data.getParcelable(CHOSEN_LUNCH_KEY);
+
         Log.d("LOG_TAG", "EventID is " + chosenLunchEvent.getEventID());
 
         titleText = (TextView)root.findViewById(R.id.lunch_detail_title);
@@ -110,7 +124,65 @@ public class LunchDetailFragment extends Fragment {
             }
         });
 
+        DateTime currentDateTime = DateTime.now();
+        Interval votingInterval = new Interval(currentDateTime, chosenLunchEvent.getVotingDate());
+        int millisecondsLeft = (int)(votingInterval.getEndMillis() - votingInterval.getStartMillis());
+        voteCountDownTimer = new CountDownTimer(millisecondsLeft, 1000) {
+            public void onTick(long millisUntilFinished) {
+                if (getActivity() != null) {
+                    TextView votingStatus = (TextView) getActivity().findViewById(R.id.voting_status);
+                    votingStatus.setText(getStringThatShowsWhenVotingEnds(chosenLunchEvent));
+                }
+            }
+
+            public void onFinish() {
+                TextView votingStatus = (TextView) getActivity().findViewById(R.id.voting_status);
+                votingStatus.setText("Too late!");
+            }
+        };
+        voteCountDownTimer.start();
         return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        DateTime currentDateTime = DateTime.now();
+        Interval votingInterval = new Interval(currentDateTime, chosenLunchEvent.getVotingDate());
+        int millisecondsLeft = (int)(votingInterval.getEndMillis() - votingInterval.getStartMillis());
+        voteCountDownTimer = new CountDownTimer(millisecondsLeft, 1000) {
+            public void onTick(long millisUntilFinished) {
+                if (getActivity() != null) {
+                    TextView votingStatus = (TextView) getActivity().findViewById(R.id.voting_status);
+                    votingStatus.setText(getStringThatShowsWhenVotingEnds(chosenLunchEvent));
+                }
+            }
+
+            public void onFinish() {
+                TextView votingStatus = (TextView) getActivity().findViewById(R.id.voting_status);
+                votingStatus.setText("Voting over! You're eating at "+ chosenLunchEvent.getTopRestaurant());
+            }
+        };
+        voteCountDownTimer.start();
+
+        //
+        // THIS CODE GRABS ALL THE VOTES SUBMITTED FOR A PARTICULAR LUNCH EVENT
+        voteCalculator = new VoteCalculator(this);
+        voteCalculator.calculateWinner(chosenLunchEvent.eventID);
+        // END VOTE CODE
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        voteCountDownTimer.cancel();
+        voteCountDownTimer = null;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        voteCountDownTimer = null;
     }
 
     private String getStringThatShowsWhenVotingEnds(LunchEvent chosenLunchEvent) {
@@ -133,7 +205,11 @@ public class LunchDetailFragment extends Fragment {
                 .appendSeparator(", and ")
                 .appendMinutes()
                 .appendSuffix(" minute", " minutes")
+                .appendSeparator(", ")
+                .appendSeconds()
+                .appendSuffix(" second", " seconds")
                 .toFormatter();
+
 
 
         String stringThatShowsWhenVotingEnds = "Time until voting ends:\n" + timeLeftFormatter.print(timeLeftUntilVotingEnds);
@@ -164,5 +240,10 @@ public class LunchDetailFragment extends Fragment {
             }
         }
         return allTheAttendees;
+    }
+
+    @Override
+    public void voteResultsCalculated(String winner) {
+
     }
 }

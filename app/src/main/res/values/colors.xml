@@ -140,4 +140,9 @@
     <color name="DarkBlue">#00008B</color>
     <color name="Navy">#000080</color>
     <color name="Black">#000000</color>
+    <color name="green">#776600</color>
+    <color name="darkyellow">#cc8800</color>
+    <color name="red">#ff1100</color>
+    <color name="orange">#ff7700</color>
+    <color name="yellow">#ff7700</color>
 </resources>

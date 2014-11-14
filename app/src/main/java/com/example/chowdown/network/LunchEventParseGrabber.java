@@ -11,7 +11,9 @@ import com.parse.ParseQuery;
 
 import org.json.JSONArray;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -42,67 +44,34 @@ public class LunchEventParseGrabber {
     }
 
 //    public String testLunchQuery() {
-//
-//    }
-
-    public List<ParseObject> getLunchEvents(){
+    public List<ParseObject> getLunchEvents() {
         List<ParseObject> parseObjectList = null;
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("LunchEvent");
+        ArrayList<ParseObject> upcomingEvents = new ArrayList<ParseObject>();
 
         try {
          parseObjectList = query.find();
+
+            //filtering just for events that have not past:
+            for (ParseObject x: parseObjectList) {
+                Date endDate = new Date();
+                Date currentDate = new Date();
+                Log.d("LOG_TAG", "currentDate is " + currentDate);
+
+                endDate = x.getDate("endDate");
+                Log.d("LOG_TAG", "endDate is " + endDate);
+                if(endDate.after(currentDate)) {
+                    upcomingEvents.add(x);
+                }
+            }
+            for (ParseObject y: upcomingEvents) {
+                Log.d("LOG_TAG","upcomingEvents includes " + y.getString("eventDescription"));
+            }
         } catch (ParseException e) {
             Log.e("Error", e.getMessage());
             e.printStackTrace();
         }
 
-        return parseObjectList;
-//        try {
-//            Thread.sleep(10000);
-//            System.out.println("I'm sleeping");
-//            Log.v("I am ", "sleeping");
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-
-//        for(ParseObject po: parseObjectList) {
-//            System.out.println(po.getString("topRestaurant"));
-//            Log.v("Returned topRestaurant", po.getString("topRestaurant"));
-//        }
-//
-//        ArrayList<String> testList = new ArrayList<String>();
-//        testList.add("string 1");
-//
-//        for(String po: testList) {
-////            System.out.println(po.getString("topRestaurant"));
-//            Log.v("Returned topRestaurant", po);
-//        }
-//
-//        ArrayList<LunchEvent> lunchEvents = new ArrayList<LunchEvent>();
-//
-//        return lunchEvents;
-    }
-
-    private void grabEventIDFromParse(LunchEvent lunchEvent) {
-        // Use Parse to grab the objectID for the Parse record associated with this LunchEvent.
-        // Assumes the LunchEvent is already saved to Parse.
-        // Then set eventID using setter method.
-    }
-
-    private void grabDatesFromParse(LunchEvent lunchEvent) {
-        // Use Parse to grab all dates for a particular LunchEvent, and set them using the setter methods.
-        // Assumes the LunchEvent is already saved to Parse.
-    }
-
-    private void grabEventAttendeesFromParse(LunchEvent lunchEvent) {
-        // Use Parse to grab all user names associated with all votes that are tied to this LunchEvent ID.
-        // Store those name Strings into the eventAttendees ArrayList.
-        // Again assumes the entries have already been added to Parse.
-        // Then set eventAttendees using setter method.
-    }
-
-    public void setUpLunchEvent(LunchEvent lunchEvent) {
-        // Call the grab methods above to fill this LunchEvent in Java. These methods are private.
-        // User should just call setUpLunchEvent() when she needs a new LunchEvent.
+        return upcomingEvents;
     }
 }

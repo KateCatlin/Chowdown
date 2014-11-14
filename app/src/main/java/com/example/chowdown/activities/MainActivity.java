@@ -6,22 +6,27 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.chowdown.R;
 import com.example.chowdown.fragments.LoginDialogFragment;
 import com.example.chowdown.fragments.MainFragment;
+import com.parse.Parse;
+import com.parse.ParseUser;
 
-
-public class MainActivity extends Activity  {
+public class MainActivity extends Activity {
 
     public static final String USERNAME_KEY = "USERNAME_KEY";
+    private static String APPLICATION_ID = "hQ5iOAVCIZ4BCepP1zco5r1HcoTp0uuvQUhLgUyX";
+    private static String CLIENT_KEY = "Hi4IYWhFI3L7EJLaX5KIRTTJvlt6DvBQHSDSTKgS";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Parse.initialize(this, APPLICATION_ID, CLIENT_KEY);
 
         setContentView(R.layout.activity_main);
 
@@ -35,14 +40,15 @@ public class MainActivity extends Activity  {
                     .commit();
         }
 
-        String username = PreferenceManager.getDefaultSharedPreferences(this).getString(USERNAME_KEY, null);
-        if (username == null){
+        Parse.initialize(this, APPLICATION_ID, CLIENT_KEY);
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser == null) {
+            Log.d("LOG_TAG", "made it inot currentUser ==null");
             DialogFragment loginDialog = new LoginDialogFragment();
             loginDialog.setCancelable(false);
             loginDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
             loginDialog.show(getFragmentManager(), "LoginDialogFragment");
         }
-
 
     }
 
@@ -66,4 +72,5 @@ public class MainActivity extends Activity  {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

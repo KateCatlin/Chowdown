@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.chowdown.R;
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 public class LoginDialogFragment extends DialogFragment {
 
@@ -19,8 +22,10 @@ public class LoginDialogFragment extends DialogFragment {
     }
 
     public EditText mUsernameEditText;
+    public EditText mPasswordEditText;
     public Button mSaveButton;
     public static final String USERNAME_KEY = "USERNAME_KEY";
+    public static final String PASSWORD_KEY = "PASSWORD_KEY";
     public static final String LOG_TAG = "LoginDialogFragment";
 
     @Override
@@ -30,16 +35,21 @@ public class LoginDialogFragment extends DialogFragment {
         View root = inflater.inflate(R.layout.dialog_fragment_login, container, false);
 
         mUsernameEditText = (EditText) root.findViewById(R.id.editText_username_entry);
+        mPasswordEditText = (EditText) root.findViewById(R.id.editText_password_entry);
+
         mSaveButton = (Button) root.findViewById(R.id.button_save);
 
         mSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if (mUsernameEditText.getText().toString().trim().length() != 0){
+                if (mUsernameEditText.getText().toString().trim().length() != 0 & mPasswordEditText.getText().toString().trim().length() != 0){
 
-                    String username = (mUsernameEditText.getText().toString());
+                    final String username = (mUsernameEditText.getText().toString());
                     Log.d(LOG_TAG, "THE USERNAME IS: " + username);
+
+                    final String password = (mPasswordEditText.getText().toString());
+                    Log.d(LOG_TAG, "THE PASSWORD IS: " + password);
 
                     //saves the "saved" username in the editText to SharedPreferences
                     PreferenceManager.getDefaultSharedPreferences(getActivity())
@@ -47,7 +57,30 @@ public class LoginDialogFragment extends DialogFragment {
                             .putString(USERNAME_KEY, username)
                             .commit();
 
-                    //jumps back to main activity
+                    PreferenceManager.getDefaultSharedPreferences(getActivity())
+                            .edit()
+                            .putString(PASSWORD_KEY, password)
+                            .commit();
+
+                    ParseUser user = new ParseUser();
+                    user.setUsername(username);
+                    user.setPassword(password);
+
+                    user.signUpInBackground(new SignUpCallback() {
+                        public void done(ParseException e) {
+                            if (e == null) {
+                                //
+                            } else {
+//                                Context context = getActivity();
+//                                CharSequence text = "Something was wrong! Try again!";
+//                                int duration = Toast.LENGTH_SHORT;
+//
+//                                Toast toast = Toast.makeText(context, text, duration);
+//                                toast.show();
+                            }
+                        }
+                    });
+
                     dismiss();
                 }
 

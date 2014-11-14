@@ -15,8 +15,9 @@
         android:paddingRight="25dp"
         android:paddingTop="10dp"
         android:text="@string/lunches_title_text"
-        android:textSize="30sp"
-        />
+        android:textColor="@color/orange"
+        android:layout_centerHorizontal="true"
+        android:textSize="30sp"/>
 
     <ListView
         android:id="@+id/listview"

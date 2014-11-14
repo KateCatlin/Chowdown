@@ -17,6 +17,7 @@ import com.example.chowdown.activities.LunchDetailActivity;
 import com.example.chowdown.adapters.LunchEventAdapter;
 import com.example.chowdown.models.LunchEvent;
 import com.example.chowdown.models.ParseConverterObject;
+import com.example.chowdown.models.Vote;
 import com.example.chowdown.network.LunchEventParseGrabber;
 import com.parse.ParseObject;
 
@@ -32,9 +33,11 @@ public class MainFragment extends Fragment implements AdapterView.OnItemClickLis
     LunchEventParseGrabber lunchEventParseGrabber;
     ParseConverterObject mParseConverterObject = new ParseConverterObject();
     public static ArrayList<LunchEvent> arrayOfLunches = new ArrayList<LunchEvent>();
+    public static ArrayList<Vote> arrayOfVotes = new ArrayList<Vote>();
     public static final String CHOSEN_LUNCH_KEY = "CHOSEN_LUNCH_KEY";
     public static final String LOG_TAG = "MainActivity";
     public Button newLunchButton;
+
 
     public MainFragment () {
 
@@ -80,13 +83,11 @@ public class MainFragment extends Fragment implements AdapterView.OnItemClickLis
 
         lunchEventParseGrabber = new LunchEventParseGrabber(getActivity());
 
-
-
         List<ParseObject> pOL = lunchEventParseGrabber.getLunchEvents();
 
         int i = 0;
         for (ParseObject pO: pOL) {
-            arrayOfLunches.add(i, mParseConverterObject.parseToObject(pO));
+            arrayOfLunches.add(i, mParseConverterObject.parseObjectToLunchEvent(pO));
             i++;
 
         }
