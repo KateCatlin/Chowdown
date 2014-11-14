@@ -23,7 +23,9 @@
             android:paddingRight="25dp"
             android:paddingTop="10dp"
             android:text="@string/lunch_detail_title_text"
-            android:textSize="30sp" />
+            android:textSize="30sp"
+            android:background="@color/DarkRed"
+            android:textColor="@color/White"/>
 
         <TextView
             android:id="@+id/text_detail_date"
@@ -118,7 +120,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/no_button_text"
-            android:background="@color/Gray"
+            android:background="@color/DarkRed"
             android:textColor="@color/White"
             android:textSize="25sp" />
 
@@ -128,7 +130,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/yes_button_text"
-            android:background="@color/DarkRed"
+            android:background="@color/DarkGoldenrod"
             android:textColor="@color/White"
             android:textSize="25sp" />
 

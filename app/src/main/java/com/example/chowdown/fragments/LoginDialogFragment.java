@@ -21,9 +21,9 @@ public class LoginDialogFragment extends DialogFragment {
     public LoginDialogFragment() {
     }
 
-    public EditText mUsernameEditText;
-    public EditText mPasswordEditText;
-    public Button mSaveButton;
+    EditText mUsernameEditText;
+    EditText mPasswordEditText;
+    Button mSaveButton;
     public static final String USERNAME_KEY = "USERNAME_KEY";
     public static final String PASSWORD_KEY = "PASSWORD_KEY";
     public static final String LOG_TAG = "LoginDialogFragment";
@@ -45,10 +45,10 @@ public class LoginDialogFragment extends DialogFragment {
 
                 if (mUsernameEditText.getText().toString().trim().length() != 0 & mPasswordEditText.getText().toString().trim().length() != 0){
 
-                    final String username = (mUsernameEditText.getText().toString());
+                    String username = (mUsernameEditText.getText().toString());
                     Log.d(LOG_TAG, "THE USERNAME IS: " + username);
 
-                    final String password = (mPasswordEditText.getText().toString());
+                    String password = (mPasswordEditText.getText().toString());
                     Log.d(LOG_TAG, "THE PASSWORD IS: " + password);
 
                     //saves the "saved" username in the editText to SharedPreferences
@@ -81,6 +81,7 @@ public class LoginDialogFragment extends DialogFragment {
                         }
                     });
 
+                    //jumps back to main activity???
                     dismiss();
                 }
 

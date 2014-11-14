@@ -67,7 +67,9 @@
         android:layout_alignLeft="@+id/textview_lunch_begins"
         android:layout_alignStart="@+id/textview_lunch_begins"
         android:layout_alignRight="@+id/button_vote_ends"
-        android:layout_alignEnd="@+id/button_vote_ends"/>
+        android:layout_alignEnd="@+id/button_vote_ends"
+        android:background="@color/DarkGoldenrod"
+        android:textColor="@color/White"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -95,7 +97,9 @@
         android:layout_alignLeft="@+id/textView_lunch_ends"
         android:layout_alignStart="@+id/textView_lunch_ends"
         android:layout_alignRight="@+id/button_lunch_begins"
-        android:layout_alignEnd="@+id/button_lunch_begins"/>
+        android:layout_alignEnd="@+id/button_lunch_begins"
+        android:background="@color/DarkGoldenrod"
+        android:textColor="@color/White"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -124,7 +128,9 @@
         android:layout_alignLeft="@+id/textView_voting_ends"
         android:layout_alignStart="@+id/textView_voting_ends"
         android:layout_alignRight="@+id/edit_description"
-        android:layout_alignEnd="@+id/edit_description"/>
+        android:layout_alignEnd="@+id/edit_description"
+        android:background="@color/DarkGoldenrod"
+        android:textColor="@color/White"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -135,6 +141,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="45dp"
-        android:singleLine="false"/>
+        android:singleLine="false"
+        android:background="@color/DarkGoldenrod"
+        android:textColor="@color/White"/>
 
 </RelativeLayout>

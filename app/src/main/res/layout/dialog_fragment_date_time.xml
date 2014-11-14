@@ -44,10 +44,11 @@
         />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/set_time_date"
         android:id="@+id/button_set_time_date"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="10dp"/>
+        android:background="@color/DarkGoldenrod"
+        android:layout_margin="10dp"/>
 </LinearLayout>
