@@ -34,4 +34,22 @@
     <string name="fake_time">11:34</string>
     <string name="title_activity_post_vote">PostVoteActivity</string>
     <string name="confirm_button">Confirm</string>
+
+    <string name="add_new_lunch">Create New Lunch</string>
+    <string name="create_lunch">CREATE!</string>
+    <string name="lunch_description">Lunch Description</string>
+    <string name="enter_description">Enter description here..</string>
+    <string name="lunch_start_time">Lunch Start Time (should happen second)</string>
+    <string name="lunch_end_time">Lunch End Time (should happen last)</string>
+    <string name="vote_end_time">Vote End Time (should happen first)</string>
+    <string name="choose_time">Choose Date/Time</string>
+    <string name="lunch_created">Lunch Created. Voting Begins Now.</string>
+    <string name="set_time_date">Set Date/Time</string>
+    <string name="datetime_are_set">Date/Time are set</string>
+    <string name="set_date">SET DATE</string>
+    <string name="set_time">SET TIME</string>
+    <string name="change_fields">You must set all fields before creating...</string>
+    <string name="date_order">Vote End Time must happen before Lunch Start Time, which must happen before Lunch End Time...</string>
+    <string name="after_now">All chosen dates and times must happen after the current date and time...</string>
+
 </resources>

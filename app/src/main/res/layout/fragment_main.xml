@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/LightGrey"
-    tools:context=".MainActivity">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/LightGrey"
+                tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/lunches_title"
@@ -37,7 +37,20 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:background="@color/LightGrey"
-        android:layout_below="@id/divider_line">
+        android:layout_below="@id/divider_line"
+        android:layout_above="@+id/new_lunch_button">
     </ListView>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/DarkGoldenrod"
+        android:text="@string/add_new_lunch"
+        android:id="@+id/new_lunch_button"
+        android:textColor="@color/White"
+        android:nestedScrollingEnabled="false"
+        android:textSize="20sp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>
