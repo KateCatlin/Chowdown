@@ -49,7 +49,8 @@ public class RankingActivity extends Activity {
 
         Intent intent = getIntent();
         lunchEventID = chosenLunchEvent.getEventID();
-        Log.d("LOG_TAG", "EventID is " + chosenLunchEvent.getEventID());
+        Log.d("LOG_TAG", "EventID in RankingActivity is " + chosenLunchEvent.getEventID());
+        Log.d("LOG_TAG", "Description in RankingActivity is " + chosenLunchEvent.getDescription() );
         TextView testTextView1 = (TextView) findViewById(R.id.title_text_view);
         testTextView1.setText(lunchEventID);
 

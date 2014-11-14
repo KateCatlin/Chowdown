@@ -19,6 +19,7 @@ import java.util.Map;
  * Created by mattlauer on 2014-11-10.
  */
 public class VoteCalculator {
+    public final static String LOG_TAG = "LOG_TAG";
 
     private VoteResultsListener listener;
 
@@ -87,9 +88,15 @@ public class VoteCalculator {
                     }
 
                     ParseObject parseLunchObject = ParseObject.createWithoutData("LunchEvent", lunchEventID);
-                    parseLunchObject.put("topRestaurant", maxEntry.getKey());
-                    parseLunchObject.put("votingEnded", true);
-                    parseLunchObject.saveInBackground();
+                    try {
+                        parseLunchObject.put("topRestaurant", maxEntry.getKey());
+                        parseLunchObject.put("votingEnded", true);
+                        parseLunchObject.saveInBackground();
+                    }
+                    catch (NullPointerException f) {
+                        Log.d(LOG_TAG, "did not have topRestaurant, therefore crashed");
+
+                    }
                 }
             }
         });

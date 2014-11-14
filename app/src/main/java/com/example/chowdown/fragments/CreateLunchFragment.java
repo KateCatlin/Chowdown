@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,20 +17,25 @@ import android.widget.Toast;
 
 import com.example.chowdown.R;
 import com.example.chowdown.activities.MainActivity;
+import com.example.chowdown.activities.RankingActivity;
 import com.example.chowdown.controllers.GetChosenDateInterface;
 import com.example.chowdown.models.LunchEvent;
+import com.example.chowdown.models.ParseConverterObject;
 import com.example.chowdown.network.LunchEventParseGrabber;
+import com.parse.ParseObject;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Borham on 11/11/14.
  */
 public class CreateLunchFragment extends Fragment implements GetChosenDateInterface {
+    public static ArrayList<LunchEvent> arrayOfLunches = new ArrayList<LunchEvent>();
     public EditText editDescription;
     public Button lunchStartButton;
     public Button lunchEndButton;
@@ -38,18 +44,25 @@ public class CreateLunchFragment extends Fragment implements GetChosenDateInterf
     public DialogFragment lunchStartDialogFragment;
     public DialogFragment lunchEndDialogFragment;
     public DialogFragment voteEndDialogFragment;
+    public LunchEvent newLunchEvent;
+    public LunchEventParseGrabber mLunchEventParseGrabber;
     public final String VOTING_DATE_STRING = "VOTING_DATE_STRING";
     public final String START_DATE_STRING = "START_DATE_STRING";
     public final String END_DATE_STRING = "END_DATE_STRING";
     public boolean voteDateChanged;
     public boolean startDateChanged;
     public boolean endDateChanged;
+    ParseConverterObject mParseConverterObject = new ParseConverterObject();
     public final String VOTE_CHANGE_KEY = "VOTE_CHANGE_KEY";
     public final String START_CHANGE_KEY = "START_CHANGE_KEY";
     public final String END_CHANGE_KEY = "END_CHANGE_KEY";
     public final String DESCRIPTION_KEY = "DESCRIPTION_KEY";
+    public static final String PASS_TO_RANKING_KEY = "PASS_TO_RANKING_KEY";
+    public static final String LOG_TAG = "LOG_TAG";
+
 
     String description;
+    String objectID;
     DateTime startDate, endDate, votingDate;
     ArrayList<String> eventAttendees;
     DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm");
@@ -179,11 +192,32 @@ public class CreateLunchFragment extends Fragment implements GetChosenDateInterf
                         if (votingDate.isBefore(startDate) && startDate.isBefore(endDate)){
 
                             LunchEventParseGrabber lunchEventParseGrabber = new LunchEventParseGrabber(getActivity());
-                            lunchEventParseGrabber.postToParse(new LunchEvent(null, description, startDate, endDate, votingDate, eventAttendees, null));
+                            newLunchEvent = new LunchEvent(null, description, startDate, endDate, votingDate, eventAttendees, null);
+                            lunchEventParseGrabber.postToParse(newLunchEvent);
 
-                            Intent mainIntent = new Intent(getActivity(), MainActivity.class);
                             Toast.makeText(getActivity(), getString(R.string.lunch_created), Toast.LENGTH_SHORT).show();
-                            startActivity(mainIntent);
+
+                            mLunchEventParseGrabber = new LunchEventParseGrabber(getActivity());
+
+                            List<ParseObject> pOL = lunchEventParseGrabber.getLunchEvents();
+
+                            int i = 0;
+                            for (ParseObject pO: pOL) {
+                                arrayOfLunches.add(i, mParseConverterObject.parseObjectToLunchEvent(pO));
+                                i++;
+                            }
+
+                            objectID = arrayOfLunches.get(0).getEventID();
+
+                            newLunchEvent.setEventID(objectID);
+
+                            Intent rankingIntent = new Intent(getActivity(), RankingActivity.class);
+                            Bundle mBundle = new Bundle();
+                            mBundle.putParcelable(PASS_TO_RANKING_KEY, newLunchEvent);
+                            rankingIntent.putExtras(mBundle);
+
+                            startActivity(rankingIntent);
+
                         }
 
                         else Toast.makeText(getActivity(), getString(R.string.date_order), Toast.LENGTH_LONG).show();

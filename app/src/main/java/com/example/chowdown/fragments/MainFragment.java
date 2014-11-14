@@ -98,7 +98,6 @@ public class MainFragment extends Fragment implements AdapterView.OnItemClickLis
 
         }
         catch (IndexOutOfBoundsException e) {
-            //
         }
 
         int i = 0;

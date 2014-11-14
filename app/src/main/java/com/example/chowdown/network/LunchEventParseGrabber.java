@@ -56,16 +56,13 @@ public class LunchEventParseGrabber {
             for (ParseObject x: parseObjectList) {
                 Date endDate = new Date();
                 Date currentDate = new Date();
-                Log.d("LOG_TAG", "currentDate is " + currentDate);
 
                 endDate = x.getDate("endDate");
-                Log.d("LOG_TAG", "endDate is " + endDate);
                 if(endDate.after(currentDate)) {
                     upcomingEvents.add(x);
                 }
             }
             for (ParseObject y: upcomingEvents) {
-                Log.d("LOG_TAG","upcomingEvents includes " + y.getString("eventDescription"));
             }
         } catch (ParseException e) {
             Log.e("Error", e.getMessage());

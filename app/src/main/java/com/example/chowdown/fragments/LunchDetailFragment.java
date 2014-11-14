@@ -44,6 +44,7 @@ public class LunchDetailFragment extends Fragment implements VoteResultsListener
     public static final String PASS_TO_RANKING_KEY = "PASS_TO_RANKING_KEY";
     private CountDownTimer voteCountDownTimer;
     private LunchEvent chosenLunchEvent;
+    public static final String LOG_TAG = "LOG_TAG";
 
     VoteCalculator voteCalculator;
     Multimap<String, Integer> voteResultsMultimap = ArrayListMultimap.create();
@@ -118,6 +119,7 @@ public class LunchDetailFragment extends Fragment implements VoteResultsListener
 
                 Intent rankingIntent = new Intent(getActivity(), RankingActivity.class);
                 Bundle mBundle = new Bundle();
+                Log.d(LOG_TAG,"chosen lunch even stuff: " + chosenLunchEvent.getDescription() + " " + chosenLunchEvent.getStartDate() + " " + chosenLunchEvent.getTopRestaurant() + " " + chosenLunchEvent.getEventID());
                 mBundle.putParcelable(PASS_TO_RANKING_KEY, chosenLunchEvent);
                 rankingIntent.putExtras(mBundle);
 
