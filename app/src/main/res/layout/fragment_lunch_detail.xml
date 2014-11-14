@@ -5,12 +5,15 @@
     android:orientation="vertical"
     android:id="@+id/fragment_lunch_detail"
     tools:context=".DetailFragment"
-    android:background="@color/White">
+    android:background="@color/White"
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:id="@+id/id_of_background"
+        android:background="@drawable/pizza"
         tools:context=".DetailFragment">
 
         <TextView
@@ -117,6 +120,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/no_button_text"
+            android:background="@color/Gray"
+            android:textColor="@color/White"
             android:textSize="25sp" />
 
         <Button
@@ -125,6 +130,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/yes_button_text"
+            android:background="@color/DarkRed"
+            android:textColor="@color/White"
             android:textSize="25sp" />
 
 
