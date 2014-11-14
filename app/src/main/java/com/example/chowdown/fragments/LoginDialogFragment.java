@@ -47,7 +47,7 @@ public class LoginDialogFragment extends DialogFragment {
                             .putString(USERNAME_KEY, username)
                             .commit();
 
-                    //jumps back to main activity???
+                    //jumps back to main activity
                     dismiss();
                 }
 

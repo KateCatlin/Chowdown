@@ -9,11 +9,9 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-import org.joda.time.DateTime;
 import org.json.JSONArray;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,19 +26,15 @@ public class LunchEventParseGrabber {
         Parse.initialize(currentActivity, APPLICATION_ID, CLIENT_KEY);
     }
 
-    public void testPostToParse() {
+    public void postToParse(LunchEvent createdLunchEvent) {
 
-        JSONArray attendees = new JSONArray(Arrays.asList(new String[] {"boy1", "woman2", "dog1", "cat1"}));
-
-        DateTime dt = new DateTime(2014, 11, 15, 4, 7, 20);
-        Date dte = dt.toDate();
-
+        JSONArray attendees = new JSONArray(Arrays.asList(createdLunchEvent.eventAttendees.toArray()));
 
         ParseObject testObject = new ParseObject("LunchEvent");
-        testObject.put("startDate", dte);
-        testObject.put("eventDescription", "PARTY");
-        testObject.put("endDate", dte);
-        testObject.put("voteDate", dte);
+        testObject.put("startDate", createdLunchEvent.startDate.toDate());
+        testObject.put("eventDescription", createdLunchEvent.description);
+        testObject.put("endDate", createdLunchEvent.endDate.toDate());
+        testObject.put("voteDate", createdLunchEvent.votingDate.toDate());
         testObject.put("attendees", attendees);
         testObject.put("topRestaurant", "Lily Thai");
         testObject.put("objectID", "10103930");

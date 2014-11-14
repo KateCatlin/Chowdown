@@ -52,13 +52,11 @@
         android:textStyle="bold"
         android:textIsSelectable="true"
         android:textSize="15sp"
-        android:layout_marginTop="20dp"
-        android:layout_below="@+id/edit_description"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:phoneNumber="false"/>
+        android:phoneNumber="false"
+        android:layout_below="@+id/button_vote_ends"
+        android:layout_alignLeft="@+id/button_vote_ends"
+        android:layout_alignStart="@+id/button_vote_ends"
+        android:layout_marginTop="20dp"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -68,15 +66,15 @@
         android:layout_below="@+id/textview_lunch_begins"
         android:layout_alignLeft="@+id/textview_lunch_begins"
         android:layout_alignStart="@+id/textview_lunch_begins"
-        android:layout_alignRight="@+id/edit_description"
-        android:layout_alignEnd="@+id/edit_description"/>
+        android:layout_alignRight="@+id/button_vote_ends"
+        android:layout_alignEnd="@+id/button_vote_ends"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/lunch_end_time"
-        android:id="@+id/textView2"
+        android:id="@+id/textView_lunch_ends"
         android:singleLine="false"
         android:gravity="left"
         android:textStyle="bold"
@@ -93,9 +91,9 @@
         android:layout_height="wrap_content"
         android:text="@string/choose_time"
         android:id="@+id/button_lunch_ends"
-        android:layout_below="@+id/textView2"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_alignStart="@+id/textView2"
+        android:layout_below="@+id/textView_lunch_ends"
+        android:layout_alignLeft="@+id/textView_lunch_ends"
+        android:layout_alignStart="@+id/textView_lunch_ends"
         android:layout_alignRight="@+id/button_lunch_begins"
         android:layout_alignEnd="@+id/button_lunch_begins"/>
 
@@ -104,16 +102,16 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/vote_end_time"
-        android:id="@+id/textView3"
+        android:id="@+id/textView_voting_ends"
         android:singleLine="false"
         android:gravity="left"
         android:textStyle="bold"
         android:textIsSelectable="true"
         android:textSize="15sp"
         android:phoneNumber="false"
-        android:layout_below="@+id/button_lunch_ends"
-        android:layout_alignLeft="@+id/button_lunch_ends"
-        android:layout_alignStart="@+id/button_lunch_ends"
+        android:layout_below="@+id/edit_description"
+        android:layout_alignLeft="@+id/edit_description"
+        android:layout_alignStart="@+id/edit_description"
         android:layout_marginTop="20dp"/>
 
     <Button
@@ -121,11 +119,12 @@
         android:layout_height="wrap_content"
         android:text="@string/choose_time"
         android:id="@+id/button_vote_ends"
-        android:layout_below="@+id/textView3"
-        android:layout_alignLeft="@+id/textView3"
-        android:layout_alignStart="@+id/textView3"
-        android:layout_alignRight="@+id/button_lunch_ends"
-        android:layout_alignEnd="@+id/button_lunch_ends"/>
+        android:layout_toEndOf="@+id/button_create_lunch"
+        android:layout_below="@+id/textView_voting_ends"
+        android:layout_alignLeft="@+id/textView_voting_ends"
+        android:layout_alignStart="@+id/textView_voting_ends"
+        android:layout_alignRight="@+id/edit_description"
+        android:layout_alignEnd="@+id/edit_description"/>
 
     <Button
         android:layout_width="wrap_content"

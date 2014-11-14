@@ -80,7 +80,7 @@ public class MainFragment extends Fragment implements AdapterView.OnItemClickLis
 
         lunchEventParseGrabber = new LunchEventParseGrabber(getActivity());
 
-        lunchEventParseGrabber.testPostToParse();
+
 
         List<ParseObject> pOL = lunchEventParseGrabber.getLunchEvents();
 

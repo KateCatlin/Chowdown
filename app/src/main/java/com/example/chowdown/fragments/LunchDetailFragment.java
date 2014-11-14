@@ -56,7 +56,7 @@ public class LunchDetailFragment extends Fragment {
 
         Bundle data = getArguments();
 
-        final LunchEvent chosenLunchEvent = (LunchEvent) data.getParcelable(CHOSEN_LUNCH_KEY);
+        final LunchEvent chosenLunchEvent = data.getParcelable(CHOSEN_LUNCH_KEY);
         Log.d("LOG_TAG", "EventID is " + chosenLunchEvent.getEventID());
 
         titleText = (TextView)root.findViewById(R.id.lunch_detail_title);
@@ -143,6 +143,15 @@ public class LunchDetailFragment extends Fragment {
 
     private String getStringOfAttendees(LunchEvent chosenLunchEvent) {
         String allTheAttendees = "Attending:\n";
+
+        if (chosenLunchEvent.getEventAttendees().size() == 1){
+            return (allTheAttendees + chosenLunchEvent.getEventAttendees().get(0));
+        }
+
+        if (chosenLunchEvent.getEventAttendees().size() == 2){
+            return (allTheAttendees + (chosenLunchEvent.getEventAttendees().get(0) + " and " + chosenLunchEvent.getEventAttendees().get(1)));
+        }
+
         for (int i = 0; i < chosenLunchEvent.getEventAttendees().size(); i++){
             if (i < (chosenLunchEvent.getEventAttendees().size() - 1)){
                 allTheAttendees = allTheAttendees + chosenLunchEvent.getEventAttendees().get(i) + ", ";
