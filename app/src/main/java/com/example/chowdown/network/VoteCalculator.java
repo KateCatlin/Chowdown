@@ -49,7 +49,7 @@ public class VoteCalculator {
         submitTestVote.saveInBackground();
     }
 
-    public void calculateWinner(String lunchEventID) {
+    public void calculateWinner(final String lunchEventID) {
 
         ParseQuery<ParseObject> voteQuery = ParseQuery.getQuery("Vote");
         voteQuery.whereEqualTo("relatedLunch", ParseObject.createWithoutData("LunchEvent", lunchEventID));
@@ -67,33 +67,35 @@ public class VoteCalculator {
 
                         String restaurantChoiceName = restaurantChoice.getString("name");
                         Log.d("restaurantChoiceName", restaurantChoiceName);
+                        voteResultsHashMap.put(restaurantChoiceName, 0);
 
                         int restaurantChoiceRank = vote.getInt("rank");
                         Log.d("restaurantChoiceRank", String.valueOf(restaurantChoiceRank));
-                        //Log.d("restaurantChoiceRank", restaurantChoiceRank.toString());
 
-                        voteCollectionMultimap.put(restaurantChoiceName, restaurantChoiceRank);
+                        if (restaurantChoiceRank == 1) {
+                            voteResultsHashMap.put(restaurantChoiceName, voteResultsHashMap.get(restaurantChoiceName) + 10);
+                        }
+                        if (restaurantChoiceRank == 2) {
+                            voteResultsHashMap.put(restaurantChoiceName, voteResultsHashMap.get(restaurantChoiceName) + 5);
+                        }
+                        if (restaurantChoiceRank == 3) {
+                            voteResultsHashMap.put(restaurantChoiceName, voteResultsHashMap.get(restaurantChoiceName) + 1);
+                        }
 
-                        Log.d("voteResultsMap", voteCollectionMultimap.toString());
+                        Log.d("voteResultsMap", voteResultsHashMap.toString());
                     }
-                    for (Map.Entry<String, Integer> entry : voteCollectionMultimap.entries()) {
-                        String restaurantName = entry.getKey();
-                        Log.d("restaurantName", restaurantName);
-                        Integer score = 0;
-                        Integer rank = entry.getValue();
-                        if (rank == 1) {
-                            score = 3;
+                    Map.Entry<String, Integer> maxEntry = null;
+                    for (Map.Entry<String, Integer> entry : voteResultsHashMap.entrySet()) {
+                        if (maxEntry == null || entry.getValue() > maxEntry.getValue()) {
+                            maxEntry = entry;
                         }
-                        else if (rank == 2) {
-                            score = 2;
-                        }
-                        else if (rank == 3) {
-                            score = 1;
-                        }
-                        Log.d("rank", rank.toString());
                     }
+                    Log.d("maxEntry", maxEntry.toString());
 
-                    //listener.voteResultsCalculated(winner);
+                    ParseObject parseLunchObject = ParseObject.createWithoutData("LunchEvent", lunchEventID);
+                    parseLunchObject.put("topRestaurant", maxEntry.getKey());
+                    parseLunchObject.put("votingEnded", true);
+                    parseLunchObject.saveInBackground();
                 }
             }
         });
