@@ -28,7 +28,7 @@
 
     <string name="organizer_label">Organizer</string>
     <string name="label_restaurant_first_choice">1st restaurant choice</string>
-    <string name="rank_restaurants_prompt">Drag and drop the restaurants into your preferred order with the first restaurant being your top choice</string>
+    <string name="rank_restaurants_prompt">Please choose your top three choices.  Drag and drop the restaurants into your preferred order with the first restaurant being your top choice</string>
     <string name="submit_vote_button_text">Submit vote</string>
     <string name="post_vote_title">Congrats dude, you\'re going to lunch at:</string>
     <string name="fake_time">11:34</string>

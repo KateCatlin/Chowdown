@@ -28,6 +28,8 @@ public class ParsePutter {
         restaurantIds.put("Slice", "A1ItP7AEuy");
         restaurantIds.put("Orchid Thai", "doLgBRhEzo");
         restaurantIds.put("TAQO", "YqLy4jHA2T");
+        restaurantIds.put("Bucharest Grill", "BQLOSEeDss");
+        restaurantIds.put("Detroit Beer Company", "yaAdoIhmkx");
 
         ParseObject parseVoteObject = new ParseObject("Vote");
 //        parseVoteObject.put("userId", "Fakey McFakerson");
