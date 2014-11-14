@@ -83,13 +83,23 @@ public class MainFragment extends Fragment implements AdapterView.OnItemClickLis
 
         List<ParseObject> pOL = lunchEventParseGrabber.getLunchEvents();
 
-//        if (arrayOfLunches != null) {
-//            Log.d(LOG_TAG, "Made it into not null");
-//        }
+        try {
+            Log.d(LOG_TAG, "arrayList starts at " + arrayOfLunches.get(1).getDescription());
 
-//        mLunchEventAdapter.notifyDataSetInvalidated();
+            mLunchEventAdapter = new LunchEventAdapter(getActivity(), arrayOfLunches);
 
+            listView.setAdapter(mLunchEventAdapter);
+            //Clear existing items
+            mLunchEventAdapter.clear();
+            //Add new items
+            mLunchEventAdapter.addAll(arrayOfLunches);
+            //Notify that the data has changed
+            mLunchEventAdapter.notifyDataSetChanged();
 
+        }
+        catch (IndexOutOfBoundsException e) {
+            //
+        }
 
         int i = 0;
         for (ParseObject pO: pOL) {
@@ -100,21 +110,14 @@ public class MainFragment extends Fragment implements AdapterView.OnItemClickLis
 
         mLunchEventAdapter = new LunchEventAdapter(getActivity(), arrayOfLunches);
 
-        try {
-            Log.d(LOG_TAG, "arrayList starts at " + arrayOfLunches.get(1).getDescription());
-            listView.
-            mLunchEventAdapter.clearAdapter();
-
-        }
-        catch (IndexOutOfBoundsException e) {
-            //
-        }
-
-        mLunchEventAdapter.addAll(arrayOfLunches);
-
         listView.setAdapter(mLunchEventAdapter);
 
         listView.setOnItemClickListener(this);
+
+
+//        mLunchEventAdapter.addAll(arrayOfLunches);
+
+
 
 
 
