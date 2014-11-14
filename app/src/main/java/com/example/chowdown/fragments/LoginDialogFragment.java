@@ -1,7 +1,6 @@
 package com.example.chowdown.fragments;
 
 import android.app.DialogFragment;
-import android.content.Context;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -10,13 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.chowdown.R;
-import com.parse.LogInCallback;
+import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
-import com.parse.ParseException;
 
 public class LoginDialogFragment extends DialogFragment {
 
@@ -48,10 +45,10 @@ public class LoginDialogFragment extends DialogFragment {
 
                 if (mUsernameEditText.getText().toString().trim().length() != 0 & mPasswordEditText.getText().toString().trim().length() != 0){
 
-                    final String username = (mUsernameEditText.getText().toString());
+                    String username = (mUsernameEditText.getText().toString());
                     Log.d(LOG_TAG, "THE USERNAME IS: " + username);
 
-                    final String password = (mPasswordEditText.getText().toString());
+                    String password = (mPasswordEditText.getText().toString());
                     Log.d(LOG_TAG, "THE PASSWORD IS: " + password);
 
                     //saves the "saved" username in the editText to SharedPreferences

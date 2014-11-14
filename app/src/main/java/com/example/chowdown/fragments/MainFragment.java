@@ -8,9 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.chowdown.R;
+import com.example.chowdown.activities.CreateLunchActivity;
 import com.example.chowdown.activities.LunchDetailActivity;
 import com.example.chowdown.adapters.LunchEventAdapter;
 import com.example.chowdown.models.LunchEvent;
@@ -34,6 +36,7 @@ public class MainFragment extends Fragment implements AdapterView.OnItemClickLis
     public static ArrayList<Vote> arrayOfVotes = new ArrayList<Vote>();
     public static final String CHOSEN_LUNCH_KEY = "CHOSEN_LUNCH_KEY";
     public static final String LOG_TAG = "MainActivity";
+    public Button newLunchButton;
 
 
     public MainFragment () {
@@ -69,9 +72,16 @@ public class MainFragment extends Fragment implements AdapterView.OnItemClickLis
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
         ListView listView = (ListView) rootView.findViewById(R.id.listview);
+        newLunchButton = (Button) rootView.findViewById(R.id.new_lunch_button);
+        newLunchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent createIntent = new Intent(getActivity(), CreateLunchActivity.class);
+                startActivity(createIntent);
+            }
+        });
 
         lunchEventParseGrabber = new LunchEventParseGrabber(getActivity());
-//        lunchEventParseGrabber.testPostToParse();
 
         List<ParseObject> pOL = lunchEventParseGrabber.getLunchEvents();
 
@@ -89,6 +99,8 @@ public class MainFragment extends Fragment implements AdapterView.OnItemClickLis
         listView.setAdapter(mLunchEventAdapter);
 
         listView.setOnItemClickListener(this);
+
+
 
         return rootView;
     }
