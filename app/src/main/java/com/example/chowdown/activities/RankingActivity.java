@@ -59,6 +59,8 @@ public class RankingActivity extends Activity {
         restaurants.add("Slice");
         restaurants.add("Orchid Thai");
         restaurants.add("TAQO");
+        restaurants.add("Bucharest Grill");
+        restaurants.add("Detroit Beer Company");
         restaurantAdaptor = new StableArrayAdapter(this, R.layout.list_item_restaurant, restaurants);
 
         topRestaurantsListView.setCheeseList(restaurants);
